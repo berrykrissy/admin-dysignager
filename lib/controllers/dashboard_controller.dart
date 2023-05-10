@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:signage/controllers/base_controller.dart';
 
-class MainController extends BaseController {
+class DashboardController extends BaseController {
 
   MainController() {
-    debugPrint("MainController Constructor");
+    debugPrint("DashboardController Constructor");
   }
 
   final RxDouble _width = Get.width.obs;
@@ -19,16 +19,16 @@ class MainController extends BaseController {
   }
 
   bool setWidth(double width) {
-    debugPrint("MainController setWidth $width");
+    debugPrint("DashboardController setWidth $width");
     _width(width);
     return false;
   }
 
-  bool isDesktop() { debugPrint("MainController isDesktop");
+  bool isDesktop() { debugPrint("DashboardController isDesktop");
     return _width.value >= 600.00;
   }
 
-  bool isMobile() { debugPrint("MainController isMobile");
+  bool isMobile() { debugPrint("DashboardController isMobile");
     return _width.value < 600.00;
   }
 
@@ -42,7 +42,7 @@ class MainController extends BaseController {
 
   @override
   void onClose() {
-    debugPrint("MainController onClose");
+    debugPrint("DashboardController onClose");
     super.onClose();
   }
 }
