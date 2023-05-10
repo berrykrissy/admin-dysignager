@@ -2,6 +2,7 @@ import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:signage/controllers/base_controller.dart';
+import 'package:signage/routes/app_pages.dart';
 
 class DashboardController extends BaseController {
 
@@ -38,6 +39,26 @@ class DashboardController extends BaseController {
 
   bool isLoading() {
     return _isLoading.value;
+  }
+
+  void launchFindScreen() {
+      debugPrint("DashboardController Timer StopslaunchFindScreen");
+      Get.toNamed(Routes.FIND_SCREEN);
+  }
+
+  void launchScreens() {
+      debugPrint("DashboardController launchScreens");
+      Get.toNamed(Routes.SCREENS);
+  }
+
+  void launchContents() {
+      debugPrint("DashboardController launchContents");
+      Get.toNamed(Routes.CONTENTS);
+  }
+
+  void launchSettings() {
+      debugPrint("DashboardController launchSettings");
+      Get.toNamed(Routes.SETTINGS);
   }
 
   @override
