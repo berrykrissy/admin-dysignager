@@ -14,11 +14,18 @@ class DashboardPage extends BaseView<DashboardController> {
     debugPrint("DashboardPage isClosed ${controller.isClosed}");
     controller.setWidth(MediaQuery.of(context).size.width);
       return Scaffold (
-        body: Row(
+        body: Row (
           mainAxisSize: MainAxisSize.max,
           children: [
             const NavigationWidget(),
-            const CircularProgressIndicator(),
+            Flexible (
+              flex: 70,
+              child: Container(
+                color: Colors.yellow,
+                alignment: Alignment.center,
+                child: const CircularProgressIndicator(),
+              )
+            ),
           ],
         ),
       );

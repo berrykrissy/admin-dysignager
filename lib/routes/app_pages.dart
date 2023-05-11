@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:signage/bindings/dashboard_binding.dart';
 import 'package:signage/bindings/splash_binding.dart';
 import 'package:signage/views/contents_page.dart';
-import 'package:signage/views/dashboard_page%20copy.dart';
+import 'package:signage/views/settings_page.dart';
 import 'package:signage/views/dashboard_page.dart';
 import 'package:signage/views/find_screen_page.dart';
 import 'package:signage/views/screens_page.dart';
@@ -29,28 +29,28 @@ abstract class AppPages {
       name: Routes.FIND_SCREEN,
       page: () => const FindScreenPage(),
       binding: DashboardBinding(),
-      transition: Transition.fade,
+      transition: Transition.native,
       transitionDuration: const Duration(milliseconds: 250),
     ),
     GetPage(
       name: Routes.SCREENS,
       page: () => const ScreensPage(),
       binding: DashboardBinding(),
-      transition: Transition.fade,
+      transition: Transition.native,
       transitionDuration: const Duration(milliseconds: 250),
     ),
     GetPage(
       name: Routes.CONTENTS,
       page: () => const ContentsPage(),
       binding: DashboardBinding(),
-      transition: Transition.fade,
+      transition: Transition.native,
       transitionDuration: const Duration(milliseconds: 250),
     ),
     GetPage(
       name: Routes.SETTINGS,
       page: () => const SettingsPage(),
       binding: DashboardBinding(),
-      transition: Transition.fade,
+      transition: Transition.native,
       transitionDuration: const Duration(milliseconds: 250),
     ),
   ];

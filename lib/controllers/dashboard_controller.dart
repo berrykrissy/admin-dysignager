@@ -61,6 +61,11 @@ class DashboardController extends BaseController {
       Get.toNamed(Routes.SETTINGS);
   }
 
+  void launchLogout() {
+      debugPrint("DashboardController launchLogout");
+      //TODO: Implement Logout Code Method
+  }
+
   @override
   void onClose() {
     debugPrint("DashboardController onClose");
