@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:signage/widgets/navigation_cell_widget.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class NavigationCellTextWidget extends NavigationCellWidget {
-  
   NavigationCellTextWidget( {
     super.key,
     required String text,
     //required bool isHovered,
-    //Function? onHover,
+    Function? onHover,
     //Function? onExit,
     GestureTapCallback? onTap,
   } ) : super (
@@ -21,12 +21,18 @@ class NavigationCellTextWidget extends NavigationCellWidget {
     },
   
     child: InkWell (
-      child: Text (
-        text,
-        style: TextStyle (
-          color: Colors.white,
-          //decoration: TextDecoration.overline,
-          fontSize: 13,
+      onHover: (value) {
+      },
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 65),
+        padding: const EdgeInsets.only(bottom: 40),
+        child: Text (
+          text,
+          style: GoogleFonts.roboto(
+            fontSize: 17,
+            fontWeight: FontWeight.bold,
+            color: Colors.black54
+          ),
         ),
       ),
       onTap: onTap,
