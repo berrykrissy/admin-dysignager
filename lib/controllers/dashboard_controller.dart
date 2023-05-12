@@ -63,6 +63,10 @@ class DashboardController extends BaseController {
 
   void launchLogout() {
       debugPrint("DashboardController launchLogout");
+      Get.defaultDialog(
+        title: "Logging Out",
+        middleText: "Are you sure you want to logout",
+      );
       //TODO: Implement Logout Code Method
   }
 
