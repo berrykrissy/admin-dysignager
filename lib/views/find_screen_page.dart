@@ -14,12 +14,12 @@ class FindScreenPage extends BaseView<DashboardController> {
     debugPrint("FindScreenPage initialized ${controller.initialized}");
     debugPrint("FindScreenPage isClosed ${controller.isClosed}");
     controller.setWidth(MediaQuery.of(context).size.width);
-      return Scaffold (
+      return const Scaffold (
         body: Row(
           mainAxisSize: MainAxisSize.max,
           children: [
-            const NavigationWidget(),
-            const FindScreenWidget(),
+            NavigationWidget(),
+            FindScreenWidget(),
           ],
         ),
       );

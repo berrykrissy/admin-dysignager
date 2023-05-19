@@ -14,12 +14,12 @@ class SettingsPage extends BaseView<DashboardController> {
     debugPrint("SettingsPage initialized ${controller.initialized}");
     debugPrint("SettingsPage isClosed ${controller.isClosed}");
     controller.setWidth(MediaQuery.of(context).size.width);
-      return Scaffold (
+      return const Scaffold (
         body: Row(
           mainAxisSize: MainAxisSize.max,
           children: [
-            const NavigationWidget(),
-            const SettingsWidget(),
+            NavigationWidget(),
+            SettingsWidget(),
           ],
         ),
       );

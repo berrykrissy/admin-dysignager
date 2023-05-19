@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:signage/controllers/dashboard_controller.dart';
 import 'package:signage/widgets/base_widgets.dart';
@@ -25,20 +26,14 @@ class NavigationWidget extends BaseWidget<DashboardController> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    margin: EdgeInsets.symmetric(vertical: 40, horizontal: 10,),
-                    height: 60,
-                    width: 60,
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.circular(100),
-                        image: DecorationImage(
-                            image: NetworkImage(
-                                'https://p7.hiclipart.com/preview/92/319/609/computer-icons-person-clip-art-name.jpg')),
-                      ),
+                    height: 100,
+                    width: 100,
+                  child: const Icon (
+                    CupertinoIcons.person_crop_circle_fill,
+                    color: Colors.purple,
                     ),
                   ),
-                  Text('Admin', style: TextStyle(
+                  const Text('Admin', style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w500,
                   ),)

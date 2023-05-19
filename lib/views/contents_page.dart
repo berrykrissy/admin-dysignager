@@ -14,12 +14,12 @@ class ContentsPage extends BaseView<DashboardController> {
     debugPrint("ContentsPage initialized ${controller.initialized}");
     debugPrint("ContentsPage isClosed ${controller.isClosed}");
     controller.setWidth(MediaQuery.of(context).size.width);
-      return Scaffold (
+      return const Scaffold (
         body: Row(
           mainAxisSize: MainAxisSize.max,
           children: [
-            const NavigationWidget(),
-            const ContentsWidget(),
+            NavigationWidget(),
+            ContentsWidget(),
           ],
         ),
       );
