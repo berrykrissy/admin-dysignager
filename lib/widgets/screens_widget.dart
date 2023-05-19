@@ -10,9 +10,72 @@ class ScreensWidget extends BaseWidget {
     return Flexible(
       flex: 70,
       child: Container(
-        color: Colors.yellow,
+        padding: const EdgeInsets.all(30),
         alignment: Alignment.center,
-        child: Text("Screens"),
+        child:  Column (
+          children: [
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("Welcome to DYSIGNER Dashboard!", style: TextStyle ( fontSize: 25, fontWeight: FontWeight.w500,),),
+                Text("Dysignager", style: TextStyle ( fontSize: 25, fontWeight: FontWeight.w500,),),
+              ],
+            ),
+            const SizedBox(height: 13,),
+            Card (
+              color: Colors.white,
+              shape: RoundedRectangleBorder(
+                side: const BorderSide(
+                  color: Colors.grey,
+                ),
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              child: Container(
+                padding: const EdgeInsets.fromLTRB(13, 30, 10, 30),
+                child: Column (
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("SCREENS", style: TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
+                      Text("Audiance Views as of May 1, 2023 Monday", style: TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
+                    ],
+                  ),
+                  const SizedBox(height: 13,),
+                  /*
+                  GridView(
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount (crossAxisCount: 3),
+                    children: [
+                      Card (
+                        color: Colors.green,
+                        shape: RoundedRectangleBorder (
+                          side: const BorderSide (
+                            color: Colors.grey,
+                          ),
+                          borderRadius: BorderRadius.circular(13.0),
+                        ),
+                        child: const Text("0"),
+                      ),
+                      Card (
+                        color: Colors.red,
+                        shape: RoundedRectangleBorder (
+                          side: const BorderSide (
+                            color: Colors.grey,
+                          ),
+                          borderRadius: BorderRadius.circular(13.0),
+                        ),
+                        child: const Text("0"),
+                      ),
+                    ],
+                  ),
+                  */
+                ],
+              ),
+              )
+            ),
+          ]
+        ),
       )
     );
   }
