@@ -74,6 +74,26 @@ class ScreensWidget extends BaseWidget {
               ),
               )
             ),
+            const SizedBox(height: 15,),
+            const Row (
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text("Name", style: TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
+                Text("Status", style: TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
+                Text("Online Since", style: TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
+                Text("Content Playlist", style: TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
+                Text("Preview", style: TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
+                Text("Action", style: TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
+              ],
+            ),
+            const Divider(
+              color: Colors.grey,
+              height: 25,
+              thickness: 1,
+              indent: 5,
+              endIndent: 5,
+            ),
+
           ]
         ),
       )
