@@ -10,12 +10,8 @@ class ScreensPage extends BaseView<DashboardController> {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("ScreenPage build");
-    debugPrint("ScreenPage initialized ${controller.initialized}");
-    debugPrint("ScreenPage isClosed ${controller.isClosed}");
-    controller.setWidth(MediaQuery.of(context).size.width);
       return const Scaffold (
-        body: Row(
+        body: Row (
           mainAxisSize: MainAxisSize.max,
           children: [
             NavigationWidget(),

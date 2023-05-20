@@ -9,13 +9,9 @@ class SettingsPage extends BaseView<DashboardController> {
   const SettingsPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    debugPrint("SettingsPage build");
-    debugPrint("SettingsPage initialized ${controller.initialized}");
-    debugPrint("SettingsPage isClosed ${controller.isClosed}");
-    controller.setWidth(MediaQuery.of(context).size.width);
+  Widget build(BuildContext context) {  
       return const Scaffold (
-        body: Row(
+        body: Row (
           mainAxisSize: MainAxisSize.max,
           children: [
             NavigationWidget(),

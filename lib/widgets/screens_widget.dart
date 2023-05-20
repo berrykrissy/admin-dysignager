@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:signage/widgets/base_widgets.dart';
+import 'package:signage/widgets/list_view_screens_details_widget.dart';
 
 class ScreensWidget extends BaseWidget {
   
@@ -86,14 +87,14 @@ class ScreensWidget extends BaseWidget {
                 Text("Action", style: TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
               ],
             ),
-            const Divider(
+            const Divider (
               color: Colors.grey,
               height: 25,
               thickness: 1,
               indent: 5,
               endIndent: 5,
             ),
-
+            //const ListViewScreensDetailsWidget()
           ]
         ),
       )

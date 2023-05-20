@@ -1,7 +1,7 @@
-import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:signage/controllers/base_controller.dart';
+import 'package:signage/models/screens_details_model.dart';
 import 'package:signage/routes/app_pages.dart';
 
 class DashboardController extends BaseController {
@@ -10,35 +10,19 @@ class DashboardController extends BaseController {
     debugPrint("DashboardController Constructor");
   }
 
-  final RxDouble _width = Get.width.obs;
-  final RxBool _isLoading = true.obs;
+  final RxList<ScreensDetailsModel> _screenDetailsList = new List<ScreensDetailsModel>.empty().obs;
 
   @override
   void onInit() {
-    //Platform.isIOS;
     super.onInit();
   }
 
-  bool setWidth(double width) {
-    debugPrint("DashboardController setWidth $width");
-    _width(width);
-    return false;
-  }
-
-  bool isDesktop() { debugPrint("DashboardController isDesktop");
-    return _width.value >= 600.00;
-  }
-
-  bool isMobile() { debugPrint("DashboardController isMobile");
-    return _width.value < 600.00;
-  }
-
-  double getAppBarHeight() {
-    return Get.height * 0.10; //MediaQuery.of(context).size.height * 0.10;
-  }
-
-  bool isLoading() {
-    return _isLoading.value;
+  void initializeList() {
+    _screenDetailsList.add(ScreensDetailsModel(name: "Screen 1", status: "Online", onlineSince: "04/25/23", contentPlaylist: "Sample Playlist 1", preview: ""));
+    _screenDetailsList.add(ScreensDetailsModel(name: "Screen 2", status: "Offline", onlineSince: "04/25/23", contentPlaylist: "Sample Playlist 2", preview: ""));
+    _screenDetailsList.add(ScreensDetailsModel(name: "Screen 3", status: "Online", onlineSince: "04/25/23", contentPlaylist: "Sample Playlist 3", preview: ""));
+    _screenDetailsList.add(ScreensDetailsModel(name: "Screen 4", status: "Offline", onlineSince: "04/25/23", contentPlaylist: "Sample Playlist 4", preview: ""));
+    _screenDetailsList.add(ScreensDetailsModel(name: "Screen 5", status: "Online", onlineSince: "04/25/23", contentPlaylist: "Sample Playlist 5", preview: ""));
   }
 
   void launchFindScreen() {
@@ -68,6 +52,14 @@ class DashboardController extends BaseController {
         middleText: "Are you sure you want to logout",
       );
       //TODO: Implement Logout Code Method
+  }
+
+  int getScreensDetailsLength() {
+    return _screenDetailsList.length;
+  }
+
+  ScreensDetailsModel getScreensDetailsList(int index) {
+    return _screenDetailsList.value[index];
   }
 
   @override
