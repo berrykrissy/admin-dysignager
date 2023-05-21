@@ -10,12 +10,8 @@ class ContentsPage extends BaseView<DashboardController> {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("ContentsPage build");
-    debugPrint("ContentsPage initialized ${controller.initialized}");
-    debugPrint("ContentsPage isClosed ${controller.isClosed}");
-    controller.setWidth(MediaQuery.of(context).size.width);
       return const Scaffold (
-        body: Row(
+        body: Row (
           mainAxisSize: MainAxisSize.max,
           children: [
             NavigationWidget(),

@@ -10,12 +10,8 @@ class FindScreenPage extends BaseView<DashboardController> {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("FindScreenPage build");
-    debugPrint("FindScreenPage initialized ${controller.initialized}");
-    debugPrint("FindScreenPage isClosed ${controller.isClosed}");
-    controller.setWidth(MediaQuery.of(context).size.width);
       return const Scaffold (
-        body: Row(
+        body: Row (
           mainAxisSize: MainAxisSize.max,
           children: [
             NavigationWidget(),

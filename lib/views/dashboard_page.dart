@@ -9,10 +9,6 @@ class DashboardPage extends BaseView<DashboardController> {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("DashboardPage build");
-    debugPrint("DashboardPage initialized ${controller.initialized}");
-    debugPrint("DashboardPage isClosed ${controller.isClosed}");
-    controller.setWidth(MediaQuery.of(context).size.width);
       return Scaffold (
         body: Row (
           mainAxisSize: MainAxisSize.max,
@@ -20,8 +16,7 @@ class DashboardPage extends BaseView<DashboardController> {
             const NavigationWidget(),
             Flexible (
               flex: 70,
-              child: Container(
-                color: Colors.yellow,
+              child: Container (
                 alignment: Alignment.center,
                 child: const CircularProgressIndicator(),
               )
