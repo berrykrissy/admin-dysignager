@@ -17,15 +17,19 @@ class ScreensWidget extends BaseWidget<DashboardController> {
           isScrollable: true,
           //scrollContoller: controller.screensScrollController,
           children: [
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("Welcome to DYSIGNER Dashboard!", style: TextStyle ( fontSize: 25, fontWeight: FontWeight.w500,),),
-                Text("Dysignager", style: TextStyle ( fontSize: 25, fontWeight: FontWeight.w500,),),
-              ],
-            ),
+             Container(
+              margin: EdgeInsets.only(left: 30, right: 30, top: 20, bottom: 10),
+               child: Row(
+                children: [
+                  Text("Welcome to DYSIGNER Dashboard!", style: TextStyle ( fontSize: 25, fontWeight: FontWeight.w500,),),
+                  Spacer(),
+                  Text("Dysignager", style: TextStyle ( fontSize: 25, fontWeight: FontWeight.w500,),),
+                ],
+                         ),
+             ),
             const SizedBox(height: 13,),
             Card (
+              margin: EdgeInsets.symmetric(horizontal: 40),
               color: Colors.white,
               shape: RoundedRectangleBorder(
                 side: const BorderSide(
@@ -38,12 +42,15 @@ class ScreensWidget extends BaseWidget<DashboardController> {
                 child: const Column (
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("SCREENS", style: TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
-                      Text("Audiance Views as of May 1, 2023 Monday", style: TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
-                    ],
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("SCREENS", style: TextStyle ( color: Colors.grey, fontSize: 20, fontWeight: FontWeight.w500,),),
+                        Text("Audience Views as of May 1, 2023 Monday", style: TextStyle ( color: Colors.grey, fontSize: 20, fontWeight: FontWeight.w500,),),
+                      ],
+                    ),
                   ),
                   SizedBox(height: 13,),
                   GridViewScreensViewWidget(),

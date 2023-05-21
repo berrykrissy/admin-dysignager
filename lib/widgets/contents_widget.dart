@@ -11,7 +11,6 @@ class ContentsWidget extends BaseWidget {
         flex: 70,
         child: Container(
           padding: EdgeInsets.all(30),
-          color: Colors.yellow,
           alignment: Alignment.center,
           child: Column(
             children: [
@@ -74,11 +73,18 @@ class ContentsWidget extends BaseWidget {
                           Container(
                             height: 350,
                             width: 400,
-                            color: Colors.green,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('Preview'),
+                                Text(
+                                  'Preview',
+                                  style: GoogleFonts.roboto(
+                                    textStyle: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black45),
+                                  ),
+                                ),
                                 SizedBox(
                                   height: 13,
                                 ),
@@ -86,7 +92,7 @@ class ContentsWidget extends BaseWidget {
                                   height: 300,
                                   width: 400,
                                   decoration: BoxDecoration(
-                                    color: Colors.red,
+                                    color: Colors.yellow,
                                     borderRadius: BorderRadius.circular(26),
                                   ),
                                 ),
@@ -97,10 +103,201 @@ class ContentsWidget extends BaseWidget {
                             width: 13,
                           ),
                           Container(
-                                  color: Colors.green,
-                                  height: 350,
-                                  width: 485,
-                                )
+                            height: 350,
+                            width: 485,
+                            child: Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    Text(
+                                      'Edit Playlist',
+                                      style: GoogleFonts.roboto(
+                                        textStyle: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.black45),
+                                      ),
+                                    ),
+                                    Spacer(),
+                                    Text(
+                                      'Cancel',
+                                      style: GoogleFonts.roboto(
+                                        textStyle: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.black45),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      'Update',
+                                      style: GoogleFonts.roboto(
+                                        textStyle: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.purple[400],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text(
+                                          'Name',
+                                          style: GoogleFonts.roboto(
+                                            textStyle: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.w600,
+                                                color: Colors.black45),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Container(
+                                          width: 400,
+                                          height: 25,
+                                          decoration: BoxDecoration(
+                                            border:
+                                                Border.all(color: Colors.black),
+                                          ),
+                                          child: Padding(
+                                            padding: EdgeInsets.only(left: 10),
+                                            child: Text('Sample Playlist'),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 13,
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'Media to Display',
+                                          style: GoogleFonts.roboto(
+                                            textStyle: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.w600,
+                                                color: Colors.black45),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Row(
+                                          children: [
+                                            Container(
+                                              width: 200,
+                                              height: 25,
+                                              decoration: BoxDecoration(
+                                                border: Border.all(
+                                                    color: Colors.black),
+                                              ),
+                                              child: Padding(
+                                                padding: EdgeInsets.only(
+                                                    left: 10, right: 10),
+                                                child: Row(
+                                                  children: [
+                                                    Container(
+                                                      height: 20,
+                                                      width: 100,
+                                                      decoration: BoxDecoration(
+                                                          color: Colors
+                                                              .purple[200],
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(5)),
+                                                      child: Center(
+                                                          child: Text(
+                                                              'Photo1.jpg x')),
+                                                    ),
+                                                    Spacer(),
+                                                    Text('+1'),
+                                                    Icon(Icons.arrow_drop_down)
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          height: 15,
+                                        ),
+                                        Row(
+                                          children: [
+                                            Container(
+                                              width: 200,
+                                              height: 25,
+                                              decoration: BoxDecoration(
+                                                border: Border.all(
+                                                    color: Colors.black),
+                                              ),
+                                              child: Padding(
+                                                padding: EdgeInsets.only(
+                                                    left: 10, right: 10),
+                                                child: Row(
+                                                  children: [
+                                                    Container(
+                                                      height: 20,
+                                                      width: 100,
+                                                      decoration: BoxDecoration(
+                                                          color: Colors
+                                                              .purple[200],
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(5)),
+                                                      child: Center(
+                                                          child: Text(
+                                                              'Video1.mp4 x')),
+                                                    ),
+                                                    Spacer(),
+                                                    Text('+1'),
+                                                    Icon(Icons.arrow_drop_down)
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    Row(
+                                          children: [
+                                            Text(
+                                              '+ Add Media',
+                                              style: TextStyle(fontSize: 20),
+                                            ),
+                                            Spacer(),
+                                            Text(
+                                              'View all',
+                                              style: TextStyle(fontSize: 20),
+                                            ),
+                                          ],
+                                        ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          )
                         ],
                       ),
                     ],
