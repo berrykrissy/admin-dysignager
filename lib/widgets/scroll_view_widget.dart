@@ -22,8 +22,7 @@ class ScrollViewWidget extends BaseWidget {
 
    @override
   Widget build(BuildContext context) {
-    return Expanded (
-      child: Scrollbar (
+    return  Scrollbar (
         controller: scrollContoller,
         thickness: 10,
         trackVisibility: true, //showTrackOnHover: true,
@@ -39,7 +38,6 @@ class ScrollViewWidget extends BaseWidget {
             ),
           ),
         )
-      )
-    );
+      );
   } 
 }

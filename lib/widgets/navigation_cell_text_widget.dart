@@ -13,11 +13,11 @@ class NavigationCellTextWidget extends NavigationCellWidget {
   } ) : super (
     
     onHover: () {
-      debugPrint("NavigationCellTextWidget onHovers $text");
+      //debugPrint("NavigationCellTextWidget onHovers $text");
     },
 
     onExit: () {
-      debugPrint("NavigationCellTextWidget onExit $text");
+      //debugPrint("NavigationCellTextWidget onExit $text");
     },
   
     child: InkWell (

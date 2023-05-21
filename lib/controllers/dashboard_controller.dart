@@ -10,14 +10,16 @@ class DashboardController extends BaseController {
     debugPrint("DashboardController Constructor");
   }
 
+  final screensScrollController = ScrollController();
   final RxList<ScreensDetailsModel> _screenDetailsList = new List<ScreensDetailsModel>.empty().obs;
 
   @override
   void onInit() {
     super.onInit();
+    _initializeList();
   }
 
-  void initializeList() {
+  void _initializeList() {
     _screenDetailsList.add(ScreensDetailsModel(name: "Screen 1", status: "Online", onlineSince: "04/25/23", contentPlaylist: "Sample Playlist 1", preview: ""));
     _screenDetailsList.add(ScreensDetailsModel(name: "Screen 2", status: "Offline", onlineSince: "04/25/23", contentPlaylist: "Sample Playlist 2", preview: ""));
     _screenDetailsList.add(ScreensDetailsModel(name: "Screen 3", status: "Online", onlineSince: "04/25/23", contentPlaylist: "Sample Playlist 3", preview: ""));
@@ -58,8 +60,12 @@ class DashboardController extends BaseController {
     return _screenDetailsList.length;
   }
 
-  ScreensDetailsModel getScreensDetailsList(int index) {
+  ScreensDetailsModel getScreensDetails(int index) {
     return _screenDetailsList.value[index];
+  }
+
+  List<ScreensDetailsModel> getScreensDetailsList() {
+    return _screenDetailsList.value;
   }
 
   @override

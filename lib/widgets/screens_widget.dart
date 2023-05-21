@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:signage/controllers/dashboard_controller.dart';
 import 'package:signage/widgets/base_widgets.dart';
 import 'package:signage/widgets/list_view_screens_details_widget.dart';
+import 'package:signage/widgets/scroll_view_widget.dart';
 
-class ScreensWidget extends BaseWidget {
+class ScreensWidget extends BaseWidget<DashboardController> {
   
   const ScreensWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Flexible(
+    return Flexible (
       flex: 70,
-      child: Container(
-        padding: const EdgeInsets.all(30),
-        alignment: Alignment.center,
-        child:  Column (
+      child: ScrollViewWidget (
+          isScrollable: true,
+          //scrollContoller: controller.screensScrollController,
           children: [
             const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -94,10 +95,9 @@ class ScreensWidget extends BaseWidget {
               indent: 5,
               endIndent: 5,
             ),
-            //const ListViewScreensDetailsWidget()
+            const ListViewScreensDetailsWidget()
           ]
         ),
-      )
     );
   }
 
