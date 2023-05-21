@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:signage/controllers/base_controller.dart';
 import 'package:signage/models/screens_details_model.dart';
+import 'package:signage/models/screens_view_model.dart';
 import 'package:signage/routes/app_pages.dart';
 
 class DashboardController extends BaseController {
@@ -11,6 +12,7 @@ class DashboardController extends BaseController {
   }
 
   final screensScrollController = ScrollController();
+  final RxList<ScreensViewModel> _screenViewList = new List<ScreensViewModel>.empty().obs;
   final RxList<ScreensDetailsModel> _screenDetailsList = new List<ScreensDetailsModel>.empty().obs;
 
   @override
@@ -20,6 +22,13 @@ class DashboardController extends BaseController {
   }
 
   void _initializeList() {
+    _screenViewList.add(ScreensViewModel(name: "Screen 1", quantity: "0", color: Colors.red));
+    _screenViewList.add(ScreensViewModel(name: "Screen 2", quantity: "2", color: Colors.orange));
+    _screenViewList.add(ScreensViewModel(name: "Screen 3", quantity: "3", color: Colors.yellow));
+    _screenViewList.add(ScreensViewModel(name: "Screen 4", quantity: "4", color: Colors.green));
+    _screenViewList.add(ScreensViewModel(name: "Screen 5", quantity: "5", color: Colors.blue));
+    _screenViewList.add(ScreensViewModel(name: "Screen 6", quantity: "6", color: Colors.purple));
+
     _screenDetailsList.add(ScreensDetailsModel(name: "Screen 1", status: "Online", onlineSince: "04/25/23", contentPlaylist: "Sample Playlist 1", preview: ""));
     _screenDetailsList.add(ScreensDetailsModel(name: "Screen 2", status: "Offline", onlineSince: "04/25/23", contentPlaylist: "Sample Playlist 2", preview: ""));
     _screenDetailsList.add(ScreensDetailsModel(name: "Screen 3", status: "Online", onlineSince: "04/25/23", contentPlaylist: "Sample Playlist 3", preview: ""));
@@ -55,7 +64,20 @@ class DashboardController extends BaseController {
       );
       //TODO: Implement Logout Code Method
   }
+  //region Screen Views Methods
+  int getScreensViewLength() {
+    return _screenViewList.length;
+  }
 
+  ScreensViewModel getScreensView(int index) {
+    return _screenViewList.value[index];
+  }
+
+  List<ScreensViewModel> getScreensViewList() {
+    return _screenViewList.value;
+  }
+  //endregion
+  //region Screen Details Methods
   int getScreensDetailsLength() {
     return _screenDetailsList.length;
   }
@@ -67,7 +89,7 @@ class DashboardController extends BaseController {
   List<ScreensDetailsModel> getScreensDetailsList() {
     return _screenDetailsList.value;
   }
-
+  //endregion
   @override
   void onClose() {
     debugPrint("DashboardController onClose");

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:signage/controllers/dashboard_controller.dart';
 import 'package:signage/widgets/base_widgets.dart';
+import 'package:signage/widgets/grid_view_screens_view_widget.dart';
 import 'package:signage/widgets/list_view_screens_details_widget.dart';
 import 'package:signage/widgets/scroll_view_widget.dart';
 
@@ -34,44 +35,18 @@ class ScreensWidget extends BaseWidget<DashboardController> {
               ),
               child: Container(
                 padding: const EdgeInsets.fromLTRB(13, 30, 10, 30),
-                child: Column (
+                child: const Column (
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  const Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text("SCREENS", style: TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
                       Text("Audiance Views as of May 1, 2023 Monday", style: TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
                     ],
                   ),
-                  const SizedBox(height: 13,),
-                  /*
-                  GridView(
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount (crossAxisCount: 3),
-                    children: [
-                      Card (
-                        color: Colors.green,
-                        shape: RoundedRectangleBorder (
-                          side: const BorderSide (
-                            color: Colors.grey,
-                          ),
-                          borderRadius: BorderRadius.circular(13.0),
-                        ),
-                        child: const Text("0"),
-                      ),
-                      Card (
-                        color: Colors.red,
-                        shape: RoundedRectangleBorder (
-                          side: const BorderSide (
-                            color: Colors.grey,
-                          ),
-                          borderRadius: BorderRadius.circular(13.0),
-                        ),
-                        child: const Text("0"),
-                      ),
-                    ],
-                  ),
-                  */
+                  SizedBox(height: 13,),
+                  GridViewScreensViewWidget(),
                 ],
               ),
               )
