@@ -23,8 +23,9 @@ class NavigationCellTextWidget extends NavigationCellWidget {
     child: InkWell (
       onHover: (value) {
       },
+      onTap: onTap,
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 65),
+        margin: const EdgeInsets.symmetric(horizontal: 65),
         padding: const EdgeInsets.only(bottom: 40),
         child: Text (
           text,
@@ -35,7 +36,6 @@ class NavigationCellTextWidget extends NavigationCellWidget {
           ),
         ),
       ),
-      onTap: onTap,
     ),
   );
 

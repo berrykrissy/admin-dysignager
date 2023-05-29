@@ -21,17 +21,17 @@ class ButtonWidget extends BaseWidget {
   @override
   Widget build(BuildContext context) {
     return RawMaterialButton(
-      child: new Text(
-        text,
-        style: TextStyle(
-          color: textColor ?? Colors.white
-        ),
-      ),
       fillColor: fillColor ?? Colors.indigo,
       highlightElevation: 5.0,
       onPressed: onPressed,
       //shape: StadiumBorder(),
       splashColor: splashColor ?? Colors.indigoAccent,
+      child: Text(
+        text,
+        style: TextStyle (
+          color: textColor ?? Colors.white
+        ),
+      ),
       );
   }
 }

@@ -12,7 +12,7 @@ class SettingsWidget extends BaseWidget {
       child: Container(
         color: Colors.yellow,
         alignment: Alignment.center,
-        child: Text("Settings"),
+        child: const Text("Settings"),
       )
     );
   }

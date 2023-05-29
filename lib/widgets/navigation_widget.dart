@@ -15,7 +15,7 @@ class NavigationWidget extends BaseWidget<DashboardController> {
     return Flexible(
         flex: 20,
         child: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: Colors.white,
             border: Border(right: BorderSide(color: Colors.black54))
           ),

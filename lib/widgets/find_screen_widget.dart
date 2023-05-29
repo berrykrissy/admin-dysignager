@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_map/plugin_api.dart';
-import 'package:latlong2/latlong.dart';
 import 'package:signage/widgets/base_widgets.dart';
+import 'package:signage/widgets/flutter_map_widget.dart';
 
 class FindScreenWidget extends BaseWidget {
   
@@ -83,25 +82,7 @@ class FindScreenWidget extends BaseWidget {
               )
             ),
             const SizedBox(height: 13,),
-            Card (
-              child: SizedBox (
-                width: double.infinity,
-                height: 400,
-                child: FlutterMap (
-                  options: MapOptions(
-                    //center: LatLng(51.509364, -0.128928),
-                    center: LatLng(12.8797, 121.7740),
-                    zoom: 5.0,
-                  ),
-                  children: [
-                    TileLayer (
-                      urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                      userAgentPackageName: 'com.example.app',
-                    ),
-                  ],
-                ),
-              )
-            ),
+            const FlutterMapWidget(),
           ]
         ),
       )
