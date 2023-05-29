@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:signage/bindings/dashboard_binding.dart';
+import 'package:signage/bindings/login_binding.dart';
 import 'package:signage/views/contents_page.dart';
+import 'package:signage/views/login_page.dart';
 import 'package:signage/views/settings_page.dart';
 import 'package:signage/views/dashboard_page.dart';
 import 'package:signage/views/find_screen_page.dart';
@@ -9,6 +11,13 @@ part 'routes.dart';
 
 abstract class AppPages {
   static final pages = [
+    GetPage(
+      name: Routes.LOGIN,
+      page: () => LoginPage(),
+      binding: LoginBinding(),
+      transition: Transition.fade,
+      transitionDuration: const Duration(milliseconds: 250),
+    ),
     GetPage(
       name: Routes.DASHBOARD,
       page: () => const DashboardPage(),
