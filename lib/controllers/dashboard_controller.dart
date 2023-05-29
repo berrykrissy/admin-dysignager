@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:signage/controllers/base_controller.dart';
 import 'package:signage/models/marker_model.dart';
@@ -24,9 +25,10 @@ class DashboardController extends BaseController {
   }
 
   void _initializeList() { //TODO: List are Test Data need to implement soon
-    _markerModelList.add(MarkerModel(latitude: 12.8797, longitude: 121.7740));
-    _markerModelList.add(MarkerModel(latitude: 13.00, longitude: 120.7740));
-    _markerModelList.add(MarkerModel(latitude: 51.509364, longitude: -0.1289280));
+    //_markerModelList.add(MarkerModel(latitude: 12.8797, longitude: 121.7740));
+    //_markerModelList.add(MarkerModel(latitude: 13.00, longitude: 120.7740));
+    //_markerModelList.add(MarkerModel(latitude: 51.509364, longitude: -0.1289280));
+    _GetCoordinates();
 
     _screenViewList.add(ScreensViewModel(name: "Screen 1", quantity: "0", color: Colors.red));
     _screenViewList.add(ScreensViewModel(name: "Screen 2", quantity: "2", color: Colors.orange));
@@ -75,6 +77,37 @@ class DashboardController extends BaseController {
   
   RxList<MarkerModel> getObservableMarkers() {
     return _markerModelList;
+  }
+
+  Future<bool> _handleLocationPermission() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+    
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      Get.snackbar("GPS","Location services are disabled. Please enable the services");
+      return false;
+    }
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {   
+        Get.snackbar("GPS","Location permissions are denied");
+        return false;
+      }
+    }
+    if (permission == LocationPermission.deniedForever) {
+      Get.snackbar("GPS","Location permissions are permanently denied, we cannot request permissions.");
+      return false;
+    }
+    return true;
+  }
+
+  Future<void> _GetCoordinates() async {
+    if(await _handleLocationPermission()) {
+      Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+      _markerModelList.add(MarkerModel(latitude: position.latitude, longitude: position.longitude));
+    }
   }
   //region Screen Views Methods
   int getScreensViewLength() {

@@ -37,6 +37,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   dio: ^5.0.0
   flutter_map: ^4.0.0
+  geolocator: ^8.2.0
+  geocoding: ^2.0.4
   get: ^4.6.5
   google_fonts: ^4.0.4
   latlong2: ^0.8.0
