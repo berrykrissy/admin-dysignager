@@ -27,8 +27,11 @@ class DashboardController extends BaseController {
 
   void _initializeList() { //TODO: List are Test Data need to implement soon
     _markerModelList.add(MarkerModel(latitude: 12.8797, longitude: 121.7740, status: Constants.ONLINE));
+    //_markerModelList.add(MarkerModel(latitude: 12.8797, longitude: 121.7740, status: Constants.ONLINE));
     _markerModelList.add(MarkerModel(latitude: 13.00, longitude: 120.7740, status: Constants.OUT_OF_SYNC));
     _markerModelList.add(MarkerModel(latitude: 51.509364, longitude: -0.1289280, status: Constants.OFFLINE));
+    //_markerModelList.add(MarkerModel(latitude: 51.509364, longitude: -0.1289280, status: Constants.OFFLINE));
+    //_markerModelList.add(MarkerModel(latitude: 51.509364, longitude: -0.1289280, status: Constants.OFFLINE));
     _markerModelList.add(MarkerModel(latitude: 14.00, longitude: 130.00, status: Constants.DISABLED));
     _GetCoordinates();
 
@@ -45,7 +48,7 @@ class DashboardController extends BaseController {
     _screenDetailsList.add(ScreensDetailsModel(name: "Screen 4", status: "Offline", onlineSince: "04/25/23", contentPlaylist: "Sample Playlist 4", preview: ""));
     _screenDetailsList.add(ScreensDetailsModel(name: "Screen 5", status: "Online", onlineSince: "04/25/23", contentPlaylist: "Sample Playlist 5", preview: ""));
   }
-
+  //region Page Launchers
   void launchFindScreen() {
       debugPrint("DashboardController Timer StopslaunchFindScreen");
       Get.toNamed(Routes.FIND_SCREEN);
@@ -76,9 +79,32 @@ class DashboardController extends BaseController {
         },
       );
   }
-  
+  //endregion
+  //region zxczxc
   RxList<MarkerModel> getObservableMarkers() {
     return _markerModelList;
+  }
+
+  RxString getMarkersQuantity(String? status) {
+    if(status == Constants.ONLINE) {
+      return _markerModelList.value.where(
+        (model) => model.status == Constants.ONLINE
+      ).length.toString().obs;
+    } else if(status == Constants.OUT_OF_SYNC) {
+      return _markerModelList.value.where(
+        (model) => model.status == Constants.OUT_OF_SYNC
+      ).length.toString().obs;
+    } else if(status == Constants.OFFLINE) {
+      return _markerModelList.value.where(
+        (model) => model.status == Constants.OFFLINE
+      ).length.toString().obs;
+    } else if(status == Constants.DISABLED) {
+      return _markerModelList.value.where(
+        (model) => model.status == Constants.DISABLED
+      ).length.toString().obs;
+    } else {
+      return 0.toString().obs;
+    }
   }
 
   MaterialColor getColour(String? status) {
@@ -94,7 +120,7 @@ class DashboardController extends BaseController {
       return Colors.brown;
     }
   }
-
+  //endregion
   Future<bool> _handleLocationPermission() async {
     bool serviceEnabled;
     LocationPermission permission;
