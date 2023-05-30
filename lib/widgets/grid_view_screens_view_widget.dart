@@ -12,7 +12,7 @@ class GridViewScreensViewWidget extends BaseWidget<DashboardController> {
     return Obx( () {
       return GridView.builder (
         shrinkWrap: true,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount (crossAxisCount: 3, mainAxisSpacing: 1),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount (crossAxisCount: 3, mainAxisSpacing: 1, crossAxisSpacing: 1, mainAxisExtent: 130,),
         scrollDirection: Axis.vertical,
         physics: const NeverScrollableScrollPhysics(),
         itemCount: controller.getScreensViewLength(),
@@ -20,10 +20,10 @@ class GridViewScreensViewWidget extends BaseWidget<DashboardController> {
           return Column (
             children: [
               SizedBox (
-                height: 130,
-                width: 130,
+                height: 100,
+                width: 100,
                 child: Card (
-                  color: controller.getScreensView(index).color,
+                  color: controller.getScreensViewColour(index),
                   elevation: 1,
                   semanticContainer: true,
                   shape: RoundedRectangleBorder (
@@ -32,7 +32,7 @@ class GridViewScreensViewWidget extends BaseWidget<DashboardController> {
                     ),
                     borderRadius: BorderRadius.circular(13.0),
                   ),
-                  child: Center(child: Text(controller.getScreensView(index).quantity.toString()),)
+                  child: null, //Center(child: Text(controller.getScreensView(index).quantity.toString()),)
                 ),
               ),
               Text(controller.getScreensView(index).name.toString())

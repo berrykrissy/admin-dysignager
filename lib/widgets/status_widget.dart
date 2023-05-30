@@ -7,7 +7,9 @@ import 'package:signage/widgets/base_widgets.dart';
 
 class StatusWidget extends BaseWidget<DashboardController> {
 
-  StatusWidget({super.key});
+  const StatusWidget ( {
+   super.key
+  } );
 
   @override
   Widget build(BuildContext context) {
@@ -15,17 +17,17 @@ class StatusWidget extends BaseWidget<DashboardController> {
       return Card (
         color: Colors.white,
         shape: RoundedRectangleBorder(
-          side: BorderSide(
+          side: const BorderSide (
             color: Colors.grey,
           ),
           borderRadius: BorderRadius.circular(10.0),
         ),
         child: Container(
-          padding: EdgeInsets.fromLTRB(0, 30, 0, 30),
+          padding: const EdgeInsets.fromLTRB(0, 30, 0, 30),
           child: Row (
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Column(
+            const Column(
               children: [
                 Icon (
                   CupertinoIcons.map_pin_ellipse,
@@ -34,8 +36,8 @@ class StatusWidget extends BaseWidget<DashboardController> {
                 Text(Constants.ONLINE, style: TextStyle ( fontSize: 13, fontWeight: FontWeight.w500,),),
               ],
             ),
-            Text(controller.getMarkersQuantity(Constants.ONLINE).value, style: TextStyle ( fontSize: 25, fontWeight: FontWeight.w500,),),
-            Column(
+            Text(controller.getMarkersQuantity(Constants.ONLINE).value, style: const TextStyle ( fontSize: 25, fontWeight: FontWeight.w500,),),
+            const Column(
               children: [
                 Icon (
                   CupertinoIcons.map_pin_ellipse,
@@ -44,8 +46,8 @@ class StatusWidget extends BaseWidget<DashboardController> {
                 Text(Constants.OUT_OF_SYNC, style: TextStyle ( fontSize: 13, fontWeight: FontWeight.w500,),),
               ],
             ),
-            Text(controller.getMarkersQuantity(Constants.OUT_OF_SYNC).value, style: TextStyle ( fontSize: 25, fontWeight: FontWeight.w500,),),
-            Column(
+            Text(controller.getMarkersQuantity(Constants.OUT_OF_SYNC).value, style: const TextStyle ( fontSize: 25, fontWeight: FontWeight.w500,),),
+            const Column(
               children: [
                 Icon (
                   CupertinoIcons.map_pin_ellipse,
@@ -54,8 +56,8 @@ class StatusWidget extends BaseWidget<DashboardController> {
                 Text(Constants.OFFLINE, style: TextStyle ( fontSize: 13, fontWeight: FontWeight.w500,),),
               ],
             ),
-            Text(controller.getMarkersQuantity(Constants.OFFLINE).value, style: TextStyle ( fontSize: 25, fontWeight: FontWeight.w500,),),
-            Column(
+            Text(controller.getMarkersQuantity(Constants.OFFLINE).value, style: const TextStyle ( fontSize: 25, fontWeight: FontWeight.w500,),),
+            const Column(
               children: [
                 Icon (
                   CupertinoIcons.map_pin_ellipse,
@@ -64,7 +66,7 @@ class StatusWidget extends BaseWidget<DashboardController> {
                 Text(Constants.DISABLED, style: TextStyle ( fontSize: 13, fontWeight: FontWeight.w500,),),
               ],
             ),
-            Text(controller.getMarkersQuantity(Constants.DISABLED).value, style: TextStyle ( fontSize: 25, fontWeight: FontWeight.w500,),),
+            Text(controller.getMarkersQuantity(Constants.DISABLED).value, style: const TextStyle ( fontSize: 25, fontWeight: FontWeight.w500,),),
           ],
         ),
         )

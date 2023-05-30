@@ -15,19 +15,19 @@ class FindScreenWidget extends BaseWidget {
       child: Container (
         padding: const EdgeInsets.all(30),
         alignment: Alignment.center,
-        child: Column(
+        child: const Column (
           children: [
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text("Welcome to DYSIGNER Dashboard!", style: TextStyle ( fontSize: 25, fontWeight: FontWeight.w500,),),
                 Text("Dysignager", style: TextStyle ( fontSize: 25, fontWeight: FontWeight.w500,),),
               ],
             ),
-            const SizedBox(height: 13,),
+            SizedBox(height: 13,),
             StatusWidget(),
-            const SizedBox(height: 13,),
-            const FlutterMapWidget(),
+            SizedBox(height: 13,),
+            FlutterMapWidget(),
           ]
         ),
       )
