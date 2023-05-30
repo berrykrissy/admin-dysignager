@@ -6,6 +6,7 @@ import 'package:signage/models/marker_model.dart';
 import 'package:signage/models/screens_details_model.dart';
 import 'package:signage/models/screens_view_model.dart';
 import 'package:signage/routes/app_pages.dart';
+import 'package:signage/utils/constants.dart';
 
 class DashboardController extends BaseController {
 
@@ -25,9 +26,10 @@ class DashboardController extends BaseController {
   }
 
   void _initializeList() { //TODO: List are Test Data need to implement soon
-    //_markerModelList.add(MarkerModel(latitude: 12.8797, longitude: 121.7740));
-    //_markerModelList.add(MarkerModel(latitude: 13.00, longitude: 120.7740));
-    //_markerModelList.add(MarkerModel(latitude: 51.509364, longitude: -0.1289280));
+    _markerModelList.add(MarkerModel(latitude: 12.8797, longitude: 121.7740, status: Constants.ONLINE));
+    _markerModelList.add(MarkerModel(latitude: 13.00, longitude: 120.7740, status: Constants.OUT_OF_SYNC));
+    _markerModelList.add(MarkerModel(latitude: 51.509364, longitude: -0.1289280, status: Constants.OFFLINE));
+    _markerModelList.add(MarkerModel(latitude: 14.00, longitude: 130.00, status: Constants.DISABLED));
     _GetCoordinates();
 
     _screenViewList.add(ScreensViewModel(name: "Screen 1", quantity: "0", color: Colors.red));
@@ -79,6 +81,20 @@ class DashboardController extends BaseController {
     return _markerModelList;
   }
 
+  MaterialColor getColour(String? status) {
+    if(status == Constants.ONLINE) {
+      return Colors.green;
+    } else if(status == Constants.OUT_OF_SYNC) {
+      return Colors.red;
+    } else if(status == Constants.OFFLINE) {
+      return Colors.orange;
+    } else if(status == Constants.DISABLED) {
+      return Colors.blue;
+    } else {
+      return Colors.brown;
+    }
+  }
+
   Future<bool> _handleLocationPermission() async {
     bool serviceEnabled;
     LocationPermission permission;
@@ -106,7 +122,7 @@ class DashboardController extends BaseController {
   Future<void> _GetCoordinates() async {
     if(await _handleLocationPermission()) {
       Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-      _markerModelList.add(MarkerModel(latitude: position.latitude, longitude: position.longitude));
+      _markerModelList.add(MarkerModel(latitude: position.latitude, longitude: position.longitude, status: null));
     }
   }
   //region Screen Views Methods

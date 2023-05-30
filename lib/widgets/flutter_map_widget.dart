@@ -29,7 +29,10 @@ class FlutterMapWidget extends BaseWidget<DashboardController> {
               ),
               MarkerLayer(
                 markers: controller.getObservableMarkers().value.map((model) =>
-                  MarkerWidget(model: model)
+                  MarkerWidget(
+                    model: model, 
+                    colour: controller.getColour(model.status)
+                  )
                 ).toList(),
               )
             ],
@@ -38,4 +41,6 @@ class FlutterMapWidget extends BaseWidget<DashboardController> {
       );
     }, );
   }
+
+
 }
