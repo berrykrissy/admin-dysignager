@@ -2,12 +2,15 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 
 class Server {
+
   Future<void> initialize() async {
     //Get Free IP Address
     final ip = InternetAddress.anyIPv4;
-    const port = 3000;
+    const port = 26770;
+    debugPrint("Server: ${ip.address}:$port");
     //Initialize ServerSocket on ip / port
     final server = await ServerSocket.bind(ip, port);
+    debugPrint("Server: running ${ip.address}:$port");
     //Listen for incomming connections
     server.listen((Socket event) {
       //Inform the server that the client connected  
@@ -18,6 +21,9 @@ class Server {
   List<Socket> clients = <Socket>[];
 
   void _handleConnection(Socket client) {
+
+    debugPrint("Server: Connection from ${client.remoteAddress.address}:${client.port}");
+
     client.listen( //Listen for "write" information from the client
       (Uint8List data) {
         final message = String.fromCharCodes(data);
@@ -38,5 +44,14 @@ class Server {
         client.close();
       }
     );
+  }
+
+  Future<bool> hasNetwork() async {
+    try {
+      final result = await InternetAddress.lookup('www.google.com');
+      return result.isNotEmpty && result[0].rawAddress.isNotEmpty;
+    } on SocketException catch (_) {
+      return false;
+    }
   }
 }

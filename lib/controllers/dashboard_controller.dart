@@ -7,22 +7,40 @@ import 'package:signage/models/screens_details_model.dart';
 //import 'package:signage/models/screens_view_model.dart';
 import 'package:signage/routes/app_pages.dart';
 import 'package:signage/utils/constants.dart';
+import 'package:socket_io/socket_io.dart';
 
 class DashboardController extends BaseController {
-
-  MainController() {
+  
+  DashboardController(Server this._server) {
     debugPrint("DashboardController Constructor");
   }
 
+  final Server _server;
   final screensScrollController = ScrollController();
   final RxList<MarkerModel> _markerModelList = new List<MarkerModel>.empty().obs;
   //final RxList<ScreensViewModel> _screenViewList = new List<ScreensViewModel>.empty().obs;
   final RxList<ScreensDetailsModel> _screenDetailsList = new List<ScreensDetailsModel>.empty().obs;
 
   @override
-  void onInit() {
+  Future<void> onInit() async {
     super.onInit();
     _initializeList();
+    var nsp = _server.of('/some');
+    nsp.on('connection', (client) {
+      debugPrint('DashboardController connection /some');
+      client.on('msg', (data) {
+        debugPrint('DashboardController data from /some => $data');
+        client.emit('fromServer', "ok 2");
+      });
+    });
+    _server.on('connection', (client) {
+      debugPrint('DashboardController connection default namespace');
+      client.on('msg', (data) {
+        debugPrint('DashboardController data from default => $data');
+        client.emit('fromServer', "ok");
+      });
+    });
+    //_server.listen(3000);
   }
 
   void _initializeList() { //TODO: List are Test Data need to implement soon
@@ -51,7 +69,7 @@ class DashboardController extends BaseController {
     _screenDetailsList.add(ScreensDetailsModel(name: "Screen 4", status: "Offline", onlineSince: "04/25/23", contentPlaylist: "Sample Playlist 4", preview: ""));
     _screenDetailsList.add(ScreensDetailsModel(name: "Screen 5", status: "Online", onlineSince: "04/25/23", contentPlaylist: "Sample Playlist 5", preview: ""));
   }
-  //region Page Launchers
+  //#region Page Launchers
   void launchFindScreen() {
       debugPrint("DashboardController Timer StopslaunchFindScreen");
       Get.toNamed(Routes.FIND_SCREEN);
@@ -82,8 +100,8 @@ class DashboardController extends BaseController {
         },
       );
   }
-  //endregion
-  //region Maker Methods
+  //#endregion
+  //#region Maker Methods
   RxList<MarkerModel> getObservableMarkers() {
     return _markerModelList;
   }
@@ -123,7 +141,7 @@ class DashboardController extends BaseController {
       return Colors.brown;
     }
   }
-  //endregion
+  //#endregion
   Future<bool> _handleLocationPermission() async {
     bool serviceEnabled;
     LocationPermission permission;
