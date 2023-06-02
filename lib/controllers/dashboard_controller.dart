@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -7,7 +8,8 @@ import 'package:signage/models/screens_details_model.dart';
 //import 'package:signage/models/screens_view_model.dart';
 import 'package:signage/routes/app_pages.dart';
 import 'package:signage/utils/constants.dart';
-import 'package:socket_io/socket_io.dart';
+import 'package:signage/utils/server.dart';
+//import 'package:socket_io/socket_io.dart';
 
 class DashboardController extends BaseController {
   
@@ -25,6 +27,7 @@ class DashboardController extends BaseController {
   Future<void> onInit() async {
     super.onInit();
     _initializeList();
+    /*
     var nsp = _server.of('/some');
     nsp.on('connection', (client) {
       debugPrint('DashboardController connection /some');
@@ -40,7 +43,9 @@ class DashboardController extends BaseController {
         client.emit('fromServer', "ok");
       });
     });
-    //_server.listen(3000);
+    _server.listen(3000);
+    */
+    //_server.initialize();
   }
 
   void _initializeList() { //TODO: List are Test Data need to implement soon
@@ -128,7 +133,7 @@ class DashboardController extends BaseController {
     }
   }
 
-  MaterialColor getColour(String? status) {
+  MaterialColor? getColour(String? status) {
     if(status == Constants.ONLINE) {
       return Colors.green;
     } else if(status == Constants.OUT_OF_SYNC) {
@@ -138,7 +143,7 @@ class DashboardController extends BaseController {
     } else if(status == Constants.DISABLED) {
       return Colors.blue;
     } else {
-      return Colors.brown;
+      return null;
     }
   }
   //#endregion
@@ -181,8 +186,20 @@ class DashboardController extends BaseController {
     return _markerModelList.value[index]; //_screenViewList.value[index];
   }
 
-  MaterialColor getScreensViewColour(int index) {
+  MaterialColor? getScreensViewColour(int index) {
     return getColour(_markerModelList.value[index].status);
+  }
+
+  bool isIconHidden(int index) {
+    if (_markerModelList.value[index].name == null) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  String getScreensViewName(int index) {
+    return _markerModelList.value[index].name ?? "";
   }
   /*
   List<ScreensViewModel> getScreensViewList() {

@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:signage/controllers/dashboard_controller.dart';
+import 'package:signage/widgets/add_icon_widget.dart';
 import 'package:signage/widgets/base_widgets.dart';
 
 class GridViewScreensViewWidget extends BaseWidget<DashboardController> {
@@ -32,10 +34,10 @@ class GridViewScreensViewWidget extends BaseWidget<DashboardController> {
                     ),
                     borderRadius: BorderRadius.circular(13.0),
                   ),
-                  child: null, //Center(child: Text(controller.getScreensView(index).quantity.toString()),)
+                  child: AddIconWidget(index: index,),
                 ),
               ),
-              Text(controller.getScreensView(index).name.toString())
+              Text(controller.getScreensViewName(index))
             ],
           );
           /*

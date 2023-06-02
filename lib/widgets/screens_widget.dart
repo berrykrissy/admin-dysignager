@@ -3,6 +3,7 @@ import 'package:signage/controllers/dashboard_controller.dart';
 import 'package:signage/widgets/base_widgets.dart';
 import 'package:signage/widgets/grid_view_screens_view_widget.dart';
 import 'package:signage/widgets/list_view_screens_details_widget.dart';
+import 'package:signage/widgets/list_view_screens_header_widget.dart';
 import 'package:signage/widgets/scroll_view_widget.dart';
 
 class ScreensWidget extends BaseWidget<DashboardController> {
@@ -18,8 +19,8 @@ class ScreensWidget extends BaseWidget<DashboardController> {
           //scrollContoller: controller.screensScrollController,
           children: [
              Container(
-              margin: EdgeInsets.only(left: 30, right: 30, top: 20, bottom: 10),
-               child: Row(
+              margin: const EdgeInsets.only(left: 30, right: 30, top: 20, bottom: 10),
+               child: const Row(
                 children: [
                   Text("Welcome to DYSIGNER Dashboard!", style: TextStyle ( fontSize: 25, fontWeight: FontWeight.w500,),),
                   Spacer(),
@@ -29,7 +30,7 @@ class ScreensWidget extends BaseWidget<DashboardController> {
              ),
             const SizedBox(height: 13,),
             Card (
-              margin: EdgeInsets.symmetric(horizontal: 40),
+              margin: const EdgeInsets.symmetric(horizontal: 40),
               color: Colors.white,
               shape: RoundedRectangleBorder(
                 side: const BorderSide(
@@ -48,7 +49,7 @@ class ScreensWidget extends BaseWidget<DashboardController> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text("SCREENS", style: TextStyle ( color: Colors.grey, fontSize: 20, fontWeight: FontWeight.w500,),),
-                        Text("Audience Views as of May 1, 2023 Monday", style: TextStyle ( color: Colors.grey, fontSize: 20, fontWeight: FontWeight.w500,),),
+                        //Text("Audience Views as of May 1, 2023 Monday", style: TextStyle ( color: Colors.grey, fontSize: 20, fontWeight: FontWeight.w500,),),
                       ],
                     ),
                   ),
@@ -59,17 +60,7 @@ class ScreensWidget extends BaseWidget<DashboardController> {
               )
             ),
             const SizedBox(height: 15,),
-            const Row (
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Text("Name", style: TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
-                Text("Status", style: TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
-                Text("Online Since", style: TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
-                Text("Content Playlist", style: TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
-                Text("Preview", style: TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
-                Text("Action", style: TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
-              ],
-            ),
+            const ListViewScreensHeaderWidget(),
             const Divider (
               color: Colors.grey,
               height: 25,
