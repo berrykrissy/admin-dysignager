@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -56,8 +55,7 @@ class DashboardController extends BaseController {
     //_markerModelList.add(MarkerModel(latitude: 51.509364, longitude: -0.1289280, status: Constants.OFFLINE));
     //_markerModelList.add(MarkerModel(latitude: 51.509364, longitude: -0.1289280, status: Constants.OFFLINE));
     _markerModelList.add(MarkerModel(name: "Screen 4", latitude: 14.00, longitude: 130.00, status: Constants.DISABLED));
-    _GetCoordinates();
-
+    _getCoordinates();
     //_screenViewList.add(ScreensViewModel(name: "Screen 1", quantity: "0", color: Colors.red));
     //_screenViewList.add(ScreensViewModel(name: "Screen 2", quantity: "2", color: Colors.orange));
     //_screenViewList.add(ScreensViewModel(name: "Screen 3", quantity: "3", color: Colors.yellow));
@@ -67,7 +65,6 @@ class DashboardController extends BaseController {
     //_screenViewList.add(ScreensViewModel(name: "Screen 7", quantity: "7", color: Colors.purple));
     //_screenViewList.add(ScreensViewModel(name: "Screen 8", quantity: "8", color: Colors.purple));
     //_screenViewList.add(ScreensViewModel(name: "Screen 9", quantity: "9", color: Colors.purple));
-
     _screenDetailsList.add(ScreensDetailsModel(name: "Screen 1", status: "Online", onlineSince: "04/25/23", contentPlaylist: "Sample Playlist 1", preview: ""));
     _screenDetailsList.add(ScreensDetailsModel(name: "Screen 2", status: "Offline", onlineSince: "04/25/23", contentPlaylist: "Sample Playlist 2", preview: ""));
     _screenDetailsList.add(ScreensDetailsModel(name: "Screen 3", status: "Online", onlineSince: "04/25/23", contentPlaylist: "Sample Playlist 3", preview: ""));
@@ -171,7 +168,7 @@ class DashboardController extends BaseController {
     return true;
   }
 
-  Future<void> _GetCoordinates() async {
+  Future<void> _getCoordinates() async {
     if(await _handleLocationPermission()) {
       Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
       _markerModelList.add(MarkerModel(latitude: position.latitude, longitude: position.longitude, status: null));
