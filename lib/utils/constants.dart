@@ -5,4 +5,6 @@ class Constants {
   static const OUT_OF_SYNC = "Out of Sync";
   static const OFFLINE = "Offline";
   static const DISABLED = "Disabled";
+  static const PUBLISHED = "Published";
+  static const UNPUBLISHED = "Unpublised";
 }

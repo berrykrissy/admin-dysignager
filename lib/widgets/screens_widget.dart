@@ -32,22 +32,17 @@ class ScreensWidget extends BaseWidget<DashboardController> {
               child: Container (
                 padding: const EdgeInsets.fromLTRB(13, 30, 10, 30),
                 child: const Column (
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Padding (
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("SCREENS", style: TextStyle ( color: Colors.grey, fontSize: 20, fontWeight: FontWeight.w500,),),
-                        //Text("Audience Views as of May 1, 2023 Monday", style: TextStyle ( color: Colors.grey, fontSize: 20, fontWeight: FontWeight.w500,),),
-                      ],
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Padding (
+                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      child: Text("SCREENS", style: TextStyle ( color: Colors.grey, fontSize: 20, fontWeight: FontWeight.w500,),),
                     ),
-                  ),
-                  SizedBox(height: 13,),
-                  GridViewScreensViewWidget(),
-                ],
-              ),
+                    SizedBox(height: 13,),
+                    GridViewScreensViewWidget(),
+                  ],
+                ),
               )
             ),
             const SizedBox(height: 15,),

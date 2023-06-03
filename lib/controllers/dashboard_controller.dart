@@ -3,6 +3,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:signage/controllers/base_controller.dart';
 import 'package:signage/models/marker_model.dart';
+import 'package:signage/models/playlist_model.dart';
 import 'package:signage/models/screens_details_model.dart';
 import 'package:signage/routes/app_pages.dart';
 import 'package:signage/utils/constants.dart';
@@ -20,6 +21,7 @@ class DashboardController extends BaseController {
   //final screensScrollController = ScrollController();
   final RxList<MarkerModel> _markerModelList = new List<MarkerModel>.empty().obs;
   final RxList<ScreensDetailsModel> _screenDetailslList = new List<ScreensDetailsModel>.empty().obs;
+  final RxList<PlaylistModel> _contentsDetailslList = new List<PlaylistModel>.empty().obs;
 
   @override
   Future<void> onInit() async {
@@ -86,6 +88,18 @@ class DashboardController extends BaseController {
     _screenDetailslList.add (
       ScreensDetailsModel (
         name: "Screen 4", status: Constants.DISABLED, onlineSince: "04/25/23", contentPlaylist: "Sample Playlist 4", preview: "nil", isShowed: true
+      )
+    );
+
+    _contentsDetailslList.add (
+      PlaylistModel (
+        name: "Sample Playlist 1", date: "04/25/23", status: Constants.UNPUBLISHED
+      )
+    );
+
+    _contentsDetailslList.add (
+      PlaylistModel (
+        name: "Sample Playlist 2", date: "04/25/23", status: Constants.PUBLISHED
       )
     );
     
@@ -294,7 +308,21 @@ class DashboardController extends BaseController {
   }
   //#endregion
   //region Contents Methods
-  
+  int getContentsDetailsLength() {
+    return _contentsDetailslList.length;
+  }
+
+  String getContentDetailsName(int index) {
+    return _contentsDetailslList[index].name ?? "Nil";
+  }
+
+  String getContentDetailsDateCreated(int index) {
+    return _contentsDetailslList[index].date ?? "Nil";
+  }
+
+  String getContentDetailsStatus(int index) {
+    return _contentsDetailslList[index].status ?? "Nil";
+  }
   //#endregion
   @override
   void onClose() {

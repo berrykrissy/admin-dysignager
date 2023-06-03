@@ -13,34 +13,36 @@ class FlutterMapWidget extends BaseWidget<DashboardController> {
   @override
   Widget build(BuildContext context) {
     return Obx( () {
-      return Card (
-        child: SizedBox (
-          width: double.infinity,
-          height: 400,
-          child: FlutterMap (
-            options: MapOptions(
-              center: LatLng(12.8797, 121.7740),
-              zoom: 5.0,
-            ),
-            children: [
-              TileLayer (
-                urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                userAgentPackageName: 'com.digi.digi_signage',
+      if (controller.isLoading.value) {
+        return const Center(child: CircularProgressIndicator());
+      } else {
+        return Card (
+          child: SizedBox (
+            width: double.infinity,
+            height: 400,
+            child: FlutterMap (
+              options: MapOptions(
+                center: LatLng(12.8797, 121.7740),
+                zoom: 5.0,
               ),
-              MarkerLayer(
-                markers: controller.getObservableMarkers().value.map((model) =>
-                  MarkerWidget(
-                    model: model, 
-                    colour: controller.getColour(model.status)
-                  )
-                ).toList(),
-              )
-            ],
-          ),
-        )
-      );
+              children: [
+                TileLayer (
+                  urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                  userAgentPackageName: 'com.digi.digi_signage',
+                ),
+                MarkerLayer(
+                  markers: controller.getObservableMarkers().value.map((model) =>
+                    MarkerWidget(
+                      model: model, 
+                      colour: controller.getColour(model.status)
+                    )
+                  ).toList(),
+                )
+              ],
+            ),
+          )
+        );
+      }
     }, );
   }
-
-
 }

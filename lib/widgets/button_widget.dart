@@ -7,6 +7,7 @@ class ButtonWidget extends BaseWidget {
     super.key, 
     required this.text,
     required this.onPressed, 
+    this.highlightElevation,
     this.textColor, 
     this.fillColor, 
     this.splashColor,
@@ -16,6 +17,7 @@ class ButtonWidget extends BaseWidget {
   
   final String text;
   final GestureTapCallback onPressed;
+  final double? highlightElevation;
   final Color? textColor;
   final Color? fillColor;
   final Color? splashColor;
@@ -26,7 +28,7 @@ class ButtonWidget extends BaseWidget {
   Widget build(BuildContext context) {
     return RawMaterialButton(
       fillColor: fillColor ?? Colors.indigo,
-      highlightElevation: 5.0,
+      highlightElevation: highlightElevation ?? 1.0,
       onPressed: onPressed,
       //shape: StadiumBorder(),
       splashColor: splashColor ?? Colors.indigoAccent,

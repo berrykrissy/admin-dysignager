@@ -18,7 +18,7 @@ class DashboardPage extends BaseView<DashboardController> {
               flex: 70,
               child: Container (
                 alignment: Alignment.center,
-                child: const CircularProgressIndicator(),
+                child: const FlutterLogo(),
               )
             ),
           ],
