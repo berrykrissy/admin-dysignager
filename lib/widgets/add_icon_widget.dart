@@ -1,36 +1,27 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:signage/controllers/dashboard_controller.dart';
 import 'package:signage/widgets/base_widgets.dart';
 
-class AddIconWidget extends BaseWidget<DashboardController> {
+class AddIconWidget extends BaseWidget {
   
-  AddIconWidget( {
+  const AddIconWidget( {
     super.key,
-    required this.index,
+    required this.isVisible,
   });
 
-  final int index;
+  final bool isVisible;
 
   @override
   Widget build(BuildContext context) {
-    if (controller.isIconHidden(index)) {
-      return Center (
-        child: IconButton (
-          icon: const Icon (
-            CupertinoIcons.add_circled,
-            color: Colors.black,
-          ), 
-          onPressed: () { 
-            Get.snackbar("Test", "Add Icon");
-          },
+    if (isVisible) {
+      return const Center (
+        child: Icon (
+          CupertinoIcons.add_circled,
+          color: Colors.black,
         )
       );
     } else {
       return const Center();
     }
   }
-
-
 }

@@ -9,7 +9,7 @@ import 'package:signage/widgets/scroll_view_widget.dart';
 
 class ScreensWidget extends BaseWidget<DashboardController> {
   
-  const ScreensWidget({super.key});
+  const ScreensWidget( { super.key } );
 
   @override
   Widget build(BuildContext context) {
@@ -24,18 +24,16 @@ class ScreensWidget extends BaseWidget<DashboardController> {
             Card (
               margin: const EdgeInsets.symmetric(horizontal: 40),
               color: Colors.white,
-              shape: RoundedRectangleBorder(
-                side: const BorderSide(
-                  color: Colors.grey,
-                ),
+              shape: RoundedRectangleBorder (
+                side: const BorderSide(color: Colors.grey,),
                 borderRadius: BorderRadius.circular(10.0),
               ),
-              child: Container(
+              child: Container (
                 padding: const EdgeInsets.fromLTRB(13, 30, 10, 30),
                 child: const Column (
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Padding(
+                  Padding (
                     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -65,5 +63,4 @@ class ScreensWidget extends BaseWidget<DashboardController> {
         ),
     );
   }
-
 }

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:signage/controllers/dashboard_controller.dart';
@@ -12,48 +11,46 @@ class GridViewScreensViewWidget extends BaseWidget<DashboardController> {
   @override
   Widget build(BuildContext context) {
     return Obx( () {
-      return GridView.builder (
-        shrinkWrap: true,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount (crossAxisCount: 3, mainAxisSpacing: 1, crossAxisSpacing: 1, mainAxisExtent: 130,),
-        scrollDirection: Axis.vertical,
-        physics: const NeverScrollableScrollPhysics(),
-        itemCount: controller.getScreensViewLength(),
-        itemBuilder: (context, index) {
-          return Column (
-            children: [
-              SizedBox (
-                height: 100,
-                width: 100,
-                child: Card (
-                  color: controller.getScreensViewColour(index),
-                  elevation: 1,
-                  semanticContainer: true,
-                  shape: RoundedRectangleBorder (
-                    side: const BorderSide (
-                      color: Colors.grey,
+      if (controller.isSreensLoading.value) {
+        return const Center(child: CircularProgressIndicator());
+      } else {
+        return GridView.builder (
+          shrinkWrap: true,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount (crossAxisCount: 3, mainAxisSpacing: 1, crossAxisSpacing: 1, mainAxisExtent: 130,),
+          scrollDirection: Axis.vertical,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: controller.getScreensViewLength(),
+          itemBuilder: (context, index) {
+            return Column (
+              children: [
+                SizedBox (
+                  height: 100,
+                  width: 100,
+                  child: InkWell (
+                    onTap: () {
+                      controller.onSelectCardScreen(index);
+                    },
+                    child: Card (
+                      color: controller.getScreensViewColour(index),
+                      elevation: 1,
+                      semanticContainer: true,
+                      shape: RoundedRectangleBorder (
+                        side: BorderSide (
+                          color: controller.getScreensViewColourBorderSide(index).value,
+                          width: 3.0,
+                        ),
+                        borderRadius: BorderRadius.circular(13.0),
+                      ),
+                      child: AddIconWidget(isVisible: controller.isIconVisible(index),),
                     ),
-                    borderRadius: BorderRadius.circular(13.0),
                   ),
-                  child: AddIconWidget(index: index,),
                 ),
-              ),
-              Text(controller.getScreensViewName(index))
-            ],
-          );
-          /*
-          Card (
-            color: Colors.red,
-            shape: RoundedRectangleBorder (
-              side: const BorderSide (
-                color: Colors.grey,
-              ),
-              borderRadius: BorderRadius.circular(13.0),
-            ),
-            child: const Text("0"),
-          ),
-          */
-        },
-      );
+                Text(controller.getScreensViewName(index))
+              ],
+            );
+          },
+        );
+      }
     }, );
   }
 }

@@ -10,23 +10,23 @@ class ContentsWidget extends BaseWidget {
   Widget build(BuildContext context) {
     return Flexible(
         flex: 70,
-        child: Container(
-          padding: EdgeInsets.all(30),
+        child: Container (
+          padding: const EdgeInsets.all(30),
           alignment: Alignment.center,
           child: Column(
             children: [
-              DashboardHeaderWidget(),
-              SizedBox(height: 13,),
-              Card(
-                margin: EdgeInsets.all(25),
+              const DashboardHeaderWidget(),
+              const SizedBox(height: 13,),
+              Card (
+                margin: const EdgeInsets.all(25),
                 shape: RoundedRectangleBorder(
-                  side: BorderSide(
+                  side: const BorderSide(
                     color: Colors.grey,
                   ),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Container(
-                  padding: EdgeInsets.fromLTRB(25, 30, 25, 30),
+                  padding: const EdgeInsets.fromLTRB(25, 30, 25, 30),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,7 +36,7 @@ class ContentsWidget extends BaseWidget {
                           Text(
                             'Contents',
                             style: GoogleFonts.roboto(
-                              textStyle: TextStyle(
+                              textStyle: const TextStyle (
                                 fontSize: 25,
                                 color: Colors.black45,
                                 fontWeight: FontWeight.bold,
@@ -45,12 +45,10 @@ class ContentsWidget extends BaseWidget {
                           ),
                         ],
                       ),
-                      SizedBox(
-                        height: 13,
-                      ),
+                      const SizedBox(height: 13,),
                       Row(
                         children: [
-                          Container(
+                          SizedBox (
                             height: 350,
                             width: 400,
                             child: Column(
@@ -59,15 +57,13 @@ class ContentsWidget extends BaseWidget {
                                 Text(
                                   'Preview',
                                   style: GoogleFonts.roboto(
-                                    textStyle: TextStyle(
+                                    textStyle: const TextStyle (
                                         fontSize: 20,
                                         fontWeight: FontWeight.w600,
                                         color: Colors.black45),
                                   ),
                                 ),
-                                SizedBox(
-                                  height: 13,
-                                ),
+                                const SizedBox(height: 13,),
                                 Container(
                                   height: 300,
                                   width: 400,
@@ -79,10 +75,8 @@ class ContentsWidget extends BaseWidget {
                               ],
                             ),
                           ),
+                          const SizedBox(width: 13,),
                           SizedBox(
-                            width: 13,
-                          ),
-                          Container(
                             height: 350,
                             width: 485,
                             child: Column(
@@ -92,13 +86,13 @@ class ContentsWidget extends BaseWidget {
                                     Text(
                                       'Edit Playlist',
                                       style: GoogleFonts.roboto(
-                                        textStyle: TextStyle(
+                                        textStyle: const TextStyle(
                                             fontSize: 20,
                                             fontWeight: FontWeight.w600,
                                             color: Colors.black45),
                                       ),
                                     ),
-                                    Spacer(),
+                                    const Spacer(),
                                     Text(
                                       'Cancel',
                                       style: GoogleFonts.roboto(
