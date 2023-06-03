@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:signage/controllers/dashboard_controller.dart';
 import 'package:signage/widgets/base_widgets.dart';
+import 'package:signage/widgets/dashboard_header_Widget.dart';
 import 'package:signage/widgets/grid_view_screens_view_widget.dart';
 import 'package:signage/widgets/list_view_screens_details_widget.dart';
 import 'package:signage/widgets/list_view_screens_header_widget.dart';
@@ -18,16 +19,7 @@ class ScreensWidget extends BaseWidget<DashboardController> {
           isScrollable: true,
           //scrollContoller: controller.screensScrollController,
           children: [
-             Container(
-              margin: const EdgeInsets.only(left: 30, right: 30, top: 20, bottom: 10),
-               child: const Row(
-                children: [
-                  Text("Welcome to DYSIGNER Dashboard!", style: TextStyle ( fontSize: 25, fontWeight: FontWeight.w500,),),
-                  Spacer(),
-                  Text("Dysignager", style: TextStyle ( fontSize: 25, fontWeight: FontWeight.w500,),),
-                ],
-                         ),
-             ),
+            const DashboardHeaderWidget(),
             const SizedBox(height: 13,),
             Card (
               margin: const EdgeInsets.symmetric(horizontal: 40),

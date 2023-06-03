@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:signage/widgets/base_widgets.dart';
+import 'package:signage/widgets/dashboard_header_Widget.dart';
 
 class ContentsWidget extends BaseWidget {
   const ContentsWidget({super.key});
@@ -14,29 +15,8 @@ class ContentsWidget extends BaseWidget {
           alignment: Alignment.center,
           child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    "Welcome to DYSIGNER Dashboard!",
-                    style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  Spacer(),
-                  Text(
-                    "Dysignager",
-                    style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 13,
-              ),
+              DashboardHeaderWidget(),
+              SizedBox(height: 13,),
               Card(
                 margin: EdgeInsets.all(25),
                 shape: RoundedRectangleBorder(

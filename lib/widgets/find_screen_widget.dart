@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:signage/widgets/base_widgets.dart';
+import 'package:signage/widgets/dashboard_header_Widget.dart';
 import 'package:signage/widgets/flutter_map_widget.dart';
 import 'package:signage/widgets/status_widget.dart';
 
@@ -17,13 +18,7 @@ class FindScreenWidget extends BaseWidget {
         alignment: Alignment.center,
         child: const Column (
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("Welcome to DYSIGNER Dashboard!", style: TextStyle ( fontSize: 25, fontWeight: FontWeight.w500,),),
-                Text("Dysignager", style: TextStyle ( fontSize: 25, fontWeight: FontWeight.w500,),),
-              ],
-            ),
+            DashboardHeaderWidget(),
             SizedBox(height: 13,),
             StatusWidget(),
             SizedBox(height: 13,),
