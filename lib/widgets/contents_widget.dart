@@ -227,6 +227,6 @@ class ContentsWidget extends BaseWidget {
             const ContentsFooterWidget(),
           ]
         ),
-    );;
+    );
   }
 }
