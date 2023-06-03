@@ -9,7 +9,9 @@ class ButtonWidget extends BaseWidget {
     required this.onPressed, 
     this.textColor, 
     this.fillColor, 
-    this.splashColor
+    this.splashColor,
+    this.fontSize,
+    this.fontWeight,
   } );
   
   final String text;
@@ -17,6 +19,8 @@ class ButtonWidget extends BaseWidget {
   final Color? textColor;
   final Color? fillColor;
   final Color? splashColor;
+  final double? fontSize;
+  final FontWeight? fontWeight;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +33,9 @@ class ButtonWidget extends BaseWidget {
       child: Text(
         text,
         style: TextStyle (
-          color: textColor ?? Colors.white
+          color: textColor ?? Colors.white,
+          fontSize: fontSize,
+          fontWeight: fontWeight,
         ),
       ),
       );

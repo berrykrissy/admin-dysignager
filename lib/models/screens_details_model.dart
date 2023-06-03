@@ -6,6 +6,7 @@ class ScreensDetailsModel {
     this.onlineSince,
     this.contentPlaylist,
     this.preview,
+    this.isShowed,
   });
   
   final String? name;
@@ -13,9 +14,10 @@ class ScreensDetailsModel {
   final String? onlineSince;
   final String? contentPlaylist;
   final String? preview;
+  bool? isShowed;
 
   @override
   String toString() {
-    return "ScreensDetailsModel name $name, status $status, onlineSince $onlineSince, contentPlaylist $contentPlaylist, preview $preview" ?? super.toString();
+    return "ScreensDetailsModel name $name, status $status, onlineSince $onlineSince, contentPlaylist $contentPlaylist, preview $preview, isShowed $isShowed" ?? super.toString();
   }
 }

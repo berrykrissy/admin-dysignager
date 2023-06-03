@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:signage/controllers/base_controller.dart';
 import 'package:signage/models/marker_model.dart';
 import 'package:signage/models/screens_details_model.dart';
-//import 'package:signage/models/screens_view_model.dart';
 import 'package:signage/routes/app_pages.dart';
 import 'package:signage/utils/constants.dart';
 import 'package:signage/utils/server.dart';
@@ -20,8 +19,7 @@ class DashboardController extends BaseController {
   RxBool isSreensLoading = false.obs;
   //final screensScrollController = ScrollController();
   final RxList<MarkerModel> _markerModelList = new List<MarkerModel>.empty().obs;
-  //final RxList<ScreensViewModel> _screenViewList = new List<ScreensViewModel>.empty().obs;
-  //final RxList<ScreensDetailsModel> _screenDetailsList = new List<ScreensDetailsModel>.empty().obs;
+  final RxList<ScreensDetailsModel> _screenDetailslList = new List<ScreensDetailsModel>.empty().obs;
 
   @override
   Future<void> onInit() async {
@@ -51,36 +49,47 @@ class DashboardController extends BaseController {
   void _initializeList() { //TODO: List are Test Data need to implement soon
     _markerModelList.add (
       MarkerModel (
-        name: "Screen 1", latitude: 12.8797, longitude: 121.7740, status: Constants.ONLINE, 
-        onlineSince: "04/25/23", contentPlaylist: "Sample Playlist 1", preview: "nil", isSelected: false
-        )
-    );
-    _markerModelList.add(
-      MarkerModel (
-        name: "Screen 2", latitude: 13.00, longitude: 120.7740, status: Constants.OUT_OF_SYNC,
-        onlineSince: "04/25/23", contentPlaylist: "Sample Playlist 2", preview: "nil", isSelected: false
+        name: "Screen 1", latitude: 12.8797, longitude: 121.7740, status: Constants.ONLINE, isSelected: false
       )
     );
-    _markerModelList.add(
+    _markerModelList.add (
       MarkerModel (
-        name: "Screen 3",latitude: 51.509364, longitude: -0.1289280, status: Constants.OFFLINE,
-        onlineSince: "04/25/23", contentPlaylist: "Sample Playlist 3", preview: "nil", isSelected: false
+        name: "Screen 2", latitude: 13.00, longitude: 120.7740, status: Constants.OUT_OF_SYNC, isSelected: false
       )
     );
-    _markerModelList.add(
+    _markerModelList.add (
       MarkerModel (
-        name: "Screen 4", latitude: 14.00, longitude: 130.00, status: Constants.DISABLED,
-        onlineSince: "04/25/23", contentPlaylist: "Sample Playlist 4", preview: "nil", isSelected: false
+        name: "Screen 3", latitude: 51.509364, longitude: -0.1289280, status: Constants.OFFLINE, isSelected: false
+      )
+    );
+    _markerModelList.add (
+      MarkerModel (
+        name: "Screen 4", latitude: 14.00, longitude: 130.00, status: Constants.DISABLED, isSelected: false  
+      )
+    );
+
+    _screenDetailslList.add (
+      ScreensDetailsModel (
+        name: "Screen 1", status: Constants.ONLINE, onlineSince: "04/25/23", contentPlaylist: "Sample Playlist 1", preview: "nil", isShowed: true
+      )
+    );
+    _screenDetailslList.add (
+      ScreensDetailsModel (
+        name: "Screen 2", status: Constants.OUT_OF_SYNC, onlineSince: "04/25/23", contentPlaylist: "Sample Playlist 2", preview: "nil", isShowed: true
+      )
+    );
+    _screenDetailslList.add (
+      ScreensDetailsModel (
+        name: "Screen 3", status: Constants.OFFLINE, onlineSince: "04/25/23", contentPlaylist: "Sample Playlist 3", preview: "nil", isShowed: true
+      )
+    );
+    _screenDetailslList.add (
+      ScreensDetailsModel (
+        name: "Screen 4", status: Constants.DISABLED, onlineSince: "04/25/23", contentPlaylist: "Sample Playlist 4", preview: "nil", isShowed: true
       )
     );
     
     _getCoordinates();
-
-    //_screenDetailsList.add(ScreensDetailsModel(name: "Screen 1", status: "Online", onlineSince: "04/25/23", contentPlaylist: "Sample Playlist 1", preview: "nil"));
-    //_screenDetailsList.add(ScreensDetailsModel(name: "Screen 2", status: "Offline", onlineSince: "04/25/23", contentPlaylist: "Sample Playlist 2", preview: "nil"));
-    //_screenDetailsList.add(ScreensDetailsModel(name: "Screen 3", status: "Online", onlineSince: "04/25/23", contentPlaylist: "Sample Playlist 3", preview: "nil"));
-    //_screenDetailsList.add(ScreensDetailsModel(name: "Screen 4", status: "Offline", onlineSince: "04/25/23", contentPlaylist: "Sample Playlist 4", preview: "nil"));
-    //_screenDetailsList.add(ScreensDetailsModel(name: "Screen 5", status: "Online", onlineSince: "04/25/23", contentPlaylist: "Sample Playlist 5", preview: "nil"));
   }
   //#region Page Launchers
   void launchFindScreen() {
@@ -155,6 +164,7 @@ class DashboardController extends BaseController {
     }
   }
   //#endregion
+  //#region GPS Location Methods
   Future<bool> _handleLocationPermission() async {
     bool serviceEnabled;
     LocationPermission permission;
@@ -182,7 +192,7 @@ class DashboardController extends BaseController {
   Future<void> _getCoordinates() async {
     if(await _handleLocationPermission()) {
       Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-      _markerModelList.add(MarkerModel(latitude: position.latitude, longitude: position.longitude, status: null));
+      _markerModelList.add (MarkerModel(latitude: position.latitude, longitude: position.longitude, status: null));
     }
   }
   //#endregion
@@ -194,18 +204,18 @@ class DashboardController extends BaseController {
       Get.snackbar("Test", "Add Icon");
     } else {
       _markerModelList.value.forEach( (model) {
-        
         if (model.isSelected == true) {
           model.isSelected = false;
         }
       } );
       _markerModelList.value[index].isSelected = true;
+      _onFilterScreenDetails(_markerModelList.value[index].name);
     }
     isSreensLoading(false);
   }
 
   int getScreensViewLength() {
-    return _markerModelList.value.length; //_screenViewList.length;
+    return _markerModelList.value.length;
   }
 
   MarkerModel getScreensView(int index) {
@@ -235,43 +245,52 @@ class DashboardController extends BaseController {
   String getScreensViewName(int index) {
     return _markerModelList.value[index].name ?? "";
   }
-  /*
-  List<ScreensViewModel> getScreensViewList() {
-    return _screenViewList.value;
-  }
-  */
   //#endregion
   //#region Screen Details Methods
-  Future<void> onFilterScreenDetails(int index) async {
+  Future<void> _onFilterScreenDetails(String? name) async {
     isSreensLoading(true);
-    
+    if (name != null) {
+      _screenDetailslList.value.forEach( (model) {
+        if (model.name == name) {
+          model.isShowed = true;
+        } else {
+          model.isShowed = false;
+        }
+      } );
+    }
+    isSreensLoading(false);
+  }
+
+  Future<void> onFilterResetScreenDetails() async {
+    isSreensLoading(true);
+    _screenDetailslList.value.forEach( (model) {
+      model.isShowed = true;
+    } );
     isSreensLoading(false);
   }
 
   int getScreensDetailsLength() {
-    return _markerModelList.where( (model) => 
-      model.name != null || 
-      model.status != null || 
-      model.onlineSince != null || 
-      model.contentPlaylist != null || 
-      model.preview != null
-    ).length;
+    return _screenDetailslList.where( (model) => model.isShowed == true ).length;
+  }
+
+  String getScreenDetailsName(int index) {
+    return _screenDetailslList.where( (model) => model.isShowed == true ).toList()[index].name ?? "Nil";
   }
 
   String getScreenDetailsStatus(int index) {
-    return _markerModelList.value[index].status ?? "Nil";
+    return _screenDetailslList.where( (model) => model.isShowed == true ).toList()[index].status ?? "Nil";
   }
   
   String getScreenDetailsOnlineSince(int index) {
-    return _markerModelList.value[index].onlineSince ?? "Nil";
+    return _screenDetailslList.where( (model) => model.isShowed == true ).toList()[index].onlineSince ?? "Nil";
   }
   
   String getScreenDetailsContentPlaylist(int index) {
-    return _markerModelList.value[index].contentPlaylist ?? "Nil";
+    return _screenDetailslList.where( (model) => model.isShowed == true ).toList()[index].contentPlaylist ?? "Nil";
   }
   
   String getScreenDetailsPreview(int index) {
-    return _markerModelList.value[index].preview ?? "Nil";
+    return _screenDetailslList.where( (model) => model.isShowed == true ).toList()[index].preview ?? "Nil";
   }
   //#endregion
   @override
