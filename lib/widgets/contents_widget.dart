@@ -157,7 +157,7 @@ class ContentsWidget extends BaseWidget {
                                 ),
                               ],
                             ),
-                            SizedBox(height: 15,),
+                            const SizedBox(height: 15,),
                             Row(
                               children: [
                                 Container(
@@ -167,7 +167,7 @@ class ContentsWidget extends BaseWidget {
                                     border: Border.all(color: Colors.black),
                                   ),
                                   child: Padding(
-                                    padding: EdgeInsets.only(left: 10, right: 10),
+                                    padding: const EdgeInsets.only(left: 10, right: 10),
                                     child: Row(
                                       children: [
                                         Container(
@@ -179,7 +179,7 @@ class ContentsWidget extends BaseWidget {
                                               borderRadius:
                                                   BorderRadius
                                                       .circular(5)),
-                                          child: Center(
+                                          child: const Center(
                                               child: Text(
                                                   'Video1.mp4 x')),
                                         ),
@@ -197,7 +197,7 @@ class ContentsWidget extends BaseWidget {
                         SizedBox( height: 20,),
                       ],
                     ),
-                    Row (
+                    const Row (
                       children: [
                         Text(
                           '+ Add Media',
