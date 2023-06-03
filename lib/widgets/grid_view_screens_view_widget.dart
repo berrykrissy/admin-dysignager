@@ -11,7 +11,7 @@ class GridViewScreensViewWidget extends BaseWidget<DashboardController> {
   @override
   Widget build(BuildContext context) {
     return Obx( () {
-      if (controller.isSreensLoading.value) {
+      if (controller.isLoading.value) {
         return const Center(child: CircularProgressIndicator());
       } else {
         return GridView.builder (
