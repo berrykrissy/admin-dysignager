@@ -25,7 +25,7 @@ class FlutterMapWidget extends BaseWidget<DashboardController> {
             children: [
               TileLayer (
                 urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                userAgentPackageName: 'com.example.app',
+                userAgentPackageName: 'com.digi.digi_signage',
               ),
               MarkerLayer(
                 markers: controller.getObservableMarkers().value.map((model) =>

@@ -16,7 +16,7 @@ class DashboardController extends BaseController {
   }
 
   final Server _server;
-  RxBool isSreensLoading = false.obs;
+  RxBool isLoading = false.obs;
   //final screensScrollController = ScrollController();
   final RxList<MarkerModel> _markerModelList = new List<MarkerModel>.empty().obs;
   final RxList<ScreensDetailsModel> _screenDetailslList = new List<ScreensDetailsModel>.empty().obs;
@@ -199,7 +199,7 @@ class DashboardController extends BaseController {
   //#region Screen Views Methods
   Future<void> onSelectCardScreen(int index) async {
     debugPrint("DashboardController onSelectCardScreen $index");
-    isSreensLoading(true);
+    isLoading(true);
     if (_markerModelList.value[index].name == null) {
       Get.snackbar("Test", "Add Icon");
     } else {
@@ -211,7 +211,7 @@ class DashboardController extends BaseController {
       _markerModelList.value[index].isSelected = true;
       _onFilterScreenDetails(_markerModelList.value[index].name);
     }
-    isSreensLoading(false);
+    isLoading(false);
   }
 
   int getScreensViewLength() {
@@ -248,7 +248,7 @@ class DashboardController extends BaseController {
   //#endregion
   //#region Screen Details Methods
   Future<void> _onFilterScreenDetails(String? name) async {
-    isSreensLoading(true);
+    isLoading(true);
     if (name != null) {
       _screenDetailslList.value.forEach( (model) {
         if (model.name == name) {
@@ -258,15 +258,15 @@ class DashboardController extends BaseController {
         }
       } );
     }
-    isSreensLoading(false);
+    isLoading(false);
   }
 
   Future<void> onFilterResetScreenDetails() async {
-    isSreensLoading(true);
+    isLoading(true);
     _screenDetailslList.value.forEach( (model) {
       model.isShowed = true;
     } );
-    isSreensLoading(false);
+    isLoading(false);
   }
 
   int getScreensDetailsLength() {
@@ -292,6 +292,9 @@ class DashboardController extends BaseController {
   String getScreenDetailsPreview(int index) {
     return _screenDetailslList.where( (model) => model.isShowed == true ).toList()[index].preview ?? "Nil";
   }
+  //#endregion
+  //region Contents Methods
+  
   //#endregion
   @override
   void onClose() {
