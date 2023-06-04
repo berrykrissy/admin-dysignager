@@ -14,8 +14,8 @@ class ContentsFooterWidget extends BaseWidget {
       child: Row (
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          ButtonWidget(text: "+ Add Content Playlist", textColor: Colors.purple, fillColor: Colors.white, fontSize: 20, fontWeight: FontWeight.w500, onPressed: () {
-            Get.snackbar("Test", "+ Add Content Playlist");
+          ButtonWidget(text: "+ Add Media", textColor: Colors.purple, fillColor: Colors.white, fontSize: 20, fontWeight: FontWeight.w500, onPressed: () {
+            Get.snackbar("Test", "+ Add Media");
           } ),
           ButtonWidget(text: "View all", textColor: Colors.purple, fillColor: Colors.white, fontSize: 20, fontWeight: FontWeight.w500, onPressed: () {
             Get.snackbar("Test", "View all");
@@ -24,5 +24,4 @@ class ContentsFooterWidget extends BaseWidget {
       ),
     );
   }
-
 }

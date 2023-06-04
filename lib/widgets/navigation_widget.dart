@@ -6,7 +6,7 @@ import 'package:signage/widgets/navigation_cell_text_widget.dart';
 
 class NavigationWidget extends BaseWidget<DashboardController> {
   
-  const NavigationWidget( {
+  const NavigationWidget ( {
     super.key,
     this.selectedLink,
   } );
@@ -33,12 +33,13 @@ class NavigationWidget extends BaseWidget<DashboardController> {
                   width: 35,
                   child: Image.asset("assets/Admin.webp"),
                 ),
-                const Text('Admin', style: TextStyle (
+                const Text ('Admin', style: TextStyle (
                   fontSize: 20,
                   fontWeight: FontWeight.w500,
                 ),)
               ],
             ),
+            const SizedBox( height: 50,),
             NavigationCellTextWidget (
               text: Constants.FIND_SCREEN,
               textColour: controller.getNavigationColorLink(Constants.FIND_SCREEN, selectedLink),
@@ -46,14 +47,14 @@ class NavigationWidget extends BaseWidget<DashboardController> {
                 controller.launchFindScreen();
               },
             ),
-            NavigationCellTextWidget(
+            NavigationCellTextWidget (
               text: Constants.SCREENS,
               textColour: controller.getNavigationColorLink(Constants.SCREENS, selectedLink),
               onTap: () {
                 controller.launchScreens();
               },
             ),
-            NavigationCellTextWidget(
+            NavigationCellTextWidget (
               text: Constants.CONTENTS,
               textColour: controller.getNavigationColorLink(Constants.CONTENTS, selectedLink),
               onTap: () {
@@ -61,13 +62,15 @@ class NavigationWidget extends BaseWidget<DashboardController> {
               },
             ),
             const Spacer(),
-            NavigationCellTextWidget(
+            /*
+            NavigationCellTextWidget (
               text: Constants.SETTINGS,
               textColour: controller.getNavigationColorLink(Constants.SETTINGS, selectedLink),
               onTap: () {
                 controller.launchSettings();
               },
             ),
+            */
             NavigationCellTextWidget (
               text: Constants.LOGOUT,
               onTap: () {

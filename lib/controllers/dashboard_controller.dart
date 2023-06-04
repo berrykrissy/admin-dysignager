@@ -3,7 +3,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:signage/controllers/base_controller.dart';
 import 'package:signage/models/marker_model.dart';
-import 'package:signage/models/playlist_model.dart';
+import 'package:signage/models/content_model.dart';
 import 'package:signage/models/screens_details_model.dart';
 import 'package:signage/routes/app_pages.dart';
 import 'package:signage/utils/constants.dart';
@@ -21,7 +21,7 @@ class DashboardController extends BaseController {
   //final screensScrollController = ScrollController();
   final RxList<MarkerModel> _markerModelList = new List<MarkerModel>.empty().obs;
   final RxList<ScreensDetailsModel> _screenDetailslList = new List<ScreensDetailsModel>.empty().obs;
-  final RxList<PlaylistModel> _contentsDetailslList = new List<PlaylistModel>.empty().obs;
+  final RxList<ContentsModel> _contentsDetailslList = new List<ContentsModel>.empty().obs;
 
   @override
   Future<void> onInit() async {
@@ -92,14 +92,14 @@ class DashboardController extends BaseController {
     );
 
     _contentsDetailslList.add (
-      PlaylistModel (
-        name: "Sample Playlist 1", date: "04/25/23", status: Constants.UNPUBLISHED
+      ContentsModel (
+        mediaUploaded: "Photo.jpg", screenToDisplay: "04/25/23", dateToPublish: "04/25/2023 to 05/25/2023", duration: "30"
       )
     );
 
     _contentsDetailslList.add (
-      PlaylistModel (
-        name: "Sample Playlist 2", date: "04/25/23", status: Constants.PUBLISHED
+      ContentsModel (
+        mediaUploaded: "Video.mp4", screenToDisplay: "04/25/23", dateToPublish: "04/25/2023 to 05/25/2023", duration: "60"
       )
     );
     
@@ -107,34 +107,34 @@ class DashboardController extends BaseController {
   }
   //#region Page Launchers
   void launchFindScreen() {
-      debugPrint("DashboardController Timer StopslaunchFindScreen");
-      Get.toNamed(Routes.FIND_SCREEN);
+    debugPrint("DashboardController launchFindScreen");
+    Get.toNamed(Routes.FIND_SCREEN);
   }
 
   void launchScreens() {
-      debugPrint("DashboardController launchScreens");
-      Get.toNamed(Routes.SCREENS);
+    debugPrint("DashboardController launchScreens");
+    Get.toNamed(Routes.SCREENS);
   }
 
   void launchContents() {
-      debugPrint("DashboardController launchContents");
-      Get.toNamed(Routes.CONTENTS);
+    debugPrint("DashboardController launchContents");
+    Get.toNamed(Routes.CONTENTS);
   }
-
+  /*
   void launchSettings() {
-      debugPrint("DashboardController launchSettings");
-      Get.toNamed(Routes.SETTINGS);
+    debugPrint("DashboardController launchSettings");
+    Get.toNamed(Routes.SETTINGS);
   }
-
+  */
   void launchLogout() {
-      debugPrint("DashboardController launchLogout");
-      Get.defaultDialog(
-        title: "Logging Out",
-        middleText: "Are you sure you want to logout",
-        onConfirm: () {
-          Get.offAndToNamed(Routes.LOGIN);
-        },
-      );
+    debugPrint("DashboardController launchLogout");
+    Get.defaultDialog(
+      title: "Logging Out",
+      middleText: "Are you sure you want to logout",
+      onConfirm: () {
+        Get.offAndToNamed(Routes.LOGIN);
+      },
+    );
   }
   //#endregion
   //#region Maker Methods
@@ -330,22 +330,42 @@ class DashboardController extends BaseController {
   String getScreenDetailsPreview(int index) {
     return _screenDetailslList.where( (model) => model.isShowed == true ).toList()[index].preview ?? "Nil";
   }
+
+  Future<void> onDeleteScreenDetails(String name) async {
+    debugPrint("DashboardController onDeleteScreenDetails $name");
+    isLoading(true);
+    _screenDetailslList.removeWhere((model) => model.name == name );
+    _markerModelList.removeWhere((model) => model.name == name );
+    isLoading(false);
+
+  }
   //#endregion
   //region Contents Methods
   int getContentsDetailsLength() {
     return _contentsDetailslList.length;
   }
 
-  String getContentDetailsName(int index) {
-    return _contentsDetailslList[index].name ?? "Nil";
+  String getContentDetailsMediaUploaded(int index) {
+    return _contentsDetailslList[index].mediaUploaded ?? "Nil";
   }
 
-  String getContentDetailsDateCreated(int index) {
-    return _contentsDetailslList[index].date ?? "Nil";
+  String getContentDetailsScreenToDisplay(int index) {
+    return _contentsDetailslList[index].screenToDisplay ?? "Nil";
   }
 
-  String getContentDetailsStatus(int index) {
-    return _contentsDetailslList[index].status ?? "Nil";
+  String getContentDetailsDateToPublish(int index) {
+    return _contentsDetailslList[index].dateToPublish ?? "Nil";
+  }
+
+  String getContentDetailsDuration(int index) {
+    return _contentsDetailslList[index].duration ?? "Nil";
+  }
+
+  Future<void> onDeleteContentDetails(int index) async {
+    debugPrint("DashboardController onDeleteContentDetails $index");
+    isLoading(true);
+    _contentsDetailslList.removeAt(index);
+    isLoading(false);
   }
   //#endregion
   @override

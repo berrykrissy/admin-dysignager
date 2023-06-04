@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:signage/controllers/dashboard_controller.dart';
@@ -23,13 +24,16 @@ class ListViewContentsDetailsWidget extends BaseWidget<DashboardController> {
                 Row (
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Text(controller.getContentDetailsName(index), style: TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
-                  Text(controller.getContentDetailsDateCreated(index), style: TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
-                  Text(controller.getContentDetailsStatus(index), style: TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
-                  const Text("View Screens", style: TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
+                  Text(controller.getContentDetailsMediaUploaded(index), style: const TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
+                  Text(controller.getContentDetailsScreenToDisplay(index), style: const TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
+                  Text(controller.getContentDetailsDateToPublish(index), style: const TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
+                  Text(controller.getContentDetailsDuration(index), style: const TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
+                  IconButton( onPressed: () { 
+                    controller.onDeleteContentDetails(index);
+                  }, icon: const Icon( CupertinoIcons.delete ) ),
                 ],
               ),
-              const Divider(
+              const Divider (
                 color: Colors.grey,
                 height: 25,
                 thickness: 1,

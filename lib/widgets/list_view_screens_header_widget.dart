@@ -15,7 +15,7 @@ class ListViewScreensHeaderWidget extends BaseWidget {
         Text("Online Since", style: TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
         Text("Content Playlist", style: TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
         Text("Preview", style: TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
-        Text("Action", style: TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
+        SizedBox()
       ],
     );
   }
