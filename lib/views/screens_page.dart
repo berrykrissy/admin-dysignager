@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:signage/controllers/dashboard_controller.dart';
+import 'package:signage/utils/constants.dart';
 import 'package:signage/views/base_view.dart';
 import 'package:signage/widgets/navigation_widget.dart';
 import 'package:signage/widgets/screens_widget.dart';
@@ -10,12 +11,12 @@ class ScreensPage extends BaseView<DashboardController> {
 
   @override
   Widget build(BuildContext context) {
-      return const Scaffold (
+      return Scaffold (
         body: Row (
           mainAxisSize: MainAxisSize.max,
           children: [
-            NavigationWidget(),
-            ScreensWidget(),
+            NavigationWidget( selectedLink: Constants.SCREENS, ),
+            const ScreensWidget(),
           ],
         ),
       );

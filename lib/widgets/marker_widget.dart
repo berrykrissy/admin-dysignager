@@ -9,17 +9,16 @@ class MarkerWidget extends Marker {
   MarkerWidget( {
     super.key,
     required this.model,
-    this.colour,
+    required this.path,
   } ): super (
     point: LatLng(model.latitude, model.longitude),
     builder: (context) {
-      return Icon (
-        CupertinoIcons.map_pin_ellipse,
-        color: colour ?? Colors.white,
+      return Image.asset(
+        path,
       );
     },
   );
 
   final MarkerModel model;
-  final Color? colour;
+  final String path;
 }

@@ -9,11 +9,15 @@ class DashboardHeaderWidget extends BaseWidget {
   Widget build(BuildContext context) {
     return Container (
       margin: const EdgeInsets.only(left: 30, right: 30, top: 20, bottom: 10),
-      child: const Row (
+      child: Row (
         children: [
-          Text("Welcome to DYSIGNER Dashboard!", style: TextStyle ( fontSize: 25, fontWeight: FontWeight.w500,),),
-          Spacer(),
-          Text("Dysignager", style: TextStyle ( fontSize: 25, fontWeight: FontWeight.w500,),),
+          const Text("Welcome to DYSIGNAGER Dashboard!", style: TextStyle ( fontSize: 25, fontWeight: FontWeight.w500,),),
+          const Spacer(),
+          Image.asset(
+            "assets/DYSIGNAGER.webp",
+            width: 200,
+            height: 70,
+          ),
         ],
       ),
     );

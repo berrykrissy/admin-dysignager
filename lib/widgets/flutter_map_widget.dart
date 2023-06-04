@@ -31,10 +31,10 @@ class FlutterMapWidget extends BaseWidget<DashboardController> {
                   userAgentPackageName: 'com.digi.digi_signage',
                 ),
                 MarkerLayer(
-                  markers: controller.getObservableMarkers().value.map((model) =>
-                    MarkerWidget(
+                  markers: controller.getMarkers().map((model) =>
+                    MarkerWidget (
                       model: model, 
-                      colour: controller.getColour(model.status)
+                      path: controller.getPin(model.status)
                     )
                   ).toList(),
                 )

@@ -6,6 +6,7 @@ class NavigationCellTextWidget extends NavigationCellWidget {
   NavigationCellTextWidget( {
     super.key,
     required String text,
+    Color? textColour,
     //required bool isHovered,
     Function? onHover,
     //Function? onExit,
@@ -29,14 +30,13 @@ class NavigationCellTextWidget extends NavigationCellWidget {
         padding: const EdgeInsets.only(bottom: 40),
         child: Text (
           text,
-          style: GoogleFonts.roboto(
+          style: GoogleFonts.roboto (
+            color: textColour ?? Colors.black54,
             fontSize: 17,
             fontWeight: FontWeight.bold,
-            color: Colors.black54
           ),
         ),
       ),
     ),
   );
-
 }

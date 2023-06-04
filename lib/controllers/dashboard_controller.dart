@@ -138,8 +138,10 @@ class DashboardController extends BaseController {
   }
   //#endregion
   //#region Maker Methods
-  RxList<MarkerModel> getObservableMarkers() {
-    return _markerModelList;
+  List<MarkerModel> getMarkers() {
+    return _markerModelList.value.where(
+      (model) => model.name != null
+    ).toList();
   }
 
   RxString getMarkersQuantity(String? status) {
@@ -164,17 +166,31 @@ class DashboardController extends BaseController {
     }
   }
 
-  MaterialColor? getColour(String? status) {
+  Color? getColour(String? status) {
     if(status == Constants.ONLINE) {
-      return Colors.green;
+      return Constants.GREEN_ONLINE;
     } else if(status == Constants.OUT_OF_SYNC) {
-      return Colors.red;
+      return Constants.RED_OUT_OF_SYNC;
     } else if(status == Constants.OFFLINE) {
-      return Colors.orange;
+      return Constants.GRAY_OFFLINE;
     } else if(status == Constants.DISABLED) {
-      return Colors.blue;
+      return Constants.BLUE_DISABLED;
     } else {
       return null;
+    }
+  }
+
+  String getPin(String? status) {
+    if(status == Constants.ONLINE) {
+      return "assets/OnlinePin.webp";
+    } else if(status == Constants.OUT_OF_SYNC) {
+      return "assets/OutofSyncPin.webp";
+    } else if(status == Constants.OFFLINE) {
+      return "assets/OfflinePin.webp";
+    } else if(status == Constants.DISABLED) {
+      return "assets/DisabledPin.webp";
+    } else {
+      return "";
     }
   }
   //#endregion
@@ -236,15 +252,23 @@ class DashboardController extends BaseController {
     return _markerModelList.value[index]; //_screenViewList.value[index];
   }
 
-  Rx<MaterialColor> getScreensViewColourBorderSide(int index) {
+  Rx<Color> getScreensViewColourBorderSide(int index) {
     if (_markerModelList.value[index].isSelected == true) {
-      return Colors.purple.obs;
+      return Constants.PURPLE.obs;
     } else {
-      return Colors.grey.obs;
+      return Constants.GRAY_OFFLINE.obs;
     }
   }
 
-  MaterialColor? getScreensViewColour(int index) {
+  Color getNavigationColorLink(String text, String? selectedLink) {
+    if (text == selectedLink) {
+      return Constants.PURPLE;
+    } else {
+      return Constants.GRAY_OFFLINE;
+    }
+  }
+
+  Color? getScreensViewColour(int index) {
     return getColour(_markerModelList.value[index].status);
   }
 

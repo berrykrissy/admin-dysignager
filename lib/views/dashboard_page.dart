@@ -9,20 +9,20 @@ class DashboardPage extends BaseView<DashboardController> {
 
   @override
   Widget build(BuildContext context) {
-      return Scaffold (
-        body: Row (
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            const NavigationWidget(),
-            Flexible (
-              flex: 70,
-              child: Container (
-                alignment: Alignment.center,
-                child: const FlutterLogo(),
-              )
-            ),
-          ],
-        ),
-      );
+    return Scaffold (
+      body: Row (
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          const NavigationWidget(),
+          Flexible (
+            flex: 70,
+            child: Container (
+              alignment: Alignment.center,
+              child: Image.asset("assets/DYSIGNAGER.webp"),
+            )
+          ),
+        ],
+      ),
+    );
   }
 }
