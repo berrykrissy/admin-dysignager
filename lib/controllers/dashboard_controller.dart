@@ -7,16 +7,16 @@ import 'package:signage/models/playlist_model.dart';
 import 'package:signage/models/screens_details_model.dart';
 import 'package:signage/routes/app_pages.dart';
 import 'package:signage/utils/constants.dart';
-import 'package:signage/utils/server.dart';
+//import 'package:signage/utils/server.dart';
 //import 'package:socket_io/socket_io.dart';
 
 class DashboardController extends BaseController {
   
-  DashboardController(Server this._server) {
+  DashboardController(/*Server this._server*/) {
     debugPrint("DashboardController Constructor");
   }
 
-  final Server _server;
+  //final Server _server;
   RxBool isLoading = false.obs;
   //final screensScrollController = ScrollController();
   final RxList<MarkerModel> _markerModelList = new List<MarkerModel>.empty().obs;

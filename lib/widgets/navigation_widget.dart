@@ -33,7 +33,7 @@ class NavigationWidget extends BaseWidget<DashboardController> {
                   width: 35,
                   child: Image.asset("assets/Admin.webp"),
                 ),
-                Text('Admin', style: TextStyle (
+                const Text('Admin', style: TextStyle (
                   fontSize: 20,
                   fontWeight: FontWeight.w500,
                 ),)

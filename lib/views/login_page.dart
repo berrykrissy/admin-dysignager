@@ -6,7 +6,7 @@ import 'package:signage/widgets/text_field_widget.dart';
 
 class LoginPage extends BaseView<LoginController> {
 
-  LoginPage({Key? key}) : super(key: key);
+  const LoginPage( { Key? key } ) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,10 +15,10 @@ class LoginPage extends BaseView<LoginController> {
       body: SingleChildScrollView (
         child: Column (
           children: <Widget> [
-            const Padding(
-              padding: EdgeInsets.only(top: 60.0),
+            Padding (
+              padding: const EdgeInsets.only(top: 60.0),
               child: Center (
-                child: FlutterLogo(),
+                child: Image.asset("assets/DYSIGNAGER.webp"),
               ),
             ),
             Padding (
