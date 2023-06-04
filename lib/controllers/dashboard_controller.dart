@@ -22,6 +22,8 @@ class DashboardController extends BaseController {
   final RxList<MarkerModel> _markerModelList = new List<MarkerModel>.empty().obs;
   final RxList<ScreensDetailsModel> _screenDetailslList = new List<ScreensDetailsModel>.empty().obs;
   final RxList<ContentsModel> _contentsDetailslList = new List<ContentsModel>.empty().obs;
+  final TextEditingController? dateFromController = TextEditingController();
+  final TextEditingController? dateToController = TextEditingController();
 
   @override
   Future<void> onInit() async {
@@ -190,7 +192,7 @@ class DashboardController extends BaseController {
     } else if(status == Constants.DISABLED) {
       return "assets/DisabledPin.webp";
     } else {
-      return "";
+      throw UnimplementedError();
     }
   }
   //#endregion

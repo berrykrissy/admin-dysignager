@@ -1,14 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:signage/controllers/dashboard_controller.dart';
 import 'package:signage/widgets/base_widgets.dart';
 import 'package:signage/widgets/contents_footer_widget.dart';
 import 'package:signage/widgets/dashboard_header_Widget.dart';
+import 'package:signage/widgets/date_picker_widget.dart';
 import 'package:signage/widgets/list_view_contents_detail_widget.dart';
 import 'package:signage/widgets/list_view_contents_header_widget.dart';
 import 'package:signage/widgets/scroll_view_widget.dart';
+import 'package:signage/widgets/spinner_widget.dart';
+import 'package:signage/widgets/text_field_widget.dart';
 
-class ContentsWidget extends BaseWidget {
+class ContentsWidget extends BaseWidget<DashboardController> {
   const ContentsWidget({super.key});
 
   @override
@@ -38,155 +42,41 @@ class ContentsWidget extends BaseWidget {
                     const SizedBox(height: 13,),
                     Row (
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text( 'Preview',
-                          style: GoogleFonts.roboto (
-                            textStyle: const TextStyle (
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.black45
-                            ),
-                          ),
-                        ),
-                        Text( 'Edit Playlist',
-                          style: GoogleFonts.roboto (
-                            textStyle: const TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black45),
-                          ),
-                        ),
-                        Text( 'Cancel',
-                          style: GoogleFonts.roboto (
-                            textStyle: const TextStyle (
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.black45
-                            ),
-                          ),
-                        ),
-                        Text( 'Update',
-                          style: GoogleFonts.roboto(
-                            textStyle: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.purple[400],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const Row (
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Icon (
-                          CupertinoIcons.video_camera_solid,
-                          color: Colors.blue,
-                        ),
-                      ],
-                    ),
-                    Row (
-                      children: [
-                        Text( 'Name',
-                          style: GoogleFonts.roboto (
-                            textStyle: TextStyle (
-                              fontSize: 15,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.black45
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 10,),
-                        Container (
-                          width: 400,
-                          height: 25,
-                          decoration: BoxDecoration (
-                            border: Border.all(color: Colors.black),
-                          ),
-                          child: Padding (
-                            padding: EdgeInsets.only(left: 10),
-                            child: Text('Sample Playlist'),
-                          ),
-                        )
-                      ],
-                    ),
-                    Column (
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        Column (
                           children: [
-                            Text( 'Media to Display',
+                            Text ( 'Preview',
                               style: GoogleFonts.roboto (
-                                textStyle: TextStyle (
-                                  fontSize: 15,
+                                textStyle: const TextStyle (
+                                  fontSize: 20,
                                   fontWeight: FontWeight.w600,
                                   color: Colors.black45
                                 ),
                               ),
                             ),
-                            SizedBox(height: 10,),
-                            Row(
+                          ],
+                        ),
+                        Column (
+                          children: [
+                            Row (
                               children: [
-                                Container(
-                                  width: 200,
-                                  height: 25,
-                                  decoration: BoxDecoration(border: Border.all(color: Colors.black),),
-                                  child: Padding(
-                                    padding: EdgeInsets.only(left: 10, right: 10),
-                                    child: Row(
-                                      children: [
-                                        Container(
-                                          height: 20,
-                                          width: 100,
-                                          decoration: BoxDecoration(
-                                              color: Colors
-                                                  .purple[200],
-                                              borderRadius:
-                                                  BorderRadius
-                                                      .circular(5)),
-                                          child: Center(child: Text('Photo1.jpg x')),
-                                        ),
-                                        Spacer(),
-                                        Text('+1'),
-                                        Icon(Icons.arrow_drop_down)
-                                      ],
+                                Text ( 'Cancel',
+                                  style: GoogleFonts.roboto (
+                                    textStyle: const TextStyle (
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.black45
                                     ),
                                   ),
                                 ),
-                              ],
-                            ),
-                            const SizedBox(height: 15,),
-                            Row(
-                              children: [
-                                Container(
-                                  width: 200,
-                                  height: 25,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.black),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(left: 10, right: 10),
-                                    child: Row(
-                                      children: [
-                                        Container(
-                                          height: 20,
-                                          width: 100,
-                                          decoration: BoxDecoration(
-                                              color: Colors
-                                                  .purple[200],
-                                              borderRadius:
-                                                  BorderRadius
-                                                      .circular(5)),
-                                          child: const Center(
-                                              child: Text(
-                                                  'Video1.mp4 x')),
-                                        ),
-                                        Spacer(),
-                                        Text('+1'),
-                                        Icon(Icons.arrow_drop_down)
-                                      ],
+                                const SizedBox( width: 10,),
+                                Text ( 'Upload',
+                                  style: GoogleFonts.roboto (
+                                    textStyle: TextStyle (
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.purple[400],
                                     ),
                                   ),
                                 ),
@@ -194,25 +84,103 @@ class ContentsWidget extends BaseWidget {
                             ),
                           ],
                         ),
-                        SizedBox( height: 20,),
                       ],
                     ),
-                    const Row (
+                    Row (
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Text(
-                          '+ Add Media',
-                          style: TextStyle(fontSize: 20),
+                        Container (
+                          color: Colors.yellow,
+                          height: 250,
+                          width: 250,
+                          child: const Icon (
+                            CupertinoIcons.video_camera_solid,
+                            color: Colors.blue,
+                          ),
                         ),
-                        Spacer(),
-                        Text(
-                          'View all',
-                          style: TextStyle(fontSize: 20),
+                        Column (
+                          children: [
+                            Row (
+                              children: [
+                                Text( 'Screen to Display',
+                                  style: GoogleFonts.roboto (
+                                    textStyle: const TextStyle (
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.black45
+                                    ),
+                                  ),
+                                ),
+                                SpinnerWidget(),
+                              ],
+                            ),
+                            const SizedBox( height: 13,),
+                            Row ( 
+                              children: [
+                                Text( 'Date to Publish',
+                                  style: GoogleFonts.roboto (
+                                    textStyle: const TextStyle (
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.black45
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                  width: 100,
+                                  child: DatePickerWidget(dateController: controller.dateFromController,),
+                                ),
+                                const SizedBox( width: 13,),
+                                Text( 'to',
+                                  style: GoogleFonts.roboto (
+                                    textStyle: const TextStyle (
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.black45
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox( width: 13,),
+                                SizedBox(
+                                  height: 20,
+                                  width: 100,
+                                  child: DatePickerWidget(dateController: controller.dateToController,),
+                                ),
+                              ],
+                            ),
+                            const SizedBox( height: 13,),
+                            Row (
+                              children: [
+                                Text( 'Media to Display',
+                                  style: GoogleFonts.roboto (
+                                    textStyle: const TextStyle (
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.black45
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox( width: 20,),
+                                Text( 'Duration (s)',
+                                  style: GoogleFonts.roboto (
+                                    textStyle: const TextStyle (
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.black45
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
+                          ]
                         ),
                       ],
-                    ),
+                    )
                   ],
                 ),
-              )
+              ),
             ),
             const SizedBox(height: 15,),
             const ListViewContentsHeaderWidget(),
