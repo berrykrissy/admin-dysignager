@@ -20,14 +20,17 @@ class DatePickerWidget extends BaseWidget {
     return Obx(() => 
       TextField (
         controller: dateController.value,
-        decoration: const InputDecoration (
+        decoration: InputDecoration (
           //icon: Icon( Icons.calendar_today ),
-          //labelText: labelText,
-          //hintText: hintText,
-          border: OutlineInputBorder (
-            borderSide: BorderSide( color: Colors.blue, width: 1 ) ),
-            focusedBorder: OutlineInputBorder( borderSide: BorderSide( color: Colors.blue, width: 1 ) ),
-            enabledBorder: OutlineInputBorder( borderSide: BorderSide( color: Colors.blue, width: 1 ) ),
+          hintText: hintText,
+          labelText: labelText,
+          /*
+          border: const OutlineInputBorder (
+            borderSide: BorderSide( color: Colors.blue, width: 1 ) 
+          ),
+          focusedBorder: const OutlineInputBorder( borderSide: BorderSide( color: Colors.blue, width: 1 ) ),
+          enabledBorder: const OutlineInputBorder( borderSide: BorderSide( color: Colors.blue, width: 1 ) ),
+          */
         ),
         readOnly: true,
         onTap: () async {

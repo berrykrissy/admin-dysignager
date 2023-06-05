@@ -16,7 +16,6 @@ class ListViewContentsHeaderWidget extends BaseWidget {
         Text("End Date", style: TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
         Text("Duration", style: TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
         Text("File Name", style: TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
-        SizedBox( width: 1,),
       ],
     );
   }

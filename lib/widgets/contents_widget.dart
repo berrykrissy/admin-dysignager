@@ -1,19 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:signage/controllers/dashboard_controller.dart';
-import 'package:signage/utils/constants.dart';
 import 'package:signage/widgets/base_widgets.dart';
-import 'package:signage/widgets/button_widget.dart';
 import 'package:signage/widgets/contents_footer_widget.dart';
 import 'package:signage/widgets/dashboard_header_Widget.dart';
-import 'package:signage/widgets/date_picker_widget.dart';
 import 'package:signage/widgets/list_view_contents_detail_widget.dart';
 import 'package:signage/widgets/list_view_contents_header_widget.dart';
 import 'package:signage/widgets/scroll_view_widget.dart';
-import 'package:signage/widgets/spinner_widget.dart';
 
-class ContentsWidget extends BaseWidget<DashboardController> {
+class ContentsWidget extends BaseWidget {
   const ContentsWidget({super.key});
 
   @override

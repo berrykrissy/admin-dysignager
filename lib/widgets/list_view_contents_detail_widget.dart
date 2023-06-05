@@ -30,9 +30,11 @@ class ListViewContentsDetailsWidget extends BaseWidget<DashboardController> {
                   Text(controller.getContentDetailsEndDate(index), style: const TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
                   Text(controller.getContentDetailsDuration(index), style: const TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
                   Text(controller.getContentDetailsFileName(index), style: const TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
+                  /*
                   IconButton( onPressed: () { 
                     controller.onDeleteContentDetails(index);
                   }, icon: const Icon( CupertinoIcons.delete ) ),
+                  */
                 ],
               ),
               const Divider (
