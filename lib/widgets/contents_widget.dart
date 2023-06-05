@@ -26,6 +26,7 @@ class ContentsWidget extends BaseWidget<DashboardController> {
           children: [
             const DashboardHeaderWidget(),
             const SizedBox(height: 13,),
+            /*
             Card (
               margin: const EdgeInsets.symmetric(horizontal: 40),
               color: Colors.white,
@@ -195,6 +196,7 @@ class ContentsWidget extends BaseWidget<DashboardController> {
                 ),
               ),
             ),
+            */
             const SizedBox(height: 15,),
             const ListViewContentsHeaderWidget(),
             const Divider (

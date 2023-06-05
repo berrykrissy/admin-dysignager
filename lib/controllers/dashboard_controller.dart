@@ -102,13 +102,13 @@ class DashboardController extends BaseController {
 
     _contentsDetailslList.add (
       ContentsModel (
-        mediaUploaded: "Photo.jpg", screenToDisplay: "04/25/23", dateToPublishTo: "06/25/2023", dateToPublishFrom: "07/26/2023", duration: "30"
+        contractNumber: "0001", client: "Client 1", startDate: "06/25/2023", endDate: "07/26/2023", duration: "30", fileName: "Photo.jpg", fileUrl: "www", fileType: Constants.PHOTO
       )
     );
 
     _contentsDetailslList.add (
       ContentsModel (
-        mediaUploaded: "Video.mp4", screenToDisplay: "04/25/23", dateToPublishTo: "06/25/2023", dateToPublishFrom: "07/25/2023", duration: "60"
+        contractNumber: "0002", client: "Client 2", startDate: "06/25/2023", endDate: "07/26/2023", duration: "30", fileName: "Video.mp4", fileUrl: "www", fileType: Constants.VIDEO
       )
     );
   }
@@ -385,24 +385,28 @@ class DashboardController extends BaseController {
     return _contentsDetailslList.length;
   }
 
-  String getContentDetailsMediaUploaded(int index) {
-    return _contentsDetailslList[index].mediaUploaded ?? "Nil";
+  String getContentDetailsContractNumber(int index) {
+    return _contentsDetailslList[index].contractNumber ?? "Nil";
   }
 
-  String getContentDetailsScreenToDisplay(int index) {
-    return _contentsDetailslList[index].screenToDisplay ?? "Nil";
+  String getContentDetailsClient(int index) {
+    return _contentsDetailslList[index].client ?? "Nil";
   }
 
-  String getContentDetailsDateToPublishTo(int index) {
-    return _contentsDetailslList[index].dateToPublishTo ?? "Nil";
+  String getContentDetailsStartDate(int index) {
+    return _contentsDetailslList[index].startDate ?? "Nil";
   }
 
-  String getContentDetailsDateToPublishFrom(int index) {
-    return _contentsDetailslList[index].dateToPublishFrom ?? "Nil";
+  String getContentDetailsEndDate(int index) {
+    return _contentsDetailslList[index].endDate ?? "Nil";
   }
 
   String getContentDetailsDuration(int index) {
     return _contentsDetailslList[index].duration ?? "Nil";
+  }
+
+  String getContentDetailsFileName(int index) {
+    return _contentsDetailslList[index].fileName ?? "Nil";
   }
 
   Future<void> onDeleteContentDetails(int index) async {

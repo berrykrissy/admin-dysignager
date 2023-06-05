@@ -1,21 +1,28 @@
 class ContentsModel {
 
   ContentsModel ( {
-    this.mediaUploaded,
-    this.screenToDisplay,
-    this.dateToPublishTo,
-    this.dateToPublishFrom,
+    this.contractNumber,
+    this.client,
+    this.startDate,
+    this.endDate,
     this.duration,
+    this.fileName,
+    this.fileUrl,
+    this.fileType,
   } );
   
-  final String? mediaUploaded;
-  final String? screenToDisplay;
-  final String? dateToPublishTo;
-  final String? dateToPublishFrom;
+  final String? contractNumber;
+  final String? client;
+  final String? startDate;
+  final String? endDate;
   final String? duration;
+
+  final String? fileName;
+  final String? fileUrl;
+  final String? fileType;
 
   @override
   String toString() {
-    return "ContentsModel mediaUploaded $mediaUploaded, screenToDisplay $screenToDisplay dateToPublishTo $dateToPublishTo, dateToPublishFrom $dateToPublishFrom duration $duration" ?? super.toString();
+    return "ContentsModel contractNumber $contractNumber, client $client startDate $startDate, endDate $endDate duration $duration fileName $fileName fileUrl $fileUrl fileType $fileType" ?? super.toString();
   }
 }

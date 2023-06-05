@@ -7,7 +7,7 @@ class CustomDialog {
   static addScreen(TextEditingController? nameController, TextEditingController? locationController, VoidCallback? onConfirm) {
     Get.defaultDialog (
       barrierDismissible: true,
-      content: Column(
+      content: Column (
         children: [
           TextField (
             controller: nameController,
@@ -38,29 +38,77 @@ class CustomDialog {
       onConfirm: onConfirm,
       radius: 1,
       textConfirm: "Add",
-      title: "Add Name",
+      title: "Add Screen",
     );
   }
 
-  static editDialog(TextEditingController? controller, GestureTapCallback onPressed) {
+  static newContract(GestureTapCallback onPressed) {
     Get.dialog(
       AlertDialog (
         actions: [
-          ButtonWidget(text: "Update", onPressed: onPressed)
+          ButtonWidget(text: "Upload", textColor: Colors.purple, fillColor: Colors.white, fontSize: 20, fontWeight: FontWeight.w500, onPressed: onPressed)
         ],
-        content: TextField (
-          controller: controller,
-          decoration: const InputDecoration (
-            hintText: 'Update Name',
-            labelText: 'Name',
+        content: Column (
+        children: [
+          TextField (
+            readOnly: true,
+            decoration: const InputDecoration (
+              labelText: 'Contract Number',
+            ),
+            enabled: true,
+            //maxLength: 10,
+            maxLines: 1,
+            obscureText: false,
+            keyboardType: TextInputType.text,
           ),
-          enabled: true,
-          //maxLength: 10,
-          maxLines: 1,
-          obscureText: false,
-          keyboardType: TextInputType.text,
-        ),
-        title: const Text("Update"),
+          TextField (
+            decoration: const InputDecoration (
+              hintText: 'Enter Client',
+              labelText: 'Client',
+            ),
+            enabled: true,
+            //maxLength: 10,
+            maxLines: 1,
+            obscureText: false,
+            keyboardType: TextInputType.text,
+          ),
+          TextField (
+            decoration: const InputDecoration (
+              hintText: 'Enter Start Date',
+              labelText: 'Start Date',
+            ),
+            enabled: true,
+            //maxLength: 10,
+            maxLines: 1,
+            obscureText: false,
+            keyboardType: TextInputType.text,
+          ),
+          TextField (
+            decoration: const InputDecoration (
+              hintText: 'Enter End Date',
+              labelText: 'End Date',
+            ),
+            enabled: true,
+            //maxLength: 10,
+            maxLines: 1,
+            obscureText: false,
+            keyboardType: TextInputType.text,
+          ),
+          TextField (
+            readOnly: true,
+            decoration: const InputDecoration (
+              labelText: 'Duration',
+            ),
+            enabled: true,
+            //maxLength: 10,
+            maxLines: 1,
+            obscureText: false,
+            keyboardType: TextInputType.text,
+          ),
+          ButtonWidget(text: "+ Add Media", textColor: Colors.purple, fillColor: Colors.white, fontSize: 20, fontWeight: FontWeight.w500, onPressed: onPressed),
+        ],
+      ),
+        title: const Text("New Contract"),
       ),
       barrierDismissible: true,
     );

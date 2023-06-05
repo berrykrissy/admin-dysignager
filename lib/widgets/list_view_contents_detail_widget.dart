@@ -24,11 +24,12 @@ class ListViewContentsDetailsWidget extends BaseWidget<DashboardController> {
                 Row (
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Text(controller.getContentDetailsMediaUploaded(index), style: const TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
-                  Text(controller.getContentDetailsScreenToDisplay(index), style: const TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
-                  Text(controller.getContentDetailsDateToPublishTo(index), style: const TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
-                  Text(controller.getContentDetailsDateToPublishFrom(index), style: const TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
+                  Text(controller.getContentDetailsContractNumber(index), style: const TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
+                  Text(controller.getContentDetailsClient(index), style: const TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
+                  Text(controller.getContentDetailsStartDate(index), style: const TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
+                  Text(controller.getContentDetailsEndDate(index), style: const TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
                   Text(controller.getContentDetailsDuration(index), style: const TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
+                  Text(controller.getContentDetailsFileName(index), style: const TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
                   IconButton( onPressed: () { 
                     controller.onDeleteContentDetails(index);
                   }, icon: const Icon( CupertinoIcons.delete ) ),

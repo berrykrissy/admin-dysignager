@@ -10,12 +10,13 @@ class ListViewContentsHeaderWidget extends BaseWidget {
     return const Row (
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        Text("Media Uploaded", style: TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
-        Text("Screen to Display", style: TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
-        Text("Date to Publish to", style: TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
-        Text("Date to Publish from", style: TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
-        Text("Duration (s)", style: TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
-        SizedBox( width: 13,),
+        Text("Contract Number", style: TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
+        Text("Client", style: TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
+        Text("Start Date", style: TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
+        Text("End Date", style: TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
+        Text("Duration", style: TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
+        Text("File Name", style: TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
+        SizedBox( width: 1,),
       ],
     );
   }
