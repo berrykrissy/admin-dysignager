@@ -70,7 +70,7 @@ class ContentsWidget extends BaseWidget<DashboardController> {
                                     ),
                                   ),
                                 ),
-                                const SizedBox( width: 10,),
+                                const SizedBox( width: 13,),
                                 Text ( 'Upload',
                                   style: GoogleFonts.roboto (
                                     textStyle: TextStyle (

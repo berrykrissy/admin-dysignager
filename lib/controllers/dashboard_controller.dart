@@ -74,22 +74,22 @@ class DashboardController extends BaseController {
 
     _screenDetailslList.add (
       ScreensDetailsModel (
-        name: "Screen 1", status: Constants.ONLINE, onlineSince: "04/25/23", contentPlaylist: "Sample Playlist 1", preview: "nil", isShowed: true
+        name: "Screen 1", status: Constants.ONLINE, onlineSince: "04/25/23", preview: "nil", isShowed: true
       )
     );
     _screenDetailslList.add (
       ScreensDetailsModel (
-        name: "Screen 2", status: Constants.OUT_OF_SYNC, onlineSince: "04/25/23", contentPlaylist: "Sample Playlist 2", preview: "nil", isShowed: true
+        name: "Screen 2", status: Constants.OUT_OF_SYNC, onlineSince: "04/25/23", preview: "nil", isShowed: true
       )
     );
     _screenDetailslList.add (
       ScreensDetailsModel (
-        name: "Screen 3", status: Constants.OFFLINE, onlineSince: "04/25/23", contentPlaylist: "Sample Playlist 3", preview: "nil", isShowed: true
+        name: "Screen 3", status: Constants.OFFLINE, onlineSince: "04/25/23", preview: "nil", isShowed: true
       )
     );
     _screenDetailslList.add (
       ScreensDetailsModel (
-        name: "Screen 4", status: Constants.DISABLED, onlineSince: "04/25/23", contentPlaylist: "Sample Playlist 4", preview: "nil", isShowed: true
+        name: "Screen 4", status: Constants.DISABLED, onlineSince: "04/25/23", preview: "nil", isShowed: true
       )
     );
 
@@ -323,10 +323,6 @@ class DashboardController extends BaseController {
   
   String getScreenDetailsOnlineSince(int index) {
     return _screenDetailslList.where( (model) => model.isShowed == true ).toList()[index].onlineSince ?? "Nil";
-  }
-  
-  String getScreenDetailsContentPlaylist(int index) {
-    return _screenDetailslList.where( (model) => model.isShowed == true ).toList()[index].contentPlaylist ?? "Nil";
   }
   
   String getScreenDetailsPreview(int index) {

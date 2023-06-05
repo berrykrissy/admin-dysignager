@@ -44,7 +44,6 @@ class ListViewScreensDetailsWidget extends BaseWidget<DashboardController> {
                   Text(controller.getScreenDetailsName(index), style: const TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
                   Text(controller.getScreenDetailsStatus(index), style: const TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
                   Text(controller.getScreenDetailsOnlineSince(index), style: const TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
-                  Text(controller.getScreenDetailsContentPlaylist(index), style: const TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
                   Text(controller.getScreenDetailsPreview(index), style: const TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
                   IconButton( onPressed: () { 
                     controller.onDeleteScreenDetails(controller.getScreenDetailsName(index));
