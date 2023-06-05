@@ -23,8 +23,8 @@ class DashboardController extends BaseController {
   final RxList<ScreensDetailsModel> _screenDetailslList = new List<ScreensDetailsModel>.empty().obs;
   final RxList<ContentsModel> _contentsDetailslList = new List<ContentsModel>.empty().obs;
   final RxString spinnerValue = "".obs;
-  final TextEditingController? dateFromController = TextEditingController();
-  final TextEditingController? dateToController = TextEditingController();
+  final Rx<TextEditingController?> dateFromController = TextEditingController().obs;
+  final Rx<TextEditingController?> dateToController = TextEditingController().obs;
 
   @override
   Future<void> onInit() async {
@@ -75,22 +75,22 @@ class DashboardController extends BaseController {
 
     _screenDetailslList.add (
       ScreensDetailsModel (
-        name: "Screen 1", status: Constants.ONLINE, onlineSince: "04/25/23", preview: "nil", isShowed: true
+        name: "Screen 1", status: Constants.ONLINE, onlineSince: "04/25/23", location: "Manila", preview: "nil", isShowed: true
       )
     );
     _screenDetailslList.add (
       ScreensDetailsModel (
-        name: "Screen 2", status: Constants.OUT_OF_SYNC, onlineSince: "04/25/23", preview: "nil", isShowed: true
+        name: "Screen 2", status: Constants.OUT_OF_SYNC, onlineSince: "04/25/23", location: "Manila", preview: "nil", isShowed: true
       )
     );
     _screenDetailslList.add (
       ScreensDetailsModel (
-        name: "Screen 3", status: Constants.OFFLINE, onlineSince: "04/25/23", preview: "nil", isShowed: true
+        name: "Screen 3", status: Constants.OFFLINE, onlineSince: "04/25/23", location: "Manila", preview: "nil", isShowed: true
       )
     );
     _screenDetailslList.add (
       ScreensDetailsModel (
-        name: "Screen 4", status: Constants.DISABLED, onlineSince: "04/25/23", preview: "nil", isShowed: true
+        name: "Screen 4", status: Constants.DISABLED, onlineSince: "04/25/23", location: "Manila", preview: "nil", isShowed: true
       )
     );
 
@@ -324,6 +324,10 @@ class DashboardController extends BaseController {
   
   String getScreenDetailsOnlineSince(int index) {
     return _screenDetailslList.where( (model) => model.isShowed == true ).toList()[index].onlineSince ?? "Nil";
+  }
+
+  String getScreenDetailsLocation(int index) {
+    return _screenDetailslList.where( (model) => model.isShowed == true ).toList()[index].location ?? "Nil";
   }
   
   String getScreenDetailsPreview(int index) {

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:signage/controllers/dashboard_controller.dart';
 import 'package:signage/widgets/base_widgets.dart';
+import 'package:signage/widgets/button_widget.dart';
 import 'package:signage/widgets/contents_footer_widget.dart';
 import 'package:signage/widgets/dashboard_header_Widget.dart';
 import 'package:signage/widgets/date_picker_widget.dart';
@@ -60,7 +61,8 @@ class ContentsWidget extends BaseWidget<DashboardController> {
                           children: [
                             Row (
                               children: [
-                                Text ( 'Cancel',
+                                ButtonWidget (
+                                  text: 'Cancel',
                                   style: GoogleFonts.roboto (
                                     textStyle: const TextStyle (
                                       fontSize: 20,
@@ -68,16 +70,22 @@ class ContentsWidget extends BaseWidget<DashboardController> {
                                       color: Colors.black45
                                     ),
                                   ),
+                                  onPressed: () {
+
+                                  },
                                 ),
                                 const SizedBox( width: 13,),
-                                Text ( 'Upload',
+                                ButtonWidget (
+                                  text: 'Upload',
                                   style: GoogleFonts.roboto (
                                     textStyle: TextStyle (
                                       fontSize: 20,
                                       fontWeight: FontWeight.w600,
                                       color: Colors.purple[400],
                                     ),
-                                  ),
+                                  ), onPressed: () {
+
+                                  } 
                                 ),
                               ],
                             ),
@@ -111,7 +119,7 @@ class ContentsWidget extends BaseWidget<DashboardController> {
                                     ),
                                   ),
                                 ),
-                                SizedBox( width: 13, ),
+                                const SizedBox( width: 13, ),
                                 SpinnerWidget( 
                                   list: controller.getScreenList(), 
                                   liveValue: controller.spinnerValue, 
