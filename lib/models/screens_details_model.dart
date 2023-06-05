@@ -1,13 +1,13 @@
 class ScreensDetailsModel {
 
-  ScreensDetailsModel({
+  ScreensDetailsModel( {
     this.name,
     this.status,
     this.onlineSince,
     this. location,
     this.preview,
     this.isShowed,
-  });
+  } );
   
   final String? name;
   final String? status;

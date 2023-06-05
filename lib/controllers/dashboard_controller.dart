@@ -102,17 +102,15 @@ class DashboardController extends BaseController {
 
     _contentsDetailslList.add (
       ContentsModel (
-        mediaUploaded: "Photo.jpg", screenToDisplay: "04/25/23", dateToPublish: "04/25/2023 to 05/25/2023", duration: "30"
+        mediaUploaded: "Photo.jpg", screenToDisplay: "04/25/23", dateToPublishTo: "06/25/2023", dateToPublishFrom: "07/26/2023", duration: "30"
       )
     );
 
     _contentsDetailslList.add (
       ContentsModel (
-        mediaUploaded: "Video.mp4", screenToDisplay: "04/25/23", dateToPublish: "04/25/2023 to 05/25/2023", duration: "60"
+        mediaUploaded: "Video.mp4", screenToDisplay: "04/25/23", dateToPublishTo: "06/25/2023", dateToPublishFrom: "07/25/2023", duration: "60"
       )
     );
-    
-    //_getCoordinates();
   }
   //#region Page Launchers
   void launchFindScreen() {
@@ -395,8 +393,12 @@ class DashboardController extends BaseController {
     return _contentsDetailslList[index].screenToDisplay ?? "Nil";
   }
 
-  String getContentDetailsDateToPublish(int index) {
-    return _contentsDetailslList[index].dateToPublish ?? "Nil";
+  String getContentDetailsDateToPublishTo(int index) {
+    return _contentsDetailslList[index].dateToPublishTo ?? "Nil";
+  }
+
+  String getContentDetailsDateToPublishFrom(int index) {
+    return _contentsDetailslList[index].dateToPublishFrom ?? "Nil";
   }
 
   String getContentDetailsDuration(int index) {

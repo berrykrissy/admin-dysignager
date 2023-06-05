@@ -12,9 +12,10 @@ class ListViewContentsHeaderWidget extends BaseWidget {
       children: [
         Text("Media Uploaded", style: TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
         Text("Screen to Display", style: TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
-        Text("Date to Publish", style: TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
+        Text("Date to Publish to", style: TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
+        Text("Date to Publish from", style: TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
         Text("Duration (s)", style: TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
-        SizedBox(),
+        SizedBox( width: 13,),
       ],
     );
   }

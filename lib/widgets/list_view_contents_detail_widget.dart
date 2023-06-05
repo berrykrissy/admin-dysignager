@@ -26,7 +26,8 @@ class ListViewContentsDetailsWidget extends BaseWidget<DashboardController> {
                 children: [
                   Text(controller.getContentDetailsMediaUploaded(index), style: const TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
                   Text(controller.getContentDetailsScreenToDisplay(index), style: const TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
-                  Text(controller.getContentDetailsDateToPublish(index), style: const TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
+                  Text(controller.getContentDetailsDateToPublishTo(index), style: const TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
+                  Text(controller.getContentDetailsDateToPublishFrom(index), style: const TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
                   Text(controller.getContentDetailsDuration(index), style: const TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
                   IconButton( onPressed: () { 
                     controller.onDeleteContentDetails(index);
