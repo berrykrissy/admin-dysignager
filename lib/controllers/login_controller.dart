@@ -10,9 +10,9 @@ class LoginController extends BaseController {
     debugPrint("LoginController Constructor");
   }
 
+  RxBool isLoading = false.obs;
   final TextEditingController? usernameController = new TextEditingController();
   final TextEditingController? passwordController = new TextEditingController();
-
 
   @override
   void onInit() {
@@ -45,14 +45,16 @@ class LoginController extends BaseController {
     return true;
   }
 
-  void checkCredentials() {
+  Future<void> checkCredentials() async {
     debugPrint("LoginController checkCredentials ${usernameController?.text} ${passwordController?.text}");
+    isLoading(true);
     if(usernameController?.text == "Admin" && passwordController?.text == "123") {
       Get.snackbar("Credentials", "Login Succeed");
       _launchDashboard();
     } else {
       Get.snackbar("Credentials", "Login Failed");
     }
+    isLoading(false);
   }
 
   void _launchDashboard() {
