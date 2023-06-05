@@ -44,7 +44,8 @@ class LoginPage extends BaseView<LoginController> {
                   ),
                 ),
                 ButtonWidget (
-                  text: "Login", 
+                  text: "Login",
+                  textColor: Colors.purple,
                   onPressed: () {
                     controller.checkCredentials();
                   },
