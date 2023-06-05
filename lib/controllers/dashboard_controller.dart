@@ -375,7 +375,7 @@ class DashboardController extends BaseController {
 
   }
   //#endregion
-  //region Contents Methods
+  //#region Contents Methods
   List<String?> getScreenList() {
     spinnerValue(_markerModelList.where((model) => model.name != null).map((model) => model.name).toList()[0]);
     return _markerModelList.where((model) => model.name != null).map((model) => model.name).toList();
@@ -415,6 +415,29 @@ class DashboardController extends BaseController {
     _contentsDetailslList.removeAt(index);
     isLoading(false);
   }
+  /*
+  Future<void> onPickFiles() async {
+    const type = FileType.custom; //FileType.media
+    final extensions = ['mp4', 'jpg', 'png'];
+    final result = await pickFiles(type, extensions);
+    openFile(result?.files.first);
+  }
+  
+  Future<FilePickerResult?> pickFiles(FileType type, List<String>? extensions) async {
+    return await FilePicker.platform.pickFiles(type: type, allowedExtensions: extensions);
+  }
+
+  void openFile(PlatformFile? file) {
+    debugPrint("MainController openFile(PlatformFile name ${file?.name})");
+    debugPrint("MainController openFile(PlatformFile size ${file?.size})");
+    debugPrint("MainController openFile(PlatformFile extension ${file?.extension})");
+    if (Platform.isAndroid || Platform.isIOS) {
+      debugPrint("MainController openFile(PlatformFile path ${file?.path})");
+    }
+    debugPrint("MainController openFile(PlatformFile bytes ${file?.bytes})");
+    OpenFile.open(file?.path);
+  }
+  */
   //#endregion
   @override
   void onClose() {
