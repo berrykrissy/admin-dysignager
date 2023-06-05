@@ -13,6 +13,7 @@ class ButtonWidget extends BaseWidget {
     this.splashColor,
     this.fontSize,
     this.fontWeight,
+    this.style,
   } );
   
   final String text;
@@ -23,18 +24,19 @@ class ButtonWidget extends BaseWidget {
   final Color? splashColor;
   final double? fontSize;
   final FontWeight? fontWeight;
+  final TextStyle? style;
 
   @override
   Widget build(BuildContext context) {
-    return RawMaterialButton(
-      fillColor: fillColor ?? Colors.indigo,
+    return RawMaterialButton (
+      //fillColor: fillColor ?? Colors.indigo,
       highlightElevation: highlightElevation ?? 1.0,
       onPressed: onPressed,
       //shape: StadiumBorder(),
-      splashColor: splashColor ?? Colors.indigoAccent,
-      child: Text(
+      //splashColor: splashColor ?? Colors.indigoAccent,
+      child: Text (
         text,
-        style: TextStyle (
+        style: style ?? TextStyle (
           color: textColor ?? Colors.white,
           fontSize: fontSize,
           fontWeight: fontWeight,
