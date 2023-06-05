@@ -10,7 +10,6 @@ import 'package:signage/widgets/list_view_contents_detail_widget.dart';
 import 'package:signage/widgets/list_view_contents_header_widget.dart';
 import 'package:signage/widgets/scroll_view_widget.dart';
 import 'package:signage/widgets/spinner_widget.dart';
-import 'package:signage/widgets/text_field_widget.dart';
 
 class ContentsWidget extends BaseWidget<DashboardController> {
   const ContentsWidget({super.key});
@@ -112,7 +111,11 @@ class ContentsWidget extends BaseWidget<DashboardController> {
                                     ),
                                   ),
                                 ),
-                                SpinnerWidget(),
+                                SizedBox( width: 13, ),
+                                SpinnerWidget( 
+                                  list: controller.getScreenList(), 
+                                  liveValue: controller.spinnerValue, 
+                                ),
                               ],
                             ),
                             const SizedBox( height: 13,),

@@ -22,6 +22,7 @@ class DashboardController extends BaseController {
   final RxList<MarkerModel> _markerModelList = new List<MarkerModel>.empty().obs;
   final RxList<ScreensDetailsModel> _screenDetailslList = new List<ScreensDetailsModel>.empty().obs;
   final RxList<ContentsModel> _contentsDetailslList = new List<ContentsModel>.empty().obs;
+  final RxString spinnerValue = "".obs;
   final TextEditingController? dateFromController = TextEditingController();
   final TextEditingController? dateToController = TextEditingController();
 
@@ -339,6 +340,11 @@ class DashboardController extends BaseController {
   }
   //#endregion
   //region Contents Methods
+  List<String?> getScreenList() {
+    spinnerValue(_markerModelList.where((model) => model.name != null).map((model) => model.name).toList()[0]);
+    return _markerModelList.where((model) => model.name != null).map((model) => model.name).toList();
+  }
+
   int getContentsDetailsLength() {
     return _contentsDetailslList.length;
   }
