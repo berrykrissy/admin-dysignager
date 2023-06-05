@@ -56,7 +56,7 @@ class ScreensWidget extends BaseWidget<DashboardController> {
             ),
             const ListViewScreensDetailsWidget(),
             ButtonWidget(text: "View All", textColor: Colors.purple, fillColor: Colors.white, fontSize: 20, fontWeight: FontWeight.w500, onPressed: () {
-              controller.onFilterResetScreenDetails();
+              controller.onResetScreenSelection();
             } )
           ]
         ),

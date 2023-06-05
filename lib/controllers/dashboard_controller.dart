@@ -22,6 +22,10 @@ class DashboardController extends BaseController {
   final RxList<MarkerModel> _markerModelList = new List<MarkerModel>.empty().obs;
   final RxList<ScreensDetailsModel> _screenDetailslList = new List<ScreensDetailsModel>.empty().obs;
   final RxList<ContentsModel> _contentsDetailslList = new List<ContentsModel>.empty().obs;
+
+  final TextEditingController? nameController = TextEditingController();
+  final TextEditingController? locationController = TextEditingController();
+
   final RxString spinnerValue = "".obs;
   final Rx<TextEditingController?> dateFromController = TextEditingController().obs;
   final Rx<TextEditingController?> dateToController = TextEditingController().obs;
@@ -224,10 +228,17 @@ class DashboardController extends BaseController {
     return true;
   }
 
-  Future<void> _getCoordinates() async {
+  Future<void> _addMarkerWithCoordinates() async {
     if(await _handleLocationPermission()) {
       Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
       _markerModelList.add (MarkerModel(latitude: position.latitude, longitude: position.longitude, status: null));
+    }
+  }
+
+   Future<void> _insertMarker(int index, String? name, String? status) async {
+    if(await _handleLocationPermission()) {
+      Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+      _markerModelList.insert (index, MarkerModel(name: name, latitude: position.latitude, longitude: position.longitude, status: status));
     }
   }
   //#endregion
@@ -235,18 +246,33 @@ class DashboardController extends BaseController {
   Future<void> onSelectCardScreen(int index) async {
     debugPrint("DashboardController onSelectCardScreen $index");
     isLoading(true);
-    if (_markerModelList.value[index].name == null) {
-      Get.snackbar("Test", "Add Icon");
-    } else {
-      _markerModelList.value.forEach( (model) {
-        if (model.isSelected == true) {
-          model.isSelected = false;
-        }
-      } );
-      _markerModelList.value[index].isSelected = true;
-      _onFilterScreenDetails(_markerModelList.value[index].name);
-    }
+    _markerModelList.value.forEach( (model) {
+      if (model.isSelected == true) {
+        model.isSelected = false;
+      }
+    } );
+    _markerModelList.value[index].isSelected = true;
+    _onFilterScreenDetails(_markerModelList.value[index].name);
     isLoading(false);
+  }
+
+  Future<void> onAddScreen() async {
+    debugPrint("DashboardController onAddScreen ${nameController?.text} ${locationController?.text}");
+    if(nameController?.text.isBlank == false && locationController?.text.isBlank == false) {
+      isLoading(true);
+      _insertMarker(_screenDetailslList.length, nameController?.text, Constants.OUT_OF_SYNC);
+      _screenDetailslList.add ( 
+        ScreensDetailsModel (
+          name: nameController?.text, status: Constants.OUT_OF_SYNC, onlineSince: null, location: locationController?.text, preview: null, isShowed: true
+        )
+      );
+      onResetScreenSelection();
+      isLoading(false);
+      Get.back();
+    } else {
+      Get.snackbar("Error", "Inputs Invalid");
+    }
+    
   }
 
   int getScreensViewLength() {
@@ -286,6 +312,7 @@ class DashboardController extends BaseController {
   }
 
   String getScreensViewName(int index) {
+    debugPrint("DashboardController getScreensViewName $index ${_markerModelList.value[index].name}");
     return _markerModelList.value[index].name ?? "";
   }
   //#endregion
@@ -304,8 +331,13 @@ class DashboardController extends BaseController {
     isLoading(false);
   }
 
-  Future<void> onFilterResetScreenDetails() async {
+  Future<void> onResetScreenSelection() async {
     isLoading(true);
+    _markerModelList.value.forEach( (model) {
+      if (model.isSelected == true) {
+        model.isSelected = false;
+      }
+    } );
     _screenDetailslList.value.forEach( (model) {
       model.isShowed = true;
     } );
