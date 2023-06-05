@@ -73,6 +73,8 @@ class DashboardController extends BaseController {
       )
     );
 
+    _markerModelList.add (MarkerModel(latitude: 0.00, longitude: 0.00));
+
     _screenDetailslList.add (
       ScreensDetailsModel (
         name: "Screen 1", status: Constants.ONLINE, onlineSince: "04/25/23", location: "Manila", preview: "nil", isShowed: true
@@ -106,7 +108,7 @@ class DashboardController extends BaseController {
       )
     );
     
-    _getCoordinates();
+    //_getCoordinates();
   }
   //#region Page Launchers
   void launchFindScreen() {

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:signage/controllers/dashboard_controller.dart';
+import 'package:signage/utils/constants.dart';
 import 'package:signage/widgets/base_widgets.dart';
 import 'package:signage/widgets/button_widget.dart';
 import 'package:signage/widgets/contents_footer_widget.dart';
@@ -98,7 +99,7 @@ class ContentsWidget extends BaseWidget<DashboardController> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Container (
-                          color: Colors.yellow,
+                          color: Constants.GRAY_OFFLINE,
                           height: 250,
                           width: 250,
                           child: const Icon (
