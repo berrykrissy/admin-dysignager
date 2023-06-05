@@ -139,6 +139,7 @@ class ContentsWidget extends BaseWidget<DashboardController> {
                                     ),
                                   ),
                                 ),
+                                const SizedBox( width: 13, ),
                                 SizedBox(
                                   height: 20,
                                   width: 100,
