@@ -9,6 +9,7 @@ import 'package:signage/models/content_model.dart';
 import 'package:signage/models/screens_details_model.dart';
 import 'package:signage/routes/app_pages.dart';
 import 'package:signage/utils/constants.dart';
+import 'package:video_thumbnail/video_thumbnail.dart';
 //import 'package:signage/utils/server.dart';
 //import 'package:socket_io/socket_io.dart';
 
@@ -31,6 +32,7 @@ class DashboardController extends BaseController {
   final RxString spinnerValue = "".obs;
   final Rx<TextEditingController?> dateFromController = TextEditingController().obs;
   final Rx<TextEditingController?> dateToController = TextEditingController().obs;
+  final TextEditingController? durationController = TextEditingController();
   
   final RxString liveFileName = "".obs, liveFileExtension = "".obs;
   Rx<Uint8List> liveFileBytes = Uint8List.fromList([0]).obs;
@@ -433,7 +435,7 @@ class DashboardController extends BaseController {
 
   Future<void> onPickFiles() async {
     const type = FileType.custom; //FileType.media
-    final extensions = ['mp4', 'jpg', 'png'];
+    final extensions = ['mp4', 'jpg', 'png', 'webp'];
     final result = await pickFiles(type, extensions);
     
     openFile(result?.files?.single/*result?.files.first*/);
@@ -443,7 +445,7 @@ class DashboardController extends BaseController {
     return await FilePicker.platform.pickFiles(type: type, allowedExtensions: extensions);
   }
   
-  void openFile(PlatformFile? file) {
+  Future<void> openFile(PlatformFile? file) async {
     debugPrint("MainController openFile(PlatformFile name ${file?.name})");
     debugPrint("MainController openFile(PlatformFile size ${file?.size})");
     debugPrint("MainController openFile(PlatformFile extension ${file?.extension})");
@@ -454,7 +456,22 @@ class DashboardController extends BaseController {
     final fileSize = mb >= 1 ? '${mb.toStringAsFixed(2)} MB' : '${kb.toStringAsFixed(2)} KB';
     liveFileName("${file?.name} ${fileSize}");
     liveFileExtension(file?.extension);
-    liveFileBytes(file?.bytes);
+    if (file?.extension?.toLowerCase()?.contains("jpg") == true || file?.extension?.toLowerCase()?.contains("png") == true || file?.extension?.toLowerCase()?.contains("webp") == true) {
+      liveFileBytes(file?.bytes);
+    } else {
+      /*
+      final uint8list = await VideoThumbnail.thumbnailData(
+      video: file.path ?? "",
+      imageFormat: ImageFormat.JPEG,
+      maxWidth: 128,
+      // specify the width of the thumbnail, let the height auto-scaled to keep the source aspect ratio
+      quality: 25,
+      );
+      liveFileBytes(uint8list);
+      */
+      //Todo: Still finding out how to implement Video Thumbnail
+      liveFileBytes(file?.bytes);
+    }
     isLoading(false);
   }
   //#endregion

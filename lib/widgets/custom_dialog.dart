@@ -120,57 +120,48 @@ class CustomDialog {
             debugPrint("liveFileBytes ${liveFileBytes.value}");
             if (liveLoading.value) {
               return const Center(child: CircularProgressIndicator());
-            } else if (liveFileExtension.value.toLowerCase().contains("jpg") || liveFileExtension.value.toLowerCase().contains("png")/*liveFileBytes.value == Uint8List.fromList([0])*/) {
+            } else if (liveFileExtension.value.toLowerCase().contains("jpg") || liveFileExtension.value.toLowerCase().contains("png") || liveFileExtension.value.toLowerCase().contains("webp")/*liveFileBytes.value == Uint8List.fromList([0])*/) {
               return Container (
                 color: Constants.GRAY_OFFLINE,
-                height: 250,
-                width: 250,
+                height: 200,
+                width: 200,
                 child: Column(
                   children: [
-                    Image.memory(
+                    Image.memory (
                       liveFileBytes.value, fit: BoxFit.scaleDown,
-                      height: 250,
-                      width: 250,
+                      height: 200,
+                      width: 200,
                     ),
-                    Text (
-                      liveFileName.value ?? "Nil",
-                      style:  const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                      overflow: TextOverflow.ellipsis,
-                    )
                   ],
                 )
               );
             } else if (liveFileExtension.value.toLowerCase().contains("mp4")) {
               return Container (
                 color: Constants.GRAY_OFFLINE,
-                height: 250,
-                width: 250,
-                child: Column(
-                  children: [
-                    const Icon (
-                      CupertinoIcons.video_camera_solid,
-                      color: Colors.blue,
-                    ),
-                    Text (
-                      liveFileName.value ?? "Nil",
-                      style:  const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                      overflow: TextOverflow.ellipsis,
-                    )
-                  ],
-                )
-              );
-            } else {
-              return Container (
-                color: Constants.GRAY_OFFLINE,
-                height: 250,
-                width: 250,
+                height: 200,
+                width: 200,
                 child: const Icon (
                   CupertinoIcons.video_camera_solid,
                   color: Colors.blue,
                 ),
               );
+            } else {
+              return Container (
+                color: Constants.GRAY_OFFLINE,
+                height: 200,
+                width: 200,
+                child: const Icon (
+                  CupertinoIcons.cloud_upload,
+                  color: Colors.blue,
+                ),
+              );
             }
           },),
+          Obx(() => Text (
+            liveFileName.value ?? "",
+            style:  const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            overflow: TextOverflow.ellipsis,
+          ),)
         ],
       ),
         title: const Text("New Contract"),

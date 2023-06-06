@@ -18,11 +18,12 @@ class ContentsFooterWidget extends BaseWidget<DashboardController> {
       child: Row (
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          ButtonWidget(text: "+ New Contract", textColor: Colors.purple, fillColor: Colors.white, fontSize: 20, fontWeight: FontWeight.w500, onPressed: () {
+          ButtonWidget(text: "+ New Contract", textColor: Colors.purple, fillColor: Colors.white, fontSize: 20, fontWeight: FontWeight.w500, onPressed: () {            
+            controller.durationController?.text = "30";
             CustomDialog.newContract(
               null, null,
               controller.dateFromController, controller.dateToController, 
-              null,
+              controller.durationController,
               controller.isLoading, controller.liveFileName, controller.liveFileExtension, controller.liveFileBytes, () {
                 controller.onPickFiles();
               }, () {
