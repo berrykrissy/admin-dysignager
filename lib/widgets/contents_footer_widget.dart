@@ -23,7 +23,7 @@ class ContentsFooterWidget extends BaseWidget<DashboardController> {
               null, null,
               controller.dateFromController, controller.dateToController, 
               null,
-              controller.liveFileName, () {
+              controller.isLoading, controller.liveFileName, controller.liveFileExtension, controller.liveFileBytes, () {
                 controller.onPickFiles();
               }, () {
                 controller.onUpload();

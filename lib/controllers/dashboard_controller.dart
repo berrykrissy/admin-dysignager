@@ -1,9 +1,8 @@
-import 'dart:io';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-import 'package:open_file/open_file.dart';
 import 'package:signage/controllers/base_controller.dart';
 import 'package:signage/models/marker_model.dart';
 import 'package:signage/models/content_model.dart';
@@ -32,7 +31,9 @@ class DashboardController extends BaseController {
   final RxString spinnerValue = "".obs;
   final Rx<TextEditingController?> dateFromController = TextEditingController().obs;
   final Rx<TextEditingController?> dateToController = TextEditingController().obs;
-  final RxString liveFileName = "".obs;
+  
+  final RxString liveFileName = "".obs, liveFileExtension = "".obs;
+  Rx<Uint8List> liveFileBytes = Uint8List.fromList([0]).obs;
 
   @override
   Future<void> onInit() async {
@@ -423,6 +424,9 @@ class DashboardController extends BaseController {
   Future<void> onUpload() async {
     isLoading(true);
     //Todo: On Going
+    liveFileName(""); 
+    liveFileExtension("");
+    liveFileBytes(Uint8List.fromList([0]));
     isLoading(false);
     Get.back();
   }
@@ -431,7 +435,8 @@ class DashboardController extends BaseController {
     const type = FileType.custom; //FileType.media
     final extensions = ['mp4', 'jpg', 'png'];
     final result = await pickFiles(type, extensions);
-    openFile(result?.files.first);
+    
+    openFile(result?.files?.single/*result?.files.first*/);
   }
   
   Future<FilePickerResult?> pickFiles(FileType type, List<String>? extensions) async {
@@ -443,11 +448,14 @@ class DashboardController extends BaseController {
     debugPrint("MainController openFile(PlatformFile size ${file?.size})");
     debugPrint("MainController openFile(PlatformFile extension ${file?.extension})");
     debugPrint("MainController openFile(PlatformFile bytes ${file?.bytes})");
+    isLoading(true);
     final kb = file!.size / 1024;
     final mb = kb / 1024;
     final fileSize = mb >= 1 ? '${mb.toStringAsFixed(2)} MB' : '${kb.toStringAsFixed(2)} KB';
     liveFileName("${file?.name} ${fileSize}");
-    //OpenFile.open(file?.path);
+    liveFileExtension(file?.extension);
+    liveFileBytes(file?.bytes);
+    isLoading(false);
   }
   //#endregion
   @override

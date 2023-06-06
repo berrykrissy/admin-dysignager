@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:signage/utils/constants.dart';
@@ -52,7 +53,7 @@ class CustomDialog {
     TextEditingController? contractNumberController, TextEditingController? clientController,
     Rx<TextEditingController?> dateFromController, Rx<TextEditingController?> dateToController,
     TextEditingController? durationController,
-    RxString liveFileName,
+    RxBool liveLoading, RxString liveFileName, RxString liveFileExtension, Rx<Uint8List> liveFileBytes,
     GestureTapCallback onPressedMedia ,GestureTapCallback onPressedUpload
   ) {
     Get.dialog(
@@ -108,20 +109,68 @@ class CustomDialog {
             obscureText: false,
             keyboardType: TextInputType.text,
           ),
-          ButtonWidget(text: "+ Add Media", textColor: Colors.purple, fillColor: Colors.white, fontSize: 20, fontWeight: FontWeight.w500, onPressed: onPressedMedia),
-          Obx(() => Container (
-            color: Constants.GRAY_OFFLINE,
-            height: 250,
-            width: 250,
-            child: Text (
-              liveFileName.value ?? "Nil",
-              style:  const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              overflow: TextOverflow.ellipsis,
-            ) ?? const Icon (
-              CupertinoIcons.video_camera_solid,
-              color: Colors.blue,
-            ),
-          ),),
+          Obx(() {
+            if (liveLoading.value) {
+              return const SizedBox( height: 10.0,);
+            } else {
+              return ButtonWidget(text: "+ Add Media", textColor: Colors.purple, fillColor: Colors.white, fontSize: 20, fontWeight: FontWeight.w500, onPressed: onPressedMedia);
+            }
+          }),          
+          Obx(() {
+            debugPrint("liveFileBytes ${liveFileBytes.value}");
+            if (liveLoading.value) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (liveFileExtension.value.toLowerCase().contains("jpg") || liveFileExtension.value.toLowerCase().contains("png")/*liveFileBytes.value == Uint8List.fromList([0])*/) {
+              return Container (
+                color: Constants.GRAY_OFFLINE,
+                height: 250,
+                width: 250,
+                child: Column(
+                  children: [
+                    Image.memory(
+                      liveFileBytes.value, fit: BoxFit.scaleDown,
+                      height: 250,
+                      width: 250,
+                    ),
+                    Text (
+                      liveFileName.value ?? "Nil",
+                      style:  const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      overflow: TextOverflow.ellipsis,
+                    )
+                  ],
+                )
+              );
+            } else if (liveFileExtension.value.toLowerCase().contains("mp4")) {
+              return Container (
+                color: Constants.GRAY_OFFLINE,
+                height: 250,
+                width: 250,
+                child: Column(
+                  children: [
+                    const Icon (
+                      CupertinoIcons.video_camera_solid,
+                      color: Colors.blue,
+                    ),
+                    Text (
+                      liveFileName.value ?? "Nil",
+                      style:  const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      overflow: TextOverflow.ellipsis,
+                    )
+                  ],
+                )
+              );
+            } else {
+              return Container (
+                color: Constants.GRAY_OFFLINE,
+                height: 250,
+                width: 250,
+                child: const Icon (
+                  CupertinoIcons.video_camera_solid,
+                  color: Colors.blue,
+                ),
+              );
+            }
+          },),
         ],
       ),
         title: const Text("New Contract"),
