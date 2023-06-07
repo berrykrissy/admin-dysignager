@@ -6,25 +6,20 @@ import 'package:signage/widgets/list_view_contents_detail_widget.dart';
 import 'package:signage/widgets/list_view_contents_header_widget.dart';
 import 'package:signage/widgets/scroll_view_widget.dart';
 
-<<<<<<< HEAD
-import 'button_widget.dart';
 
-class ContentsWidget extends BaseWidget<DashboardController> {
-=======
 class ContentsWidget extends BaseWidget {
->>>>>>> main
   const ContentsWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Flexible (
+    return const Flexible (
       flex: 70,
       child: ScrollViewWidget (
           isScrollable: true,
           //scrollContoller: controller.screensScrollController,
           children: [
-            const DashboardHeaderWidget(),
-            const SizedBox(height: 13,),
+            DashboardHeaderWidget(),
+            SizedBox(height: 13,),
             /*
             Card (
               margin: const EdgeInsets.symmetric(horizontal: 40),
@@ -196,25 +191,17 @@ class ContentsWidget extends BaseWidget {
               ),
             ),
             */
-            const SizedBox(height: 15,),
-            const ListViewContentsHeaderWidget(),
-            const Divider (
+            SizedBox(height: 15,),
+            ListViewContentsHeaderWidget(),
+            Divider (
               color: Colors.grey,
               height: 25,
               thickness: 1,
               indent: 5,
               endIndent: 5,
             ),
-            const ListViewContentsDetailsWidget(),
-            const ContentsFooterWidget(),
-            ButtonWidget(
-            text:"Add Advertisement", 
-            textColor: Colors.grey,
-            onPressed: () => controller.processCreateAdvertisement()),
-            ButtonWidget(
-              text: "Update Advertisement", 
-              textColor: Colors.grey,
-              onPressed: () => controller.processUpdateAdvertisement())
+            ListViewContentsDetailsWidget(),
+            ContentsFooterWidget()            
           ]
         ),
     );
