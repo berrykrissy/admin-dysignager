@@ -378,7 +378,7 @@ class DashboardController extends BaseController {
     debugPrint("DashboardController onAddScreen ${nameController?.text} ${locationController?.text}");
     if(nameController?.text.isBlank == false && locationController?.text.isBlank == false) {
       isLoading(true);
-      _insertMarker(_screenDetailslList.length, nameController?.text, Constants.OUT_OF_SYNC);
+      // _insertMarker(_screenDetailslList.length, nameController?.text, Constants.OUT_OF_SYNC);
       _screenDetailslList.add ( 
         ScreensDetailsModel (
           name: nameController?.text, status: Constants.OUT_OF_SYNC, onlineSince: null, location: locationController?.text, preview: null, isShowed: true
