@@ -1,20 +1,18 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:signage/controllers/dashboard_controller.dart';
 import 'package:signage/widgets/base_widgets.dart';
 import 'package:signage/widgets/contents_footer_widget.dart';
 import 'package:signage/widgets/dashboard_header_Widget.dart';
-import 'package:signage/widgets/date_picker_widget.dart';
 import 'package:signage/widgets/list_view_contents_detail_widget.dart';
 import 'package:signage/widgets/list_view_contents_header_widget.dart';
 import 'package:signage/widgets/scroll_view_widget.dart';
-import 'package:signage/widgets/spinner_widget.dart';
-import 'package:signage/widgets/text_field_widget.dart';
 
+<<<<<<< HEAD
 import 'button_widget.dart';
 
 class ContentsWidget extends BaseWidget<DashboardController> {
+=======
+class ContentsWidget extends BaseWidget {
+>>>>>>> main
   const ContentsWidget({super.key});
 
   @override
@@ -27,6 +25,7 @@ class ContentsWidget extends BaseWidget<DashboardController> {
           children: [
             const DashboardHeaderWidget(),
             const SizedBox(height: 13,),
+            /*
             Card (
               margin: const EdgeInsets.symmetric(horizontal: 40),
               color: Colors.white,
@@ -63,7 +62,8 @@ class ContentsWidget extends BaseWidget<DashboardController> {
                           children: [
                             Row (
                               children: [
-                                Text ( 'Cancel',
+                                ButtonWidget (
+                                  text: 'Cancel',
                                   style: GoogleFonts.roboto (
                                     textStyle: const TextStyle (
                                       fontSize: 20,
@@ -71,16 +71,22 @@ class ContentsWidget extends BaseWidget<DashboardController> {
                                       color: Colors.black45
                                     ),
                                   ),
+                                  onPressed: () {
+
+                                  },
                                 ),
                                 const SizedBox( width: 13,),
-                                Text ( 'Upload',
+                                ButtonWidget (
+                                  text: 'Upload',
                                   style: GoogleFonts.roboto (
                                     textStyle: TextStyle (
                                       fontSize: 20,
                                       fontWeight: FontWeight.w600,
                                       color: Colors.purple[400],
                                     ),
-                                  ),
+                                  ), onPressed: () {
+
+                                  } 
                                 ),
                               ],
                             ),
@@ -93,7 +99,7 @@ class ContentsWidget extends BaseWidget<DashboardController> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Container (
-                          color: Colors.yellow,
+                          color: Constants.GRAY_OFFLINE,
                           height: 250,
                           width: 250,
                           child: const Icon (
@@ -114,7 +120,11 @@ class ContentsWidget extends BaseWidget<DashboardController> {
                                     ),
                                   ),
                                 ),
-                                SpinnerWidget(),
+                                const SizedBox( width: 13, ),
+                                SpinnerWidget( 
+                                  list: controller.getScreenList(), 
+                                  liveValue: controller.spinnerValue, 
+                                ),
                               ],
                             ),
                             const SizedBox( height: 13,),
@@ -129,6 +139,7 @@ class ContentsWidget extends BaseWidget<DashboardController> {
                                     ),
                                   ),
                                 ),
+                                const SizedBox( width: 13, ),
                                 SizedBox(
                                   height: 20,
                                   width: 100,
@@ -184,6 +195,7 @@ class ContentsWidget extends BaseWidget<DashboardController> {
                 ),
               ),
             ),
+            */
             const SizedBox(height: 15,),
             const ListViewContentsHeaderWidget(),
             const Divider (

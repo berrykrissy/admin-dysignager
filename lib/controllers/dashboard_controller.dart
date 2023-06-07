@@ -1,6 +1,11 @@
+<<<<<<< HEAD
 import 'dart:io';
 import 'dart:js_interop';
 
+=======
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
+>>>>>>> main
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -13,8 +18,12 @@ import 'package:signage/models/schedule.model.dart';
 import 'package:signage/models/screens_details_model.dart';
 import 'package:signage/routes/app_pages.dart';
 import 'package:signage/utils/constants.dart';
+<<<<<<< HEAD
 
 import '../services/cloudfirestore/firestore_service.dart';
+=======
+import 'package:video_thumbnail/video_thumbnail.dart';
+>>>>>>> main
 //import 'package:signage/utils/server.dart';
 //import 'package:socket_io/socket_io.dart';
 
@@ -32,6 +41,7 @@ class DashboardController extends BaseController {
   //final Server _server;
   RxBool isLoading = false.obs;
   //final screensScrollController = ScrollController();
+<<<<<<< HEAD
   final RxList<MarkerModel> _markerModelList =
       new List<MarkerModel>.empty().obs;
   final RxList<ScreensDetailsModel> _screenDetailslList =
@@ -40,6 +50,22 @@ class DashboardController extends BaseController {
       new List<ContentsModel>.empty().obs;
   final TextEditingController? dateFromController = TextEditingController();
   final TextEditingController? dateToController = TextEditingController();
+=======
+  final RxList<MarkerModel> _markerModelList = new List<MarkerModel>.empty().obs;
+  final RxList<ScreensDetailsModel> _screenDetailslList = new List<ScreensDetailsModel>.empty().obs;
+  final RxList<ContentsModel> _contentsDetailslList = new List<ContentsModel>.empty().obs;
+
+  final TextEditingController? nameController = TextEditingController();
+  final TextEditingController? locationController = TextEditingController();
+
+  final RxString spinnerValue = "".obs;
+  final Rx<TextEditingController?> dateFromController = TextEditingController().obs;
+  final Rx<TextEditingController?> dateToController = TextEditingController().obs;
+  final TextEditingController? durationController = TextEditingController();
+  
+  final RxString liveFileName = "".obs, liveFileExtension = "".obs;
+  Rx<Uint8List> liveFileBytes = Uint8List.fromList([0]).obs;
+>>>>>>> main
 
   @override
   Future<void> onInit() async {
@@ -77,6 +103,7 @@ class DashboardController extends BaseController {
     print("schedule running end-------------");
   }
 
+<<<<<<< HEAD
   processAdvertisement() async {
     final snapshot = await _dbService.getAdvertisement();
     for (final item in snapshot) {
@@ -211,6 +238,42 @@ class DashboardController extends BaseController {
         duration: "60"));
 
     _getCoordinates();
+=======
+    _markerModelList.add (MarkerModel(latitude: 0.00, longitude: 0.00));
+
+    _screenDetailslList.add (
+      ScreensDetailsModel (
+        name: "Screen 1", status: Constants.ONLINE, onlineSince: "04/25/23", location: "Manila", preview: "nil", isShowed: true
+      )
+    );
+    _screenDetailslList.add (
+      ScreensDetailsModel (
+        name: "Screen 2", status: Constants.OUT_OF_SYNC, onlineSince: "04/25/23", location: "Manila", preview: "nil", isShowed: true
+      )
+    );
+    _screenDetailslList.add (
+      ScreensDetailsModel (
+        name: "Screen 3", status: Constants.OFFLINE, onlineSince: "04/25/23", location: "Manila", preview: "nil", isShowed: true
+      )
+    );
+    _screenDetailslList.add (
+      ScreensDetailsModel (
+        name: "Screen 4", status: Constants.DISABLED, onlineSince: "04/25/23", location: "Manila", preview: "nil", isShowed: true
+      )
+    );
+
+    _contentsDetailslList.add (
+      ContentsModel (
+        contractNumber: "0001", client: "Client 1", startDate: "06/25/2023", endDate: "07/26/2023", duration: "30", fileName: "Photo.jpg", fileUrl: "www", fileType: Constants.PHOTO
+      )
+    );
+
+    _contentsDetailslList.add (
+      ContentsModel (
+        contractNumber: "0002", client: "Client 2", startDate: "06/25/2023", endDate: "07/26/2023", duration: "30", fileName: "Video.mp4", fileUrl: "www", fileType: Constants.VIDEO
+      )
+    );
+>>>>>>> main
   }
 
   //#region Page Launchers
@@ -338,6 +401,7 @@ class DashboardController extends BaseController {
     return true;
   }
 
+<<<<<<< HEAD
   Future<void> _getCoordinates() async {
     if (await _handleLocationPermission()) {
       Position position = await Geolocator.getCurrentPosition(
@@ -349,11 +413,27 @@ class DashboardController extends BaseController {
     }
   }
 
+=======
+  Future<void> _addMarkerWithCoordinates() async {
+    if(await _handleLocationPermission()) {
+      Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+      _markerModelList.add (MarkerModel(latitude: position.latitude, longitude: position.longitude, status: null));
+    }
+  }
+
+   Future<void> _insertMarker(int index, String? name, String? status) async {
+    if(await _handleLocationPermission()) {
+      Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+      _markerModelList.insert (index, MarkerModel(name: name, latitude: position.latitude, longitude: position.longitude, status: status));
+    }
+  }
+>>>>>>> main
   //#endregion
   //#region Screen Views Methods
   Future<void> onSelectCardScreen(int index) async {
     debugPrint("DashboardController onSelectCardScreen $index");
     isLoading(true);
+<<<<<<< HEAD
     if (_markerModelList.value[index].name == null) {
       Get.snackbar("Test", "Add Icon");
     } else {
@@ -365,7 +445,35 @@ class DashboardController extends BaseController {
       _markerModelList.value[index].isSelected = true;
       _onFilterScreenDetails(_markerModelList.value[index].name);
     }
+=======
+    _markerModelList.value.forEach( (model) {
+      if (model.isSelected == true) {
+        model.isSelected = false;
+      }
+    } );
+    _markerModelList.value[index].isSelected = true;
+    _onFilterScreenDetails(_markerModelList.value[index].name);
+>>>>>>> main
     isLoading(false);
+  }
+
+  Future<void> onAddScreen() async {
+    debugPrint("DashboardController onAddScreen ${nameController?.text} ${locationController?.text}");
+    if(nameController?.text.isBlank == false && locationController?.text.isBlank == false) {
+      isLoading(true);
+      _insertMarker(_screenDetailslList.length, nameController?.text, Constants.OUT_OF_SYNC);
+      _screenDetailslList.add ( 
+        ScreensDetailsModel (
+          name: nameController?.text, status: Constants.OUT_OF_SYNC, onlineSince: null, location: locationController?.text, preview: null, isShowed: true
+        )
+      );
+      onResetScreenSelection();
+      isLoading(false);
+      Get.back();
+    } else {
+      Get.snackbar("Error", "Inputs Invalid");
+    }
+    
   }
 
   int getScreensViewLength() {
@@ -405,6 +513,7 @@ class DashboardController extends BaseController {
   }
 
   String getScreensViewName(int index) {
+    debugPrint("DashboardController getScreensViewName $index ${_markerModelList.value[index].name}");
     return _markerModelList.value[index].name ?? "";
   }
 
@@ -424,9 +533,18 @@ class DashboardController extends BaseController {
     isLoading(false);
   }
 
-  Future<void> onFilterResetScreenDetails() async {
+  Future<void> onResetScreenSelection() async {
     isLoading(true);
+<<<<<<< HEAD
     _screenDetailslList.value.forEach((model) {
+=======
+    _markerModelList.value.forEach( (model) {
+      if (model.isSelected == true) {
+        model.isSelected = false;
+      }
+    } );
+    _screenDetailslList.value.forEach( (model) {
+>>>>>>> main
       model.isShowed = true;
     });
     isLoading(false);
@@ -460,6 +578,13 @@ class DashboardController extends BaseController {
         "Nil";
   }
 
+<<<<<<< HEAD
+=======
+  String getScreenDetailsLocation(int index) {
+    return _screenDetailslList.where( (model) => model.isShowed == true ).toList()[index].location ?? "Nil";
+  }
+  
+>>>>>>> main
   String getScreenDetailsPreview(int index) {
     return _screenDetailslList
             .where((model) => model.isShowed == true)
@@ -477,25 +602,38 @@ class DashboardController extends BaseController {
   }
 
   //#endregion
-  //region Contents Methods
+  //#region Contents Methods
+  List<String?> getScreenList() {
+    spinnerValue(_markerModelList.where((model) => model.name != null).map((model) => model.name).toList()[0]);
+    return _markerModelList.where((model) => model.name != null).map((model) => model.name).toList();
+  }
+
   int getContentsDetailsLength() {
     return _contentsDetailslList.length;
   }
 
-  String getContentDetailsMediaUploaded(int index) {
-    return _contentsDetailslList[index].mediaUploaded ?? "Nil";
+  String getContentDetailsContractNumber(int index) {
+    return _contentsDetailslList[index].contractNumber ?? "Nil";
   }
 
-  String getContentDetailsScreenToDisplay(int index) {
-    return _contentsDetailslList[index].screenToDisplay ?? "Nil";
+  String getContentDetailsClient(int index) {
+    return _contentsDetailslList[index].client ?? "Nil";
   }
 
-  String getContentDetailsDateToPublish(int index) {
-    return _contentsDetailslList[index].dateToPublish ?? "Nil";
+  String getContentDetailsStartDate(int index) {
+    return _contentsDetailslList[index].startDate ?? "Nil";
+  }
+
+  String getContentDetailsEndDate(int index) {
+    return _contentsDetailslList[index].endDate ?? "Nil";
   }
 
   String getContentDetailsDuration(int index) {
     return _contentsDetailslList[index].duration ?? "Nil";
+  }
+
+  String getContentDetailsFileName(int index) {
+    return _contentsDetailslList[index].fileName ?? "Nil";
   }
 
   Future<void> onDeleteContentDetails(int index) async {
@@ -505,6 +643,60 @@ class DashboardController extends BaseController {
     isLoading(false);
   }
 
+<<<<<<< HEAD
+=======
+  Future<void> onUpload() async {
+    isLoading(true);
+    //Todo: On Going
+    liveFileName(""); 
+    liveFileExtension("");
+    liveFileBytes(Uint8List.fromList([0]));
+    isLoading(false);
+    Get.back();
+  }
+
+  Future<void> onPickFiles() async {
+    const type = FileType.custom; //FileType.media
+    final extensions = ['mp4', 'jpg', 'png', 'webp'];
+    final result = await pickFiles(type, extensions);
+    
+    openFile(result?.files?.single/*result?.files.first*/);
+  }
+  
+  Future<FilePickerResult?> pickFiles(FileType type, List<String>? extensions) async {
+    return await FilePicker.platform.pickFiles(type: type, allowedExtensions: extensions);
+  }
+  
+  Future<void> openFile(PlatformFile? file) async {
+    debugPrint("MainController openFile(PlatformFile name ${file?.name})");
+    debugPrint("MainController openFile(PlatformFile size ${file?.size})");
+    debugPrint("MainController openFile(PlatformFile extension ${file?.extension})");
+    debugPrint("MainController openFile(PlatformFile bytes ${file?.bytes})");
+    isLoading(true);
+    final kb = file!.size / 1024;
+    final mb = kb / 1024;
+    final fileSize = mb >= 1 ? '${mb.toStringAsFixed(2)} MB' : '${kb.toStringAsFixed(2)} KB';
+    liveFileName("${file?.name} ${fileSize}");
+    liveFileExtension(file?.extension);
+    if (file?.extension?.toLowerCase()?.contains("jpg") == true || file?.extension?.toLowerCase()?.contains("png") == true || file?.extension?.toLowerCase()?.contains("webp") == true) {
+      liveFileBytes(file?.bytes);
+    } else {
+      /*
+      final uint8list = await VideoThumbnail.thumbnailData(
+      video: file.path ?? "",
+      imageFormat: ImageFormat.JPEG,
+      maxWidth: 128,
+      // specify the width of the thumbnail, let the height auto-scaled to keep the source aspect ratio
+      quality: 25,
+      );
+      liveFileBytes(uint8list);
+      */
+      //Todo: Still finding out how to implement Video Thumbnail
+      liveFileBytes(file?.bytes);
+    }
+    isLoading(false);
+  }
+>>>>>>> main
   //#endregion
   @override
   void onClose() {

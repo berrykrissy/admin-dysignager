@@ -7,17 +7,22 @@ class AddIconWidget extends BaseWidget {
   const AddIconWidget( {
     super.key,
     required this.isVisible,
+    this.onPressed,
   });
 
   final bool isVisible;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
     if (isVisible) {
-      return const Center (
-        child: Icon (
-          CupertinoIcons.add_circled,
-          color: Colors.black,
+      return Center (
+        child: IconButton (
+          onPressed: onPressed,
+          icon: const Icon (
+            CupertinoIcons.add_circled,
+            color: Colors.black,
+          )
         )
       );
     } else {
