@@ -1,10 +1,19 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:signage/bindings/login_binding.dart';
+import 'package:signage/services/cloudfirestore/firebase_options.dart';
+import 'package:signage/services/cloudfirestore/firestore_service.dart';
 import 'routes/app_pages.dart';
 
 Future<void> main() async {
-  runApp( GetMaterialApp (
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  Get.put(FirestoreService());
+
+  runApp(GetMaterialApp(
     debugShowCheckedModeBanner: true,
     initialBinding: LoginBinding(),
     initialRoute: Routes.LOGIN,
@@ -13,5 +22,5 @@ Future<void> main() async {
     ),
     defaultTransition: Transition.fade,
     getPages: AppPages.pages,
-  ) );
+  ));
 }

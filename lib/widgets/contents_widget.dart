@@ -12,6 +12,8 @@ import 'package:signage/widgets/scroll_view_widget.dart';
 import 'package:signage/widgets/spinner_widget.dart';
 import 'package:signage/widgets/text_field_widget.dart';
 
+import 'button_widget.dart';
+
 class ContentsWidget extends BaseWidget<DashboardController> {
   const ContentsWidget({super.key});
 
@@ -193,6 +195,14 @@ class ContentsWidget extends BaseWidget<DashboardController> {
             ),
             const ListViewContentsDetailsWidget(),
             const ContentsFooterWidget(),
+            ButtonWidget(
+            text:"Add Advertisement", 
+            textColor: Colors.grey,
+            onPressed: () => controller.processCreateAdvertisement()),
+            ButtonWidget(
+              text: "Update Advertisement", 
+              textColor: Colors.grey,
+              onPressed: () => controller.processUpdateAdvertisement())
           ]
         ),
     );
