@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:signage/bindings/login_binding.dart';
@@ -12,9 +13,10 @@ Future<void> main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   Get.put(FirestoreService());
-
+  debugPaintSizeEnabled = false;
   runApp(GetMaterialApp(
-    debugShowCheckedModeBanner: true,
+    debugShowCheckedModeBanner: false,
+  
     initialBinding: LoginBinding(),
     initialRoute: Routes.LOGIN,
     theme: ThemeData(

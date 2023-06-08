@@ -89,7 +89,19 @@ class DashboardController extends BaseController {
       advertisement.add(item);
     }
     debugPrint("advertisement running start--------------");
-    advertisement.forEach((element) =>debugPrint("document-id: ${element.id}"));
+    advertisement.forEach((element) {
+      debugPrint("document-id: ${element.id} ${element.mediaUrl} ${element.mediaType} ${element.duration} ${element.startDate} ${element.endDate} }");
+
+      _contentsDetailslList.add(ContentsModel(
+         contractNumber: "Photo.jpg",
+         client: "04/25/23",
+         fileName: "Sample.jpg",
+         startDate: element.startDate.toString(),
+         endDate: element.endDate.toString(),
+         //location: element.location.toString(),
+         duration: element.duration.toString()));
+
+      });    
     debugPrint("advertisement running end----------------");
   }
 

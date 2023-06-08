@@ -22,6 +22,7 @@ class ListViewContentsDetailsWidget extends BaseWidget<DashboardController> {
             return Column (
               children: [
                 Row (
+                crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Text(controller.getContentDetailsContractNumber(index), style: const TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),

@@ -8,6 +8,7 @@ class ListViewContentsHeaderWidget extends BaseWidget {
   @override
   Widget build(BuildContext context) {
     return const Row (
+      crossAxisAlignment:CrossAxisAlignment.start ,
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Text("Contract Number", style: TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
