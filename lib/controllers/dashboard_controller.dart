@@ -45,7 +45,12 @@ class DashboardController extends BaseController {
   @override
   Future<void> onInit() async {
     super.onInit();
-    _initializeList();
+    processLocationsOnScreens();
+    processLocationsByID();    
+    processAdvertisement();
+    processSchedule();
+    processScheduleByDate();
+    //_getCoordinates();
   }
 
   processSchedule() async {
@@ -156,15 +161,6 @@ class DashboardController extends BaseController {
     locations.forEach((element)  {
       debugPrint("location ${element.name} ${element.gps?.latitude} ${element.gps?.longitude} ${element.status} ${element.onlineSince}");
     });
-  }
-
-  void _initializeList() {
-    processLocationsOnScreens();
-    processLocationsByID();    
-    processAdvertisement();
-    processSchedule();
-    processScheduleByDate();
-    //_getCoordinates();
   }
   //#region Page Launchers
   void launchFindScreen() {
