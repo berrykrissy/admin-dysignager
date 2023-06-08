@@ -32,6 +32,7 @@ class ScrollViewWidget extends BaseWidget {
           child: Padding (
             padding: padding ?? EdgeInsets.zero,
             child: Column (
+              crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: mainAxisAlignment ?? MainAxisAlignment.start,
               mainAxisSize: mainAxisSize ?? MainAxisSize.max,
               children: children,

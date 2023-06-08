@@ -39,6 +39,7 @@ class ListViewScreensDetailsWidget extends BaseWidget<DashboardController> {
             return Column (
               children: [
                 Row (
+                  crossAxisAlignment:CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Text(controller.getScreenDetailsName(index), style: const TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),

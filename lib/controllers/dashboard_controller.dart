@@ -77,10 +77,10 @@ class DashboardController extends BaseController {
     for (final item in snapshot) {
       schedule.add(item);
     }
-    print("schedule running start-----------");
-    schedule.forEach((element) => print(
+    debugPrint("schedule running start-----------");
+    schedule.forEach((element) =>debugPrint(
         "mediaUrl: ${element.advertisement?.mediaUrl} | locationId: ${element.locationId}"));
-    print("schedule running end-------------");
+    debugPrint("schedule running end-------------");
   }
 
   processAdvertisement() async {
@@ -88,9 +88,9 @@ class DashboardController extends BaseController {
     for (final item in snapshot) {
       advertisement.add(item);
     }
-    print("advertisement running start--------------");
-    advertisement.forEach((element) => print("document-id: ${element.id}"));
-    print("advertisement running end----------------");
+    debugPrint("advertisement running start--------------");
+    advertisement.forEach((element) =>debugPrint("document-id: ${element.id}"));
+    debugPrint("advertisement running end----------------");
   }
 
   processCreateAdvertisement() async {
@@ -125,16 +125,16 @@ class DashboardController extends BaseController {
     for (final item in snapshot) {
       locations.add(item);
     }
-    print("service running start------------");
-    locations.forEach((item) => print(item.name));
-    print("service running end--------------");
+   debugPrint("service running start------------");
+    locations.forEach((item) =>debugPrint(item.name));
+   debugPrint("service running end--------------");
   }
 
   processLocationsByID() async {
     final snapshot = await _dbService.getLocationById("QwKiM6iJQTEtWFa3yqJQ");
 
-    print("locationByID running--------");
-    print("LocationByID: ${snapshot.name} | ${snapshot.address} ");
+   debugPrint("locationByID running--------");
+   debugPrint("LocationByID: ${snapshot.name} | ${snapshot.address} ");
   }
 
   processScheduleByDate() async {
@@ -143,8 +143,25 @@ class DashboardController extends BaseController {
     for (final item in snapshot) {
       locations.add(item);
     }
-    print("locationByDate running--------");
-    locations.forEach((element) => print(element.name));
+   debugPrint("locationByDate running--------");
+    locations.forEach((element)  {
+     /* debugPrint("location ${element.name} ${element.gps?.latitude} ${element.gps?.longitude} ${element.status} ${element.onlineSince}");
+     */
+      _markerModelList.add (
+        MarkerModel(
+        name: element.name,
+        latitude: 12.8797,
+        longitude: 121.7740,
+        status: Constants.ONLINE,
+        isSelected: false)
+      );
+      _screenDetailslList.add(ScreensDetailsModel(
+        name: element.name,
+        status: Constants.DISABLED,
+        onlineSince: element.onlineSince,
+        preview: "nil",
+        isShowed: true));
+    });
   }
 
   void _initializeList() {
@@ -154,68 +171,68 @@ class DashboardController extends BaseController {
     processSchedule();
     processScheduleByDate();
     //TODO: List are Test Data need to implement soon
-    _markerModelList.add(MarkerModel(
-        name: "Screen 1",
-        latitude: 12.8797,
-        longitude: 121.7740,
-        status: Constants.ONLINE,
-        isSelected: false));
-    _markerModelList.add(MarkerModel(
-        name: "Screen 2",
-        latitude: 13.00,
-        longitude: 120.7740,
-        status: Constants.OUT_OF_SYNC,
-        isSelected: false));
-    _markerModelList.add(MarkerModel(
-        name: "Screen 3",
-        latitude: 51.509364,
-        longitude: -0.1289280,
-        status: Constants.OFFLINE,
-        isSelected: false));
-    _markerModelList.add(MarkerModel(
-        name: "Screen 4",
-        latitude: 14.00,
-        longitude: 130.00,
-        status: Constants.DISABLED,
-        isSelected: false));
+    /* _markerModelList.add(MarkerModel(
+         name: "Screen 1",
+         latitude: 12.8797,
+         longitude: 121.7740,
+         status: Constants.ONLINE,
+         isSelected: false));
+     _markerModelList.add(MarkerModel(
+         name: "Screen 2",
+         latitude: 13.00,
+         longitude: 120.7740,
+         status: Constants.OUT_OF_SYNC,
+         isSelected: false));
+     _markerModelList.add(MarkerModel(
+         name: "Screen 3",
+         latitude: 51.509364,
+         longitude: -0.1289280,
+         status: Constants.OFFLINE,
+         isSelected: false));
+     _markerModelList.add(MarkerModel(
+         name: "Screen 4",
+         latitude: 14.00,
+         longitude: 130.00,
+         status: Constants.DISABLED,
+         isSelected: false));
 
-    _screenDetailslList.add(ScreensDetailsModel(
-        name: "Screen 1",
-        status: Constants.ONLINE,
-        onlineSince: "04/25/23",
-        preview: "nil",
-        isShowed: true));
-    _screenDetailslList.add(ScreensDetailsModel(
-        name: "Screen 2",
-        status: Constants.OUT_OF_SYNC,
-        onlineSince: "04/25/23",
-        preview: "nil",
-        isShowed: true));
-    _screenDetailslList.add(ScreensDetailsModel(
-        name: "Screen 3",
-        status: Constants.OFFLINE,
-        onlineSince: "04/25/23",
-        preview: "nil",
-        isShowed: true));
-    _screenDetailslList.add(ScreensDetailsModel(
-        name: "Screen 4",
-        status: Constants.DISABLED,
-        onlineSince: "04/25/23",
-        preview: "nil",
-        isShowed: true));
+     _screenDetailslList.add(ScreensDetailsModel(
+         name: "Screen 1",
+         status: Constants.ONLINE,
+         onlineSince: "04/25/23",
+         preview: "nil",
+         isShowed: true));
+     _screenDetailslList.add(ScreensDetailsModel(
+         name: "Screen 2",
+         status: Constants.OUT_OF_SYNC,
+         onlineSince: "04/25/23",
+         preview: "nil",
+         isShowed: true));
+     _screenDetailslList.add(ScreensDetailsModel(
+         name: "Screen 3",
+         status: Constants.OFFLINE,
+         onlineSince: "04/25/23",
+         preview: "nil",
+         isShowed: true));
+     _screenDetailslList.add(ScreensDetailsModel(
+         name: "Screen 4",
+         status: Constants.DISABLED,
+         onlineSince: "04/25/23",
+         preview: "nil",
+         isShowed: true));
 
-    // _contentsDetailslList.add(ContentsModel(
-    //     mediaUploaded: "Photo.jpg",
-    //     screenToDisplay: "04/25/23",
-    //     dateToPublish: "04/25/2023 to 05/25/2023",
-    //     duration: "30"));
+     _contentsDetailslList.add(ContentsModel(
+         mediaUploaded: "Photo.jpg",
+         screenToDisplay: "04/25/23",
+         dateToPublish: "04/25/2023 to 05/25/2023",
+         duration: "30"));
 
-    // _contentsDetailslList.add(ContentsModel(
-    //     mediaUploaded: "Video.mp4",
-    //     screenToDisplay: "04/25/23",
-    //     dateToPublish: "04/25/2023 to 05/25/2023",
-    //     duration: "60"));
-
+     _contentsDetailslList.add(ContentsModel(
+         mediaUploaded: "Video.mp4",
+         screenToDisplay: "04/25/23",
+         dateToPublish: "04/25/2023 to 05/25/2023",
+         duration: "60"));
+   */
     _getCoordinates();
   }
 
