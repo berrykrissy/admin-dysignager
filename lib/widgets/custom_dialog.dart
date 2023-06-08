@@ -111,9 +111,9 @@ class CustomDialog {
           ),
           Obx(() {
             if (liveLoading.value) {
-              return const SizedBox( height: 10.0,);
+              return const SizedBox( height: 20.0,);
             } else {
-              return ButtonWidget(text: "+ Add Media", textColor: Colors.purple, fillColor: Colors.white, fontSize: 20, fontWeight: FontWeight.w500, onPressed: onPressedMedia);
+              return ButtonWidget(text: "+ Add Media", textColor: Colors.purple, fillColor: Colors.white, fontSize: 15, fontWeight: FontWeight.w500, onPressed: onPressedMedia);
             }
           }),          
           Obx(() {
@@ -124,13 +124,13 @@ class CustomDialog {
               return Container (
                 color: Constants.GRAY_OFFLINE,
                 height: 200,
-                width: 200,
+                width: 300,
                 child: Column(
                   children: [
                     Image.memory (
                       liveFileBytes.value, fit: BoxFit.scaleDown,
                       height: 200,
-                      width: 200,
+                      width: 300,
                     ),
                   ],
                 )
@@ -139,7 +139,7 @@ class CustomDialog {
               return Container (
                 color: Constants.GRAY_OFFLINE,
                 height: 200,
-                width: 200,
+                width: 300,
                 child: const Icon (
                   CupertinoIcons.video_camera_solid,
                   color: Colors.blue,
@@ -149,7 +149,7 @@ class CustomDialog {
               return Container (
                 color: Constants.GRAY_OFFLINE,
                 height: 200,
-                width: 200,
+                width: 300,
                 child: const Icon (
                   CupertinoIcons.cloud_upload,
                   color: Colors.blue,
@@ -159,8 +159,8 @@ class CustomDialog {
           },),
           Obx(() => Text (
             liveFileName.value ?? "",
-            style:  const TextStyle(fontSize: 8, fontWeight: FontWeight.normal),
-            overflow: TextOverflow.ellipsis,
+            style:  const TextStyle(fontSize: 12, fontWeight: FontWeight.normal),
+            overflow: TextOverflow.visible,
           ),)
         ],
       ),
