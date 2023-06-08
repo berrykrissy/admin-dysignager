@@ -11,27 +11,22 @@ import 'package:signage/models/content_model.dart';
 import 'package:signage/models/schedule.model.dart';
 import 'package:signage/models/screens_details_model.dart';
 import 'package:signage/routes/app_pages.dart';
+import 'package:signage/services/cloudfirestore/firestore_service.dart';
 import 'package:signage/utils/constants.dart';
-import 'package:video_thumbnail/video_thumbnail.dart';
-
-import '../services/cloudfirestore/firestore_service.dart';
-//import 'package:signage/utils/server.dart';
-//import 'package:socket_io/socket_io.dart';
+//import 'package:video_thumbnail/video_thumbnail.dart';
 
 class DashboardController extends BaseController {
-  final FirestoreService _dbService = Get.find<FirestoreService>();
+
+  DashboardController(FirestoreService this._dbService) {
+    debugPrint("DashboardController Constructor");
+  }
 
   final locations = <LocationsModel>[].obs;
   final advertisement = <AdvertisementModel>[].obs;
   final schedule = <ScheduleModel>[].obs;
 
-  DashboardController(/*Server this._server*/) {
-    debugPrint("DashboardController Constructor");
-  }
-
-  //final Server _server;
+  final FirestoreService _dbService;
   RxBool isLoading = false.obs;
-  //final screensScrollController = ScrollController();
   final RxList<MarkerModel> _markerModelList = new List<MarkerModel>.empty().obs;
   final RxList<ScreensDetailsModel> _screenDetailslList = new List<ScreensDetailsModel>.empty().obs;
   final RxList<ContentsModel> _contentsDetailslList = new List<ContentsModel>.empty().obs;
@@ -51,25 +46,6 @@ class DashboardController extends BaseController {
   Future<void> onInit() async {
     super.onInit();
     _initializeList();
-    /*
-    var nsp = _server.of('/some');
-    nsp.on('connection', (client) {
-      debugPrint('DashboardController connection /some');
-      client.on('msg', (data) {
-        debugPrint('DashboardController data from /some => $data');
-        client.emit('fromServer', "ok 2");
-      });
-    });
-    _server.on('connection', (client) {
-      debugPrint('DashboardController connection default namespace');
-      client.on('msg', (data) {
-        debugPrint('DashboardController data from default => $data');
-        client.emit('fromServer', "ok");
-      });
-    });
-    _server.listen(3000);
-    */
-    //_server.initialize();
   }
 
   processSchedule() async {
@@ -78,8 +54,9 @@ class DashboardController extends BaseController {
       schedule.add(item);
     }
     debugPrint("schedule running start-----------");
-    schedule.forEach((element) =>debugPrint(
-        "mediaUrl: ${element.advertisement?.mediaUrl} | locationId: ${element.locationId}"));
+    schedule.forEach((element) =>
+      debugPrint("mediaUrl: ${element.advertisement?.mediaUrl} | locationId: ${element.locationId}")
+    );
     debugPrint("schedule running end-------------");
   }
 
@@ -91,17 +68,17 @@ class DashboardController extends BaseController {
     debugPrint("advertisement running start--------------");
     advertisement.forEach((element) {
       debugPrint("document-id: ${element.id} ${element.mediaUrl} ${element.mediaType} ${element.duration} ${element.startDate} ${element.endDate} }");
-
-      _contentsDetailslList.add(ContentsModel(
-         contractNumber: "Photo.jpg",
-         client: "04/25/23",
+      _contentsDetailslList.add( ContentsModel (
+         contractNumber: "contruct no",
+         client: "client",
          fileName: "Sample.jpg",
          startDate: element.startDate.toString(),
          endDate: element.endDate.toString(),
          //location: element.location.toString(),
-         duration: element.duration.toString()));
+         duration: element.duration.toString()
+      ) );
 
-      });    
+    });    
     debugPrint("advertisement running end----------------");
   }
 
@@ -138,7 +115,27 @@ class DashboardController extends BaseController {
       locations.add(item);
     }
    debugPrint("service running start------------");
-    locations.forEach((item) =>debugPrint(item.name));
+    locations.forEach((element) {
+      _markerModelList.add (
+        MarkerModel (
+          name: element.name,
+          latitude: element.gps?.latitude ?? 0,
+          longitude: element.gps?.longitude ?? 0,
+          status: element.status,
+          isSelected: false
+        )
+      );
+      _screenDetailslList.add (
+        ScreensDetailsModel (
+        name: element.name,
+        status: element.status,
+        onlineSince: element.onlineSince,
+        preview: "nil",
+        isShowed: true
+        )
+      );
+    });
+    _markerModelList.add (MarkerModel(latitude: 0.00, longitude: 0.00));
    debugPrint("service running end--------------");
   }
 
@@ -157,22 +154,7 @@ class DashboardController extends BaseController {
     }
    debugPrint("locationByDate running--------");
     locations.forEach((element)  {
-     /* debugPrint("location ${element.name} ${element.gps?.latitude} ${element.gps?.longitude} ${element.status} ${element.onlineSince}");
-     */
-      _markerModelList.add (
-        MarkerModel(
-        name: element.name,
-        latitude: 12.8797,
-        longitude: 121.7740,
-        status: Constants.ONLINE,
-        isSelected: false)
-      );
-      _screenDetailslList.add(ScreensDetailsModel(
-        name: element.name,
-        status: Constants.DISABLED,
-        onlineSince: element.onlineSince,
-        preview: "nil",
-        isShowed: true));
+      debugPrint("location ${element.name} ${element.gps?.latitude} ${element.gps?.longitude} ${element.status} ${element.onlineSince}");
     });
   }
 
@@ -182,72 +164,8 @@ class DashboardController extends BaseController {
     processAdvertisement();
     processSchedule();
     processScheduleByDate();
-    //TODO: List are Test Data need to implement soon
-    /* _markerModelList.add(MarkerModel(
-         name: "Screen 1",
-         latitude: 12.8797,
-         longitude: 121.7740,
-         status: Constants.ONLINE,
-         isSelected: false));
-     _markerModelList.add(MarkerModel(
-         name: "Screen 2",
-         latitude: 13.00,
-         longitude: 120.7740,
-         status: Constants.OUT_OF_SYNC,
-         isSelected: false));
-     _markerModelList.add(MarkerModel(
-         name: "Screen 3",
-         latitude: 51.509364,
-         longitude: -0.1289280,
-         status: Constants.OFFLINE,
-         isSelected: false));
-     _markerModelList.add(MarkerModel(
-         name: "Screen 4",
-         latitude: 14.00,
-         longitude: 130.00,
-         status: Constants.DISABLED,
-         isSelected: false));
-
-     _screenDetailslList.add(ScreensDetailsModel(
-         name: "Screen 1",
-         status: Constants.ONLINE,
-         onlineSince: "04/25/23",
-         preview: "nil",
-         isShowed: true));
-     _screenDetailslList.add(ScreensDetailsModel(
-         name: "Screen 2",
-         status: Constants.OUT_OF_SYNC,
-         onlineSince: "04/25/23",
-         preview: "nil",
-         isShowed: true));
-     _screenDetailslList.add(ScreensDetailsModel(
-         name: "Screen 3",
-         status: Constants.OFFLINE,
-         onlineSince: "04/25/23",
-         preview: "nil",
-         isShowed: true));
-     _screenDetailslList.add(ScreensDetailsModel(
-         name: "Screen 4",
-         status: Constants.DISABLED,
-         onlineSince: "04/25/23",
-         preview: "nil",
-         isShowed: true));
-
-     _contentsDetailslList.add(ContentsModel(
-         mediaUploaded: "Photo.jpg",
-         screenToDisplay: "04/25/23",
-         dateToPublish: "04/25/2023 to 05/25/2023",
-         duration: "30"));
-
-     _contentsDetailslList.add(ContentsModel(
-         mediaUploaded: "Video.mp4",
-         screenToDisplay: "04/25/23",
-         dateToPublish: "04/25/2023 to 05/25/2023",
-         duration: "60"));
-   */
-    _getCoordinates();
+    //_getCoordinates();
   }
-
   //#region Page Launchers
   void launchFindScreen() {
     debugPrint("DashboardController launchFindScreen");
@@ -264,12 +182,6 @@ class DashboardController extends BaseController {
     Get.toNamed(Routes.CONTENTS);
   }
 
-  /*
-  void launchSettings() {
-    debugPrint("DashboardController launchSettings");
-    Get.toNamed(Routes.SETTINGS);
-  }
-  */
   void launchLogout() {
     debugPrint("DashboardController launchLogout");
     Get.defaultDialog(
@@ -280,11 +192,10 @@ class DashboardController extends BaseController {
       },
     );
   }
-
   //#endregion
   //#region Maker Methods
   List<MarkerModel> getMarkers() {
-    return _markerModelList.value.where((model) => model.name != null).toList();
+    return _markerModelList.value.where( (model) => model.name != null ).toList();
   }
 
   RxString getMarkersQuantity(String? status) {
@@ -344,7 +255,6 @@ class DashboardController extends BaseController {
       throw UnimplementedError();
     }
   }
-
   //#endregion
   //#region GPS Location Methods
   Future<bool> _handleLocationPermission() async {
@@ -373,17 +283,19 @@ class DashboardController extends BaseController {
     return true;
   }
 
-  Future<void> _getCoordinates() async {
-    if (await _handleLocationPermission()) {
-      Position position = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.high);
-      _markerModelList.add(MarkerModel(
-          latitude: position.latitude,
-          longitude: position.longitude,
-          status: null));
+  Future<void> _addMarkerWithCoordinates() async {
+    if(await _handleLocationPermission()) {
+      Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+      _markerModelList.add (MarkerModel(latitude: position.latitude, longitude: position.longitude, status: null));
     }
   }
 
+   Future<void> _insertMarker(int index, String? name, String? status) async {
+    if(await _handleLocationPermission()) {
+      Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+      _markerModelList.insert (index, MarkerModel(name: name, latitude: position.latitude, longitude: position.longitude, status: status));
+    }
+  }
   //#endregion
   //#region Screen Views Methods
   Future<void> onSelectCardScreen(int index) async {
@@ -407,7 +319,7 @@ class DashboardController extends BaseController {
     debugPrint("DashboardController onAddScreen ${nameController?.text} ${locationController?.text}");
     if(nameController?.text.isBlank == false && locationController?.text.isBlank == false) {
       isLoading(true);
-      // _insertMarker(_screenDetailslList.length, nameController?.text, Constants.OUT_OF_SYNC);
+      _insertMarker(_screenDetailslList.length, nameController?.text, Constants.OUT_OF_SYNC);
       _screenDetailslList.add ( 
         ScreensDetailsModel (
           name: nameController?.text, status: Constants.OUT_OF_SYNC, onlineSince: null, location: locationController?.text, preview: null, isShowed: true
@@ -419,7 +331,6 @@ class DashboardController extends BaseController {
     } else {
       Get.snackbar("Error", "Inputs Invalid");
     }
-    
   }
 
   int getScreensViewLength() {
@@ -427,7 +338,7 @@ class DashboardController extends BaseController {
   }
 
   MarkerModel getScreensView(int index) {
-    return _markerModelList.value[index]; //_screenViewList.value[index];
+    return _markerModelList.value[index];
   }
 
   Rx<Color> getScreensViewColourBorderSide(int index) {
@@ -462,7 +373,6 @@ class DashboardController extends BaseController {
     debugPrint("DashboardController getScreensViewName $index ${_markerModelList.value[index].name}");
     return _markerModelList.value[index].name ?? "";
   }
-
   //#endregion
   //#region Screen Details Methods
   Future<void> _onFilterScreenDetails(String? name) async {
@@ -539,7 +449,6 @@ class DashboardController extends BaseController {
     _markerModelList.removeWhere((model) => model.name == name);
     isLoading(false);
   }
-
   //#endregion
   //#region Contents Methods
   List<String?> getScreenList() {
