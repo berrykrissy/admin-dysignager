@@ -9,7 +9,7 @@ import 'package:signage/models/content_model.dart';
 import 'package:signage/models/screens_details_model.dart';
 import 'package:signage/routes/app_pages.dart';
 import 'package:signage/utils/constants.dart';
-import 'package:video_thumbnail/video_thumbnail.dart';
+//import 'package:video_thumbnail/video_thumbnail.dart';
 //import 'package:signage/utils/server.dart';
 //import 'package:socket_io/socket_io.dart';
 

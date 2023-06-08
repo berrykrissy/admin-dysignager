@@ -10,7 +10,7 @@ class ScrollViewWidget extends BaseWidget {
     this.mainAxisAlignment,
     this.mainAxisSize,
     this.padding,
-    this.scrollContoller, required Column child,
+    this.scrollContoller,
   } );
 
   final List<Widget> children;
