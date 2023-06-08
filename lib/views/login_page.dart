@@ -27,7 +27,7 @@ class LoginPage extends BaseView<LoginController> {
                   ),
                 ),
                 Padding (
-                  padding: const EdgeInsets.only(top: 15, left: 30.0, right: 30.0,),
+                  padding: const EdgeInsets.only(top: 15, left: 150.0, right: 150.0,),
                   child: TextFieldWidget (
                     textEditingController: controller.usernameController,
                     labelText: 'Username',
@@ -35,7 +35,7 @@ class LoginPage extends BaseView<LoginController> {
                   ),
                 ),
                 Padding (
-                  padding: const EdgeInsets.only(left: 30.0, right: 30.0, top: 15, bottom: 15),
+                  padding: const EdgeInsets.only(left: 150.0, right: 150.0, top: 15, bottom: 15),
                   child: TextFieldWidget (
                     textEditingController: controller.passwordController,
                     isObscureText: true,
