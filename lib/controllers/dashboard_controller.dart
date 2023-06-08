@@ -14,7 +14,7 @@ import 'package:signage/utils/constants.dart';
 //import 'package:socket_io/socket_io.dart';
 
 class DashboardController extends BaseController {
-  
+
   DashboardController(/*Server this._server*/) {
     debugPrint("DashboardController Constructor");
   }
@@ -40,34 +40,12 @@ class DashboardController extends BaseController {
   @override
   Future<void> onInit() async {
     super.onInit();
-    _initializeList();
-    /*
-    var nsp = _server.of('/some');
-    nsp.on('connection', (client) {
-      debugPrint('DashboardController connection /some');
-      client.on('msg', (data) {
-        debugPrint('DashboardController data from /some => $data');
-        client.emit('fromServer', "ok 2");
-      });
-    });
-    _server.on('connection', (client) {
-      debugPrint('DashboardController connection default namespace');
-      client.on('msg', (data) {
-        debugPrint('DashboardController data from default => $data');
-        client.emit('fromServer', "ok");
-      });
-    });
-    _server.listen(3000);
-    */
-    //_server.initialize();
-  }
-
-  void _initializeList() { //TODO: List are Test Data need to implement soon
+    //TODO: List are Test Data need to implement soon
     _markerModelList.add (
-      MarkerModel (
+        MarkerModel (
         name: "Screen 1", latitude: 12.8797, longitude: 121.7740, status: Constants.ONLINE, isSelected: false
-      )
-    );
+        )
+      );
     _markerModelList.add (
       MarkerModel (
         name: "Screen 2", latitude: 13.00, longitude: 120.7740, status: Constants.OUT_OF_SYNC, isSelected: false
@@ -86,11 +64,11 @@ class DashboardController extends BaseController {
 
     _markerModelList.add (MarkerModel(latitude: 0.00, longitude: 0.00));
 
-    _screenDetailslList.add (
-      ScreensDetailsModel (
+      _screenDetailslList.add (
+        ScreensDetailsModel (
         name: "Screen 1", status: Constants.ONLINE, onlineSince: "04/25/23", location: "Manila", preview: "nil", isShowed: true
-      )
-    );
+        )
+      );
     _screenDetailslList.add (
       ScreensDetailsModel (
         name: "Screen 2", status: Constants.OUT_OF_SYNC, onlineSince: "04/25/23", location: "Manila", preview: "nil", isShowed: true
@@ -118,6 +96,7 @@ class DashboardController extends BaseController {
         contractNumber: "0002", client: "Client 2", startDate: "06/25/2023", endDate: "07/26/2023", duration: "30", fileName: "Video.mp4", fileUrl: "www", fileType: Constants.VIDEO
       )
     );
+    //_getCoordinates();
   }
   //#region Page Launchers
   void launchFindScreen() {
@@ -159,35 +138,43 @@ class DashboardController extends BaseController {
   }
 
   RxString getMarkersQuantity(String? status) {
-    if(status == Constants.ONLINE) {
-      return _markerModelList.value.where(
-        (model) => model.status == Constants.ONLINE
-      ).length.toString().obs;
-    } else if(status == Constants.OUT_OF_SYNC) {
-      return _markerModelList.value.where(
-        (model) => model.status == Constants.OUT_OF_SYNC
-      ).length.toString().obs;
-    } else if(status == Constants.OFFLINE) {
-      return _markerModelList.value.where(
-        (model) => model.status == Constants.OFFLINE
-      ).length.toString().obs;
-    } else if(status == Constants.DISABLED) {
-      return _markerModelList.value.where(
-        (model) => model.status == Constants.DISABLED
-      ).length.toString().obs;
+    if (status == Constants.ONLINE) {
+      return _markerModelList.value
+          .where((model) => model.status == Constants.ONLINE)
+          .length
+          .toString()
+          .obs;
+    } else if (status == Constants.OUT_OF_SYNC) {
+      return _markerModelList.value
+          .where((model) => model.status == Constants.OUT_OF_SYNC)
+          .length
+          .toString()
+          .obs;
+    } else if (status == Constants.OFFLINE) {
+      return _markerModelList.value
+          .where((model) => model.status == Constants.OFFLINE)
+          .length
+          .toString()
+          .obs;
+    } else if (status == Constants.DISABLED) {
+      return _markerModelList.value
+          .where((model) => model.status == Constants.DISABLED)
+          .length
+          .toString()
+          .obs;
     } else {
       return 0.toString().obs;
     }
   }
 
   Color? getColour(String? status) {
-    if(status == Constants.ONLINE) {
+    if (status == Constants.ONLINE) {
       return Constants.GREEN_ONLINE;
-    } else if(status == Constants.OUT_OF_SYNC) {
+    } else if (status == Constants.OUT_OF_SYNC) {
       return Constants.RED_OUT_OF_SYNC;
-    } else if(status == Constants.OFFLINE) {
+    } else if (status == Constants.OFFLINE) {
       return Constants.GRAY_OFFLINE;
-    } else if(status == Constants.DISABLED) {
+    } else if (status == Constants.DISABLED) {
       return Constants.BLUE_DISABLED;
     } else {
       return null;
@@ -195,13 +182,13 @@ class DashboardController extends BaseController {
   }
 
   String getPin(String? status) {
-    if(status == Constants.ONLINE) {
+    if (status == Constants.ONLINE) {
       return "assets/OnlinePin.webp";
-    } else if(status == Constants.OUT_OF_SYNC) {
+    } else if (status == Constants.OUT_OF_SYNC) {
       return "assets/OutofSyncPin.webp";
-    } else if(status == Constants.OFFLINE) {
+    } else if (status == Constants.OFFLINE) {
       return "assets/OfflinePin.webp";
-    } else if(status == Constants.DISABLED) {
+    } else if (status == Constants.DISABLED) {
       return "assets/DisabledPin.webp";
     } else {
       throw UnimplementedError();
@@ -212,22 +199,22 @@ class DashboardController extends BaseController {
   Future<bool> _handleLocationPermission() async {
     bool serviceEnabled;
     LocationPermission permission;
-    
+
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      Get.snackbar("GPS","Location services are disabled. Please enable the services");
+      Get.snackbar("GPS", "Location services are disabled. Please enable the services");
       return false;
     }
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {   
-        Get.snackbar("GPS","Location permissions are denied");
+      if (permission == LocationPermission.denied) {
+        Get.snackbar("GPS", "Location permissions are denied");
         return false;
       }
     }
     if (permission == LocationPermission.deniedForever) {
-      Get.snackbar("GPS","Location permissions are permanently denied, we cannot request permissions.");
+      Get.snackbar("GPS", "Location permissions are permanently denied, we cannot request permissions.");
       return false;
     }
     return true;
@@ -252,12 +239,12 @@ class DashboardController extends BaseController {
     debugPrint("DashboardController onSelectCardScreen $index");
     isLoading(true);
     _markerModelList.value.forEach( (model) {
-      if (model.isSelected == true) {
-        model.isSelected = false;
-      }
+        if (model.isSelected == true) {
+          model.isSelected = false;
+        }
     } );
-    _markerModelList.value[index].isSelected = true;
-    _onFilterScreenDetails(_markerModelList.value[index].name);
+      _markerModelList.value[index].isSelected = true;
+      _onFilterScreenDetails(_markerModelList.value[index].name);
     isLoading(false);
   }
 
@@ -277,7 +264,6 @@ class DashboardController extends BaseController {
     } else {
       Get.snackbar("Error", "Inputs Invalid");
     }
-    
   }
 
   int getScreensViewLength() {
@@ -350,19 +336,31 @@ class DashboardController extends BaseController {
   }
 
   int getScreensDetailsLength() {
-    return _screenDetailslList.where( (model) => model.isShowed == true ).length;
+    return _screenDetailslList.where((model) => model.isShowed == true).length;
   }
 
-  String getScreenDetailsName(int index) {
-    return _screenDetailslList.where( (model) => model.isShowed == true ).toList()[index].name ?? "Nil";
+  getScreenDetailsName(int index) {
+    return _screenDetailslList
+            .where((model) => model.isShowed == true)
+            .toList()[index]
+            .name ??
+        "Nil";
   }
 
-  String getScreenDetailsStatus(int index) {
-    return _screenDetailslList.where( (model) => model.isShowed == true ).toList()[index].status ?? "Nil";
+  getScreenDetailsStatus(int index) {
+    return _screenDetailslList
+            .where((model) => model.isShowed == true)
+            .toList()[index]
+            .status ??
+        "Nil";
   }
-  
+
   String getScreenDetailsOnlineSince(int index) {
-    return _screenDetailslList.where( (model) => model.isShowed == true ).toList()[index].onlineSince ?? "Nil";
+    return _screenDetailslList
+            .where((model) => model.isShowed == true)
+            .toList()[index]
+            .onlineSince ??
+        "Nil";
   }
 
   String getScreenDetailsLocation(int index) {
@@ -370,16 +368,19 @@ class DashboardController extends BaseController {
   }
   
   String getScreenDetailsPreview(int index) {
-    return _screenDetailslList.where( (model) => model.isShowed == true ).toList()[index].preview ?? "Nil";
+    return _screenDetailslList
+            .where((model) => model.isShowed == true)
+            .toList()[index]
+            .preview ??
+        "Nil";
   }
 
   Future<void> onDeleteScreenDetails(String name) async {
     debugPrint("DashboardController onDeleteScreenDetails $name");
     isLoading(true);
-    _screenDetailslList.removeWhere((model) => model.name == name );
-    _markerModelList.removeWhere((model) => model.name == name );
+    _screenDetailslList.removeWhere((model) => model.name == name);
+    _markerModelList.removeWhere((model) => model.name == name);
     isLoading(false);
-
   }
   //#endregion
   //#region Contents Methods
