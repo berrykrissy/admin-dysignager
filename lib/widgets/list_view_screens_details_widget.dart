@@ -51,13 +51,21 @@ class ListViewScreensDetailsWidget extends BaseWidget<DashboardController> {
                   }, icon: const Icon( CupertinoIcons.delete), )
                 ],
               ),
-              const Divider(
+              const Center(
+                child: Divider(
                 color: Colors.grey,
                 height: 25,
                 thickness: 1,
                 indent: 5,
-                endIndent: 5,
-              ),
+                endIndent: 5, ),
+              )
+              //const Divider(
+                //color: Colors.grey,
+                //height: 25,
+               // thickness: 1,
+               // indent: 5,
+               // endIndent: 5,
+              //),
               ],
             );
           }

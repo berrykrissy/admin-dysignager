@@ -159,7 +159,7 @@ class CustomDialog {
           },),
           Obx(() => Text (
             liveFileName.value ?? "",
-            style:  const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            style:  const TextStyle(fontSize: 8, fontWeight: FontWeight.normal),
             overflow: TextOverflow.ellipsis,
           ),)
         ],

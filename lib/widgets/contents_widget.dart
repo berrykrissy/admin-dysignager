@@ -11,14 +11,14 @@ class ContentsWidget extends BaseWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Flexible (
+    return const Flexible (
       flex: 70,
       child: ScrollViewWidget (
           isScrollable: true,
           //scrollContoller: controller.screensScrollController,
           children: [
-            const DashboardHeaderWidget(),
-            const SizedBox(height: 13,),
+            DashboardHeaderWidget(),
+            SizedBox(height: 13,),
             /*
             Card (
               margin: const EdgeInsets.symmetric(horizontal: 40),
@@ -190,17 +190,17 @@ class ContentsWidget extends BaseWidget {
               ),
             ),
             */
-            const SizedBox(height: 15,),
-            const ListViewContentsHeaderWidget(),
-            const Divider (
+            SizedBox(height: 15,),
+            ListViewContentsHeaderWidget(),
+            Divider (
               color: Colors.grey,
               height: 25,
               thickness: 1,
               indent: 5,
               endIndent: 5,
             ),
-            const ListViewContentsDetailsWidget(),
-            const ContentsFooterWidget(),
+            ListViewContentsDetailsWidget(),
+            ContentsFooterWidget(),
           ]
         ),
     );
