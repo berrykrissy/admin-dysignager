@@ -536,12 +536,8 @@ class DashboardController extends BaseController {
       //Todo: Still finding out how to implement Video Thumbnail
       liveFileBytes(file?.bytes);
     }
-<<<<<<< HEAD
     Float32List? floatList = file?.bytes?.buffer?.asFloat32List();
     debugPrint("TEST TEST TEST TEST ${floatList}");
-=======
-
->>>>>>> 84719a27f40cf79e7b0de5fb4ee61a6b61952e83
     isLoading(false);
   }
   //#endregion
