@@ -1,5 +1,3 @@
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AdvertisementModel {
@@ -11,23 +9,24 @@ class AdvertisementModel {
   int? duration;
   String? location;
 
-  AdvertisementModel(
-      {this.id,
-      this.mediaUrl,
-      this.mediaType,
-      this.startDate,
-      this.endDate,
-      this.duration,
-      this.location});
+  AdvertisementModel( {
+    this.id,
+    this.mediaUrl,
+    this.mediaType,
+    this.startDate,
+    this.endDate,
+    this.duration,
+    this.location
+  } );
 
   Map<String, dynamic> toMap() => {
-        "mediaUrl": mediaUrl,
-        "mediaType": mediaType,
-        "startDate": startDate,
-        "endDate": endDate,
-        "duration": duration,
-        "location": location
-      };
+    "mediaUrl": mediaUrl,
+    "mediaType": mediaType,
+    "startDate": startDate,
+    "endDate": endDate,
+    "duration": duration,
+    "location": location
+  };
 
   //use this is the dataype of the data is document, which will directly come from cloud_firesto
   AdvertisementModel.fromSnapshot(DocumentSnapshot snapshot) {
