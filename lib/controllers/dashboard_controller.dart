@@ -76,7 +76,7 @@ class DashboardController extends BaseController {
       _contentsDetailslList.add( ContentsModel (
          contractNumber: "contruct no",
          client: "client",
-         fileName: "Sample.jpg",
+         fileName: "Sample.${element.mediaType}",
          startDate: element.startDate.toString(),
          endDate: element.endDate.toString(),
          //location: element.location.toString(),
@@ -536,6 +536,7 @@ class DashboardController extends BaseController {
       //Todo: Still finding out how to implement Video Thumbnail
       liveFileBytes(file?.bytes);
     }
+
     isLoading(false);
   }
   //#endregion
