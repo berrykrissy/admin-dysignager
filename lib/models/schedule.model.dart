@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:signage/models/advertisement_model.dart';
-import 'package:signage/models/content_model.dart';
+
 
 class ScheduleModel {
   String? locationId;
