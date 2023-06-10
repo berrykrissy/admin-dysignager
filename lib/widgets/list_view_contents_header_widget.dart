@@ -11,7 +11,6 @@ class ListViewContentsHeaderWidget extends BaseWidget {
       crossAxisAlignment:CrossAxisAlignment.start ,
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        Text("Contract Number", style: TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
         Text("Client", style: TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
         Text("Start Date", style: TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),
         Text("End Date", style: TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),

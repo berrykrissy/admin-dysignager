@@ -2,6 +2,7 @@ import 'dart:io' as io;
 
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_disposable.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:signage/models/storage_mode.dart';
@@ -32,11 +33,14 @@ class FirebaseStorageService extends GetxService {
   }
 
    Future<void> uploadPlatformFiles(PlatformFile? file) async {
+    debugPrint("uploadPlatformFiles ${file?.name} ${file?.size}");
     bool isImage = file?.extension?.toLowerCase()?.contains("jpg") == true || file?.extension?.toLowerCase()?.contains("png") == true || file?.extension?.toLowerCase()?.contains("webp") == true;
     if (file?.bytes != null && isImage) {
       await imagesRef?.putData(file!.bytes!);
+      debugPrint("uploadPlatformFiles isImage");
     } else if (file?.bytes != null && !isImage) {
-      videosRef?.putData(file!.bytes!);
+      await videosRef?.putData(file!.bytes!);
+      debugPrint("uploadPlatformFiles isVideo");
     }
   }
       

@@ -81,12 +81,11 @@ class DashboardController extends BaseController {
     advertisement.forEach((element) {
       debugPrint("document-id: ${element.id} ${element.mediaUrl} ${element.mediaType} ${element.duration} ${element.startDate} ${element.endDate} }");
       _contentsDetailslList.add( ContentsModel (
-         contractNumber: "contruct no",
-         client: "client",
+         client: element.client,
          fileName: "Sample.${element.mediaType}",
          startDate: element.startDate.toString(),
          endDate: element.endDate.toString(),
-         //location: element.location.toString(),
+         location: element.location.toString(),
          duration: element.duration.toString()
       ) );
 
@@ -279,8 +278,7 @@ class DashboardController extends BaseController {
       }
     }
     if (permission == LocationPermission.deniedForever) {
-      Get.snackbar("GPS",
-          "Location permissions are permanently denied, we cannot request permissions.");
+      Get.snackbar("GPS","Location permissions are permanently denied, we cannot request permissions.");
       return false;
     }
     return true;
@@ -461,10 +459,6 @@ class DashboardController extends BaseController {
 
   int getContentsDetailsLength() {
     return _contentsDetailslList.length;
-  }
-
-  String getContentDetailsContractNumber(int index) {
-    return _contentsDetailslList[index].contractNumber ?? "Nil";
   }
 
   String getContentDetailsClient(int index) {
