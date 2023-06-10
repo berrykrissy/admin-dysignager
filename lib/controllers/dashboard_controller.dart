@@ -122,7 +122,8 @@ class DashboardController extends BaseController {
     await _service.updateAdvertisement(data.id, data.toMap());
   }
 
-  void processLocationsOnScreens() async { debugPrint("DashboardController processLocationsOnScreens");
+  void processLocationsOnScreens() async {
+
     final snapshot = await _service.getLocations();
     for (final item in snapshot) {
       debugPrint("DashboardController snapshot ${item.id}");
@@ -130,13 +131,7 @@ class DashboardController extends BaseController {
     }
    debugPrint("service running start------------");
     locations.forEach( (newValue) {
-      debugPrint("DashboardController location ${newValue}");
-      if (_markerModelList.where((currentValue) => currentValue.id == newValue.id).isNotEmpty) {
-        _markerModelList.where((currentValue) => currentValue.id == newValue.id).map( (oldItem) => 
-          oldItem.status = newValue.status
-        );
-      } else {
-        _markerModelList.add (
+      _markerModelList.add (
           MarkerModel (
             id: newValue.id,
             name: newValue.name,
@@ -146,15 +141,8 @@ class DashboardController extends BaseController {
             isSelected: false
           )
         );
-      }
       
-      if (_screenDetailslList.where((currentValue) => currentValue.id == newValue.id).isNotEmpty) {
-        _screenDetailslList.where((currentValue) => currentValue.id == newValue.id).map( (oldItem) => 
-          oldItem.status = newValue.status
-        );
-        _screenDetailslList.refresh();
-      } else {
-        _screenDetailslList.add (
+      _screenDetailslList.add (
           ScreensDetailsModel (
             id: newValue.id,
             name: newValue.name,
@@ -164,7 +152,6 @@ class DashboardController extends BaseController {
             isShowed: true
           )
         );
-      }
     });
     //_markerModelList.add (MarkerModel(latitude: 0.00, longitude: 0.00));
    debugPrint("service running end--------------");
@@ -504,6 +491,10 @@ class DashboardController extends BaseController {
   List<String?> getScreenList() {
     spinnerValue(_markerModelList.where((model) => model.name != null).map((model) => model.name).toList()[0]);
     return _markerModelList.where((model) => model.name != null).map((model) => model.name).toList();
+  }
+
+  List<ContentsModel> getContentsDetails() {
+    return _contentsDetailslList.value;
   }
 
   int getContentsDetailsLength() {

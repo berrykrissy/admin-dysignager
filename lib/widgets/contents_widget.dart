@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:signage/widgets/base_widgets.dart';
 import 'package:signage/widgets/contents_footer_widget.dart';
 import 'package:signage/widgets/dashboard_header_Widget.dart';
-import 'package:signage/widgets/list_view_contents_detail_widget.dart';
-import 'package:signage/widgets/list_view_contents_header_widget.dart';
+import 'package:signage/widgets/data_table_contents_widget.dart';
 import 'package:signage/widgets/scroll_view_widget.dart';
 
 
@@ -12,12 +11,12 @@ class ContentsWidget extends BaseWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Flexible (
+    return Flexible (
       flex: 70,
       child: ScrollViewWidget (
           isScrollable: true,
           //scrollContoller: controller.screensScrollController,
-          children: [
+          children: const [
             DashboardHeaderWidget(),
             SizedBox(height: 13,),
             /*
@@ -192,16 +191,19 @@ class ContentsWidget extends BaseWidget {
             ),
             */
             SizedBox(height: 15,),
+            /*
             ListViewContentsHeaderWidget(),
-            Divider (
+            const Divider (
               color: Colors.grey,
               height: 25,
               thickness: 1,
               indent: 5,
               endIndent: 5,
             ),
-            ListViewContentsDetailsWidget(),
-            ContentsFooterWidget()            
+            const ListViewContentsDetailsWidget(),
+             */
+            DataTableContentsWidget(),
+            ContentsFooterWidget()
           ]
         ),
     );
