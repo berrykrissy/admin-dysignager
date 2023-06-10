@@ -37,8 +37,8 @@ class DatePickerWidget extends BaseWidget {
           DateTime? pickedDate = await showDatePicker (
             context: context,
             initialDate: DateTime.now(),
-            firstDate:DateTime.now(),//DateTime(2000)not to allow to choose before today.
-            lastDate: DateTime(2101)
+            firstDate: DateTime.now(),//DateTime(2000)not to allow to choose before today.
+            lastDate: DateTime.now().add( const Duration(days: 365) )
           );
           if (pickedDate != null) {            
             dateController(TextEditingController( text: "${pickedDate.month}/${pickedDate.day}/${pickedDate.year}"));
