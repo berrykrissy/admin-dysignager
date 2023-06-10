@@ -11,7 +11,7 @@ import 'package:signage/models/content_model.dart';
 import 'package:signage/models/schedule.model.dart';
 import 'package:signage/models/screens_details_model.dart';
 import 'package:signage/routes/app_pages.dart';
-import 'package:signage/services/cloudfirestore/firestore_service.dart';
+import 'package:signage/services/firebase/firestore_service.dart';
 import 'package:signage/utils/constants.dart';
 //import 'package:video_thumbnail/video_thumbnail.dart';
 
