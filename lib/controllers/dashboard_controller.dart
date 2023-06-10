@@ -11,26 +11,31 @@ import 'package:signage/models/content_model.dart';
 import 'package:signage/models/schedule.model.dart';
 import 'package:signage/models/screens_details_model.dart';
 import 'package:signage/routes/app_pages.dart';
+import 'package:signage/services/firebase/firebase_storage_service.dart';
 import 'package:signage/services/firebase/firestore_service.dart';
 import 'package:signage/utils/constants.dart';
 //import 'package:video_thumbnail/video_thumbnail.dart';
 
 class DashboardController extends BaseController {
 
-  DashboardController(FirestoreService this._dbService) {
+  DashboardController(FirestoreService this._service, FirebaseStorageService this._storage) {
     debugPrint("DashboardController Constructor");
   }
-
+  //#region Firabase Instances
+  final FirestoreService _service;
+  final FirebaseStorageService _storage;
+  //#endregion
+  RxBool isLoading = false.obs;
+  //#region Rx List
   final locations = <LocationsModel>[].obs;
   final advertisement = <AdvertisementModel>[].obs;
   final schedule = <ScheduleModel>[].obs;
-
-  final FirestoreService _dbService;
-  RxBool isLoading = false.obs;
+  
   final RxList<MarkerModel> _markerModelList = new List<MarkerModel>.empty().obs;
   final RxList<ScreensDetailsModel> _screenDetailslList = new List<ScreensDetailsModel>.empty().obs;
   final RxList<ContentsModel> _contentsDetailslList = new List<ContentsModel>.empty().obs;
-
+  //#endregion
+  //#region Text Editing Controllers
   final TextEditingController? nameController = TextEditingController();
   final TextEditingController? locationController = TextEditingController();
 
@@ -39,7 +44,8 @@ class DashboardController extends BaseController {
   final Rx<TextEditingController?> dateToController = TextEditingController().obs;
   final TextEditingController? durationController = TextEditingController();
   final TextEditingController? mediaUrlController = TextEditingController();
-  
+  //#endregion
+  PlatformFile? file = null;
   final RxString liveFileName = "".obs, liveFileExtension = "".obs;
   Rx<Uint8List> liveFileBytes = Uint8List.fromList([0]).obs;
 
@@ -55,7 +61,7 @@ class DashboardController extends BaseController {
   }
 
   processSchedule() async {
-    final snapshot = await _dbService.getSchedule();
+    final snapshot = await _service.getSchedule();
     for (final item in snapshot) {
       schedule.add(item);
     }
@@ -67,7 +73,7 @@ class DashboardController extends BaseController {
   }
 
   processAdvertisement() async {
-    final snapshot = await _dbService.getAdvertisement();
+    final snapshot = await _service.getAdvertisement();
     for (final item in snapshot) {
       advertisement.add(item);
     }
@@ -98,7 +104,7 @@ class DashboardController extends BaseController {
         startDate: DateTime.now(),
         endDate: DateTime.now().add(const Duration(days: 1)));
 
-    await _dbService.createAdvertisement(data.toMap());
+    await _service.createAdvertisement(data.toMap());
   }
 
   processUpdateAdvertisement() async {
@@ -112,11 +118,11 @@ class DashboardController extends BaseController {
         startDate: DateTime.now(),
         endDate: DateTime.now().add(const Duration(days: 1)));
 
-    await _dbService.updateAdvertisement(data.id, data.toMap());
+    await _service.updateAdvertisement(data.id, data.toMap());
   }
 
   processLocationsOnScreens() async {
-    final snapshot = await _dbService.getLocations();
+    final snapshot = await _service.getLocations();
     for (final item in snapshot) {
       locations.add(item);
     }
@@ -146,14 +152,14 @@ class DashboardController extends BaseController {
   }
 
   processLocationsByID() async {
-    final snapshot = await _dbService.getLocationById("QwKiM6iJQTEtWFa3yqJQ");
+    final snapshot = await _service.getLocationById("QwKiM6iJQTEtWFa3yqJQ");
 
    debugPrint("locationByID running--------");
    debugPrint("LocationByID: ${snapshot.name} | ${snapshot.address} ");
   }
 
   processScheduleByDate() async {
-    final snapshot = await _dbService.getScheduleByDate(
+    final snapshot = await _service.getScheduleByDate(
         DateTime.parse("2023-06-06"), DateTime.parse("2023-06-06"));
     for (final item in snapshot) {
       locations.add(item);
@@ -491,6 +497,7 @@ class DashboardController extends BaseController {
   Future<void> onUpload() async {
     isLoading(true);
     //Todo: On Going
+    _storage.uploadPlatformFiles(file);
     liveFileName(""); 
     liveFileExtension("");
     liveFileBytes(Uint8List.fromList([0]));
@@ -516,6 +523,7 @@ class DashboardController extends BaseController {
     debugPrint("MainController openFile(PlatformFile extension ${file?.extension})");
     debugPrint("MainController openFile(PlatformFile bytes ${file?.bytes})");
     isLoading(true);
+    this.file = file;
     final kb = file!.size / 1024;
     final mb = kb / 1024;
     final fileSize = mb >= 1 ? '${mb.toStringAsFixed(2)} MB' : '${kb.toStringAsFixed(2)} KB';
@@ -537,8 +545,6 @@ class DashboardController extends BaseController {
       //Todo: Still finding out how to implement Video Thumbnail
       liveFileBytes(file?.bytes);
     }
-    Float32List? floatList = file?.bytes?.buffer?.asFloat32List();
-    debugPrint("TEST TEST TEST TEST ${floatList}");
     isLoading(false);
   }
   //#endregion

@@ -1,10 +1,10 @@
 import 'dart:io' as io;
 
+import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_disposable.dart';
 import 'package:path_provider/path_provider.dart';
-
-import '../../models/storage_mode.dart';
+import 'package:signage/models/storage_mode.dart';
 // import 'package:universal_html/html.dart';
 
 class FirebaseStorageService extends GetxService {
@@ -21,22 +21,32 @@ class FirebaseStorageService extends GetxService {
 
   getFileDetails(String fileName) {
     final imageRef = imagesRef?.child(fileName);
-    final imageRefPath =
-        imageRef?.fullPath; //this will get the full path in the cloud
+    final imageRefPath = imageRef?.fullPath; //this will get the full path in the cloud
     final imageRefName = imageRef?.name; //gets the file name
 
     imagesRef = imageRef?.parent;
   }
 
-  Future<UploadTask> uploadFiles(io.File file) =>
-      Future.value(imagesRef?.putFile(file));
+  Future<UploadTask> uploadFiles(io.File file) {
+    return Future.value(imagesRef?.putFile(file));
+  }
+
+   Future<void> uploadPlatformFiles(PlatformFile? file) async {
+    bool isImage = file?.extension?.toLowerCase()?.contains("jpg") == true || file?.extension?.toLowerCase()?.contains("png") == true || file?.extension?.toLowerCase()?.contains("webp") == true;
+    if (file?.bytes != null && isImage) {
+      await imagesRef?.putData(file!.bytes!);
+    } else if (file?.bytes != null && !isImage) {
+      videosRef?.putData(file!.bytes!);
+    }
+  }
+      
 
   Future<List<StorageModel>> getAllImageUrl() async {
     //this will list all the entries present in the dysignager/images folder
     final response = await imagesRef?.listAll();
 
     if (response?.items != null) {
-      var listOfFiles = await Future.wait(
+      var listOfFiles = await Future.wait (
           response!.items.map((ref) => ref.getDownloadURL()).toList());
 
       return listOfFiles.asMap().map((key, url) {

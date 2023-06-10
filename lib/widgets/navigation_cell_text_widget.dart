@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:signage/widgets/navigation_cell_widget.dart';
-import 'package:google_fonts/google_fonts.dart';
+//import 'package:google_fonts/google_fonts.dart';
 
 class NavigationCellTextWidget extends NavigationCellWidget {
   NavigationCellTextWidget( {
@@ -30,7 +30,7 @@ class NavigationCellTextWidget extends NavigationCellWidget {
         padding: const EdgeInsets.only(bottom: 40),
         child: Text (
           text,
-          style: GoogleFonts.roboto (
+          style: TextStyle (
             color: textColour ?? Colors.black54,
             fontSize: 17,
             fontWeight: FontWeight.bold,

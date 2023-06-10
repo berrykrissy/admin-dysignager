@@ -43,7 +43,7 @@ dependencies:
   geolocator: ^9.0.2
   geocoding: ^2.1.0
   get: ^4.6.5
-  google_fonts: ^3.0.1
+  #google_fonts: ^3.0.1
   path_provider: 
   latlong2: ^0.8.0
   #open_file: ^3.3.1

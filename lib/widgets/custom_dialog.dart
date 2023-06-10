@@ -111,7 +111,8 @@ class CustomDialog {
             obscureText: false,
             keyboardType: TextInputType.text,
           ),
-           TextField (
+          /*
+          TextField (
             controller: mediaUrlController,
             decoration: const InputDecoration (
               hintText: 'Enter Media Url',
@@ -123,6 +124,7 @@ class CustomDialog {
             obscureText: false,
             keyboardType: TextInputType.text,
           ),
+          */
           Obx(() {
             if (liveLoading.value) {
               return const SizedBox( height: 10.0,);
@@ -131,7 +133,7 @@ class CustomDialog {
             }
           }),          
           Obx(() {
-            debugPrint("liveFileBytes ${liveFileBytes.value}");
+            //debugPrint("liveFileBytes ${liveFileBytes.value}");
             if (liveLoading.value) {
               return const Center(child: CircularProgressIndicator());
             } else if (liveFileExtension.value.toLowerCase().contains("jpg") || liveFileExtension.value.toLowerCase().contains("png") || liveFileExtension.value.toLowerCase().contains("webp")/*liveFileBytes.value == Uint8List.fromList([0])*/) {
@@ -141,8 +143,8 @@ class CustomDialog {
                 width: 200,
                 child: Column(
                   children: [
-                    Image.network (
-                      "liveFileBytes.value",
+                    Image.memory (
+                      liveFileBytes.value,
                       fit: BoxFit.scaleDown,
                       height: 200,
                       width: 200,
