@@ -9,7 +9,6 @@ class AdvertisementModel {
   DateTime? startDate;
   DateTime? endDate;
   int? duration;
-  String? location;
 
   AdvertisementModel( {
     this.id,
@@ -20,7 +19,6 @@ class AdvertisementModel {
     this.startDate,
     this.endDate,
     this.duration,
-    this.location
   } );
 
   Map<String, dynamic> toMap() => {
@@ -31,7 +29,6 @@ class AdvertisementModel {
     "startDate": startDate,
     "endDate": endDate,
     "duration": duration,
-    "location": location
   };
 
   //use this is the dataype of the data is document, which will directly come from cloud_firesto
@@ -45,7 +42,6 @@ class AdvertisementModel {
     startDate = (data['startDate'] as Timestamp).toDate();
     endDate = (data['endDate'] as Timestamp).toDate();
     duration = data['duration'];
-    location = data['location'];
   }
 
   //use this if the datatype of the data is in Map<String,dynamic> or Json
@@ -58,6 +54,5 @@ class AdvertisementModel {
     startDate = (json['startDate'] as Timestamp).toDate();
     endDate = (json['endDate'] as Timestamp).toDate();
     duration = json['duration'];
-    location = json['location'];
   }
 }

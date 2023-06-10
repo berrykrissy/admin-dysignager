@@ -200,7 +200,7 @@ class ContentsWidget extends BaseWidget {
               endIndent: 5,
             ),
             const ListViewContentsDetailsWidget(),
-             */
+            */
             DataTableContentsWidget(),
             ContentsFooterWidget()
           ]

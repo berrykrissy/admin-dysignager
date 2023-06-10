@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:html' as html;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
@@ -88,7 +89,6 @@ class DashboardController extends BaseController {
          fileName: "Sample.${element.mediaType}",
          startDate: element.startDate.toString(),
          endDate: element.endDate.toString(),
-         location: element.location.toString(),
          duration: element.duration.toString()
       ) );
 
@@ -97,8 +97,7 @@ class DashboardController extends BaseController {
   }
 
   void processCreateAdvertisement() async {
-    final data = AdvertisementModel(
-        location: "1155 Purok 1, San Mateo, 1850 Rizal",
+    final data = AdvertisementModel (
         mediaType: "jpg",
         mediaUrl: "https://th.bing.com/th/id/R.c13bfb9af48998d980d2720d10e6e877?rik=TW%2f5uKcY5qawKg&riu=http%3a%2f%2f2.bp.blogspot.com%2f-1UcODLZ_QQc%2fT5D95yt1txI%2fAAAAAAAAAdg%2f25vGOqNqIE8%2fs1600%2fHectic.jpg&ehk=rvNF4nwjJgbL9bCAC%2f9gX5d7WcRCIaRNDY2uBXcdrgs%3d&risl=&pid=ImgRaw&r=0",
         duration: 30,
@@ -111,7 +110,6 @@ class DashboardController extends BaseController {
   void processUpdateAdvertisement() async {
     final data = AdvertisementModel(
         id: "uAvB8YNmJEZiQYPLoWD3",
-        location: "undefined location to be exact",
         mediaType: "mov",
         mediaUrl: "https://th.bing.com/th/id/R.c13bfb9af48998d980d2720d10e6e877?rik=TW%2f5uKcY5qawKg&riu=http%3a%2f%2f2.bp.blogspot.com%2f-1UcODLZ_QQc%2fT5D95yt1txI%2fAAAAAAAAAdg%2f25vGOqNqIE8%2fs1600%2fHectic.jpg&ehk=rvNF4nwjJgbL9bCAC%2f9gX5d7WcRCIaRNDY2uBXcdrgs%3d&risl=&pid=ImgRaw&r=0",
         duration: 30,
@@ -171,11 +169,6 @@ class DashboardController extends BaseController {
     _locations.forEach((element)  {
       debugPrint("location ${element.name} ${element.gps?.latitude} ${element.gps?.longitude} ${element.status} ${element.onlineSince}");
     });
-  }
-  
-  @override
-  void onReady() {
-    super.onReady();
   }
 
   void onRefresh() {
@@ -327,8 +320,6 @@ class DashboardController extends BaseController {
   }
   //#endregion
   //#region Screen Views Methods
-
-
   Future<void> onSelectCardScreen(int index) async {
     debugPrint("DashboardController onSelectCardScreen $index");
     isLoading(true);
@@ -404,7 +395,7 @@ class DashboardController extends BaseController {
   }
 
   bool isIconVisible(int index) {
-    if (_markerModelList.value[index].name == null) {
+    if (_markerModelList.value[index].name.isBlank == true) {
       return true;
     } else {
       return false;
@@ -557,7 +548,22 @@ class DashboardController extends BaseController {
   Future<void> onUpload() async {
     isLoading(true);
     //Todo: On Going
-    _storage.uploadPlatformFiles(file);
+    TaskSnapshot? taskSnapshot = await _storage.uploadPlatformFiles(file);
+    if (taskSnapshot != null && taskSnapshot!.state == TaskState.success) {
+      debugPrint("onUpload taskSnapshot ${await taskSnapshot.ref.getDownloadURL()}");
+      final data = AdvertisementModel (
+        mediaName: liveFileName.value,
+        mediaType: liveFileExtension.value,
+        mediaUrl: await taskSnapshot.ref.getDownloadURL(),
+        duration: int.tryParse(durationController?.text.toString() ?? "30"),
+        startDate: DateTime.tryParse(dateFromController.value?.text.toString() ?? DateTime.now().toString()),
+        endDate: DateTime.tryParse(dateFromController.value?.text.toString() ?? DateTime.now().toString()),
+      );
+    await _service.createAdvertisement(data.toMap());
+    } else {
+      debugPrint("onUpload taskSnapshot ${taskSnapshot?.state}");
+      Get.snackbar("Error", "on Upload Media Content Failed");
+    }
     liveFileName(""); 
     liveFileExtension("");
     liveFileBytes(Uint8List.fromList([0]));
@@ -569,7 +575,6 @@ class DashboardController extends BaseController {
     const type = FileType.custom; //FileType.media
     final extensions = ['mp4', 'jpg', 'png', 'webp'];
     final result = await pickFiles(type, extensions);
-    
     openFile(result?.files?.single/*result?.files.first*/);
   }
   

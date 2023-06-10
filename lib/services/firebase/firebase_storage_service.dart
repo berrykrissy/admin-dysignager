@@ -32,17 +32,15 @@ class FirebaseStorageService extends GetxService {
     return Future.value(imagesRef?.putFile(file));
   }
 
-   Future<void> uploadPlatformFiles(PlatformFile? file) async {
+   Future<TaskSnapshot?> uploadPlatformFiles(PlatformFile? file) async {
     debugPrint("uploadPlatformFiles ${file?.name} ${file?.size}");
     bool isImage = file?.extension?.toLowerCase()?.contains("jpg") == true || file?.extension?.toLowerCase()?.contains("png") == true || file?.extension?.toLowerCase()?.contains("webp") == true;
+    /*
     if (file?.bytes != null) {
-      
-      TaskSnapshot? taskSnapshot = await storageRef.child(file!.name)?.putData(file!.bytes!);
-      if (taskSnapshot != null && taskSnapshot!.state == TaskState.success) {
-        debugPrint("taskSnapshot ${await taskSnapshot.ref.getDownloadURL()}");
-      }
-      
+      TaskSnapshot? taskSnapshot = await storageRef.child(file!.name)?.putData(file!.bytes!); 
     }
+    */
+    return await storageRef.child(file!.name)?.putData(file!.bytes!);
   }
       
 
