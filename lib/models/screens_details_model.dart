@@ -1,23 +1,23 @@
 class ScreensDetailsModel {
 
   ScreensDetailsModel( {
+    this.id,
     this.name,
     this.status,
     this.onlineSince,
     this. location,
-    this.preview,
     this.isShowed,
   } );
   
+  final String? id;
   final String? name;
-  final String? status;
+  String? status;
   final String? onlineSince;
   String? location;
-  final String? preview;
   bool? isShowed;
 
   @override
   String toString() {
-    return "ScreensDetailsModel name $name, status $status, onlineSince $onlineSince, location $location, preview $preview, isShowed $isShowed" ?? super.toString();
+    return "ScreensDetailsModel id $id, name $name, status $status, onlineSince $onlineSince, location $location, isShowed $isShowed" ?? super.toString();
   }
 }

@@ -1,6 +1,7 @@
 class MarkerModel {
 
   MarkerModel( {
+    this.id,
     this.name,
     required this.latitude,
     required this.longitude,
@@ -8,6 +9,7 @@ class MarkerModel {
     this.isSelected,
   } );
   
+  final String? id;
   final String? name;
   final double latitude;
   final double longitude;
@@ -16,6 +18,6 @@ class MarkerModel {
 
   @override
   String toString() {
-    return "MarkerModel name $name, latitude $latitude, longitude $longitude, status $status isSelected $isSelected"?? super.toString();
+    return "MarkerModel id $id, name $name, latitude $latitude, longitude $longitude, status $status isSelected $isSelected"?? super.toString();
   }
 }

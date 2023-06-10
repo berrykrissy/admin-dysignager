@@ -36,6 +36,10 @@ class FirestoreService extends GetxService {
     await dbFirestore.collection("location").doc(docid).update(data);
   }
 
+  Future<void> updateStatus(String? docid, Map<String,dynamic> data) async {
+    await dbFirestore.collection("location").doc(docid).update(data);
+  }
+
   //DELETE: update location
   Future<void> deleteLocation(String? docid) async {
     await dbFirestore.collection("location").doc(docid).delete();

@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:html' as html;
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -53,7 +56,7 @@ class DashboardController extends BaseController {
   Future<void> onInit() async {
     super.onInit();
     processLocationsOnScreens();
-    processLocationsByID();    
+    //processLocationsByID();
     processAdvertisement();
     processSchedule();
     processScheduleByDate();
@@ -72,7 +75,7 @@ class DashboardController extends BaseController {
     debugPrint("schedule running end-------------");
   }
 
-  processAdvertisement() async {
+  void processAdvertisement() async {
     final snapshot = await _service.getAdvertisement();
     for (final item in snapshot) {
       advertisement.add(item);
@@ -93,7 +96,7 @@ class DashboardController extends BaseController {
     debugPrint("advertisement running end----------------");
   }
 
-  processCreateAdvertisement() async {
+  void processCreateAdvertisement() async {
     final data = AdvertisementModel(
         location: "1155 Purok 1, San Mateo, 1850 Rizal",
         mediaType: "jpg",
@@ -106,13 +109,12 @@ class DashboardController extends BaseController {
     await _service.createAdvertisement(data.toMap());
   }
 
-  processUpdateAdvertisement() async {
+  void processUpdateAdvertisement() async {
     final data = AdvertisementModel(
         id: "uAvB8YNmJEZiQYPLoWD3",
         location: "undefined location to be exact",
         mediaType: "mov",
-        mediaUrl:
-            "https://th.bing.com/th/id/R.c13bfb9af48998d980d2720d10e6e877?rik=TW%2f5uKcY5qawKg&riu=http%3a%2f%2f2.bp.blogspot.com%2f-1UcODLZ_QQc%2fT5D95yt1txI%2fAAAAAAAAAdg%2f25vGOqNqIE8%2fs1600%2fHectic.jpg&ehk=rvNF4nwjJgbL9bCAC%2f9gX5d7WcRCIaRNDY2uBXcdrgs%3d&risl=&pid=ImgRaw&r=0",
+        mediaUrl: "https://th.bing.com/th/id/R.c13bfb9af48998d980d2720d10e6e877?rik=TW%2f5uKcY5qawKg&riu=http%3a%2f%2f2.bp.blogspot.com%2f-1UcODLZ_QQc%2fT5D95yt1txI%2fAAAAAAAAAdg%2f25vGOqNqIE8%2fs1600%2fHectic.jpg&ehk=rvNF4nwjJgbL9bCAC%2f9gX5d7WcRCIaRNDY2uBXcdrgs%3d&risl=&pid=ImgRaw&r=0",
         duration: 30,
         startDate: DateTime.now(),
         endDate: DateTime.now().add(const Duration(days: 1)));
@@ -120,44 +122,61 @@ class DashboardController extends BaseController {
     await _service.updateAdvertisement(data.id, data.toMap());
   }
 
-  processLocationsOnScreens() async {
+  void processLocationsOnScreens() async { debugPrint("DashboardController processLocationsOnScreens");
     final snapshot = await _service.getLocations();
     for (final item in snapshot) {
+      debugPrint("DashboardController snapshot ${item.id}");
       locations.add(item);
     }
    debugPrint("service running start------------");
-    locations.forEach((element) {
-      _markerModelList.add (
-        MarkerModel (
-          name: element.name,
-          latitude: element.gps?.latitude ?? 0,
-          longitude: element.gps?.longitude ?? 0,
-          status: element.status,
-          isSelected: false
-        )
-      );
-      _screenDetailslList.add (
-        ScreensDetailsModel (
-        name: element.name,
-        status: element.status,
-        onlineSince: element.onlineSince,
-        preview: "nil",
-        isShowed: true
-        )
-      );
+    locations.forEach( (newValue) {
+      debugPrint("DashboardController location ${newValue}");
+      if (_markerModelList.where((currentValue) => currentValue.id == newValue.id).isNotEmpty) {
+        _markerModelList.where((currentValue) => currentValue.id == newValue.id).map( (oldItem) => 
+          oldItem.status = newValue.status
+        );
+      } else {
+        _markerModelList.add (
+          MarkerModel (
+            id: newValue.id,
+            name: newValue.name,
+            latitude: newValue.gps?.latitude ?? 0,
+            longitude: newValue.gps?.longitude ?? 0,
+            status: newValue.status,
+            isSelected: false
+          )
+        );
+      }
+      
+      if (_screenDetailslList.where((currentValue) => currentValue.id == newValue.id).isNotEmpty) {
+        _screenDetailslList.where((currentValue) => currentValue.id == newValue.id).map( (oldItem) => 
+          oldItem.status = newValue.status
+        );
+        _screenDetailslList.refresh();
+      } else {
+        _screenDetailslList.add (
+          ScreensDetailsModel (
+            id: newValue.id,
+            name: newValue.name,
+            status: newValue.status,
+            onlineSince: newValue.onlineSince,
+            location: newValue.address,
+            isShowed: true
+          )
+        );
+      }
     });
-    _markerModelList.add (MarkerModel(latitude: 0.00, longitude: 0.00));
+    //_markerModelList.add (MarkerModel(latitude: 0.00, longitude: 0.00));
    debugPrint("service running end--------------");
   }
 
-  processLocationsByID() async {
+  void processLocationsByID() async {
     final snapshot = await _service.getLocationById("QwKiM6iJQTEtWFa3yqJQ");
-
    debugPrint("locationByID running--------");
    debugPrint("LocationByID: ${snapshot.name} | ${snapshot.address} ");
   }
 
-  processScheduleByDate() async {
+  void processScheduleByDate() async {
     final snapshot = await _service.getScheduleByDate(
         DateTime.parse("2023-06-06"), DateTime.parse("2023-06-06"));
     for (final item in snapshot) {
@@ -167,6 +186,16 @@ class DashboardController extends BaseController {
     locations.forEach((element)  {
       debugPrint("location ${element.name} ${element.gps?.latitude} ${element.gps?.longitude} ${element.status} ${element.onlineSince}");
     });
+  }
+  
+  @override
+  void onReady() {
+    super.onReady();
+  }
+
+  void onRefresh() {
+    Timer(const Duration(milliseconds: 5000), (() => html.window.location.reload()));
+    
   }
   //#region Page Launchers
   void launchFindScreen() {
@@ -284,6 +313,19 @@ class DashboardController extends BaseController {
     return true;
   }
 
+  Future<void> _updateStaus(MarkerModel markerModel, ScreensDetailsModel screensDetailsModel, String status) async {
+    _service.updateStatus (
+      markerModel.id, 
+      LocationsModel (
+        name: screensDetailsModel.name,
+        address: screensDetailsModel.location,
+        gps: GeoPoint(markerModel.latitude, markerModel.longitude),
+        onlineSince: screensDetailsModel.onlineSince,
+        status: status,
+      ).toMap()
+    );  
+  }
+
   Future<void> _addMarkerWithCoordinates() async {
     if(await _handleLocationPermission()) {
       Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
@@ -323,7 +365,7 @@ class DashboardController extends BaseController {
       _insertMarker(_screenDetailslList.length, nameController?.text, Constants.OUT_OF_SYNC);
       _screenDetailslList.add ( 
         ScreensDetailsModel (
-          name: nameController?.text, status: Constants.OUT_OF_SYNC, onlineSince: null, location: locationController?.text, preview: null, isShowed: true
+          name: nameController?.text, status: Constants.OUT_OF_SYNC, onlineSince: null, location: locationController?.text, isShowed: true
         )
       );
       onResetScreenSelection();
@@ -407,40 +449,47 @@ class DashboardController extends BaseController {
     return _screenDetailslList.where((model) => model.isShowed == true).length;
   }
 
+  getScreenDetailsId(int index) {
+    return _screenDetailslList
+      .where((model) => model.isShowed == true)
+      .toList()[index]
+      .id ?? "Nil";
+  }
+
   getScreenDetailsName(int index) {
     return _screenDetailslList
-            .where((model) => model.isShowed == true)
-            .toList()[index]
-            .name ??
-        "Nil";
+      .where((model) => model.isShowed == true)
+      .toList()[index]
+      .name ?? "Nil";
   }
 
   getScreenDetailsStatus(int index) {
     return _screenDetailslList
-            .where((model) => model.isShowed == true)
-            .toList()[index]
-            .status ??
-        "Nil";
+      .where((model) => model.isShowed == true)
+      .toList()[index]
+      .status ?? "Nil";
   }
 
   String getScreenDetailsOnlineSince(int index) {
     return _screenDetailslList
-            .where((model) => model.isShowed == true)
-            .toList()[index]
-            .onlineSince ??
-        "Nil";
+      .where((model) => model.isShowed == true)
+      .toList()[index]
+      .onlineSince ?? "Nil";
   }
 
   String getScreenDetailsLocation(int index) {
     return _screenDetailslList.where( (model) => model.isShowed == true ).toList()[index].location ?? "Nil";
   }
-  
-  String getScreenDetailsPreview(int index) {
-    return _screenDetailslList
-            .where((model) => model.isShowed == true)
-            .toList()[index]
-            .preview ??
-        "Nil";
+
+  Future<void> onDisabledScreenDetails(String id) async {
+    isLoading(true);
+    _updateStaus(
+      _markerModelList.where((model) => model.id == id).first, 
+      _screenDetailslList.where((model) => model.id == id).first,
+      Constants.DISABLED
+    );
+    onRefresh();
+    isLoading(false);
   }
 
   Future<void> onDeleteScreenDetails(String name) async {
