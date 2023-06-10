@@ -432,6 +432,10 @@ class DashboardController extends BaseController {
     isLoading(false);
   }
 
+  List<ScreensDetailsModel> getScreensDetails() {
+    return _screenDetailslList.where((model) => model.isShowed == true).toList();
+  }
+
   int getScreensDetailsLength() {
     return _screenDetailslList.where((model) => model.isShowed == true).length;
   }
@@ -468,7 +472,7 @@ class DashboardController extends BaseController {
     return _screenDetailslList.where( (model) => model.isShowed == true ).toList()[index].location ?? "Nil";
   }
 
-  Future<void> onDisabledScreenDetails(String id) async {
+  Future<void> onDisabledScreenDetails(String? id) async {
     isLoading(true);
     _updateStaus(
       _markerModelList.where((model) => model.id == id).first, 

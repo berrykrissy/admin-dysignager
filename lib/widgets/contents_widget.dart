@@ -5,7 +5,6 @@ import 'package:signage/widgets/dashboard_header_Widget.dart';
 import 'package:signage/widgets/data_table_contents_widget.dart';
 import 'package:signage/widgets/scroll_view_widget.dart';
 
-
 class ContentsWidget extends BaseWidget {
   const ContentsWidget({super.key});
 

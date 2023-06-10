@@ -3,9 +3,8 @@ import 'package:signage/controllers/dashboard_controller.dart';
 import 'package:signage/widgets/base_widgets.dart';
 import 'package:signage/widgets/button_widget.dart';
 import 'package:signage/widgets/dashboard_header_Widget.dart';
+import 'package:signage/widgets/data_table_screens_widget.dart';
 import 'package:signage/widgets/grid_view_screens_view_widget.dart';
-import 'package:signage/widgets/list_view_screens_details_widget.dart';
-import 'package:signage/widgets/list_view_screens_header_widget.dart';
 import 'package:signage/widgets/scroll_view_widget.dart';
 
 class ScreensWidget extends BaseWidget<DashboardController> {
@@ -46,6 +45,7 @@ class ScreensWidget extends BaseWidget<DashboardController> {
               )
             ),
             const SizedBox(height: 15,),
+            /*
             const ListViewScreensHeaderWidget(),
             const Divider (
               color: Colors.grey,
@@ -55,6 +55,8 @@ class ScreensWidget extends BaseWidget<DashboardController> {
               endIndent: 5,
             ),
             const ListViewScreensDetailsWidget(),
+            */
+            const DataTableScreensWidget(),
             ButtonWidget(text: "View All", textColor: Colors.purple, fillColor: Colors.white, fontSize: 20, fontWeight: FontWeight.w500, onPressed: () {
               controller.onResetScreenSelection();
             } )

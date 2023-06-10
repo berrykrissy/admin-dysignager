@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:signage/controllers/dashboard_controller.dart';
 import 'package:signage/widgets/base_widgets.dart';
 
@@ -16,7 +15,7 @@ class DataTableContentsWidget extends BaseWidget<DashboardController> {
         DataColumn(label: Text("End Date", style: TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),),
         DataColumn(label: Text("Duration", style: TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),),
         DataColumn(label: Text("File Name", style: TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),),
-      ], 
+      ],
       rows : controller.getContentsDetails().map(
         (cell) => DataRow(cells: <DataCell> [
             DataCell(Text(cell.client ?? "", style: const TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),),

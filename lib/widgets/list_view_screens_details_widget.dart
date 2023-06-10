@@ -35,7 +35,7 @@ class ListViewScreensDetailsWidget extends BaseWidget<DashboardController> {
                     }, icon: const Icon( CupertinoIcons.delete), 
                   )
                   */
-                  IconButton( 
+                  IconButton (
                     onPressed: () {
                       controller.onDisabledScreenDetails(controller.getScreenDetailsId(index));
                     }, icon: const Icon( Icons.disabled_visible_rounded ), 
