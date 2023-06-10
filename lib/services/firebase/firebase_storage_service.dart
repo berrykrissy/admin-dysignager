@@ -10,7 +10,7 @@ import 'package:signage/models/storage_mode.dart';
 
 class FirebaseStorageService extends GetxService {
   //ref("signager") - this indicates the storage parent folder
-  final storageRef = FirebaseStorage.instance.ref("dysignager");
+  final storageRef = FirebaseStorage.instance.ref();
 
   Reference? imagesRef;
   Reference? videosRef;
@@ -36,10 +36,10 @@ class FirebaseStorageService extends GetxService {
     debugPrint("uploadPlatformFiles ${file?.name} ${file?.size}");
     bool isImage = file?.extension?.toLowerCase()?.contains("jpg") == true || file?.extension?.toLowerCase()?.contains("png") == true || file?.extension?.toLowerCase()?.contains("webp") == true;
     if (file?.bytes != null && isImage) {
-      await imagesRef?.putData(file!.bytes!);
+      await storageRef.child(file!.name)?.putData(file!.bytes!);
       debugPrint("uploadPlatformFiles isImage");
     } else if (file?.bytes != null && !isImage) {
-      await videosRef?.putData(file!.bytes!);
+      await storageRef.child(file!.name)?.putData(file!.bytes!);
       debugPrint("uploadPlatformFiles isVideo");
     }
   }
