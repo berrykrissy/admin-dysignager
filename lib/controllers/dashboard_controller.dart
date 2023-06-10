@@ -173,8 +173,9 @@ class DashboardController extends BaseController {
   }
 
   void onRefresh() {
-    Timer(const Duration(milliseconds: 5000), (() => html.window.location.reload()));
-    
+    Timer(
+      const Duration(milliseconds: 3000), ( () => html.window.location.reload() )
+    );
   }
   //#region Page Launchers
   void launchFindScreen() {
@@ -338,33 +339,38 @@ class DashboardController extends BaseController {
 
   Future<void> onAddScreen() async {
     debugPrint("DashboardController onAddScreen ${nameController?.text} ${locationController?.text}");
-    if(nameController?.text.isBlank == false/*&& locationController?.text.isBlank == false*/) {
+    try {
       isLoading(true);
-      /*
-      _insertMarker(_screenDetailslList.length, nameController?.text, Constants.OUT_OF_SYNC);
-      _screenDetailslList.add ( 
-        ScreensDetailsModel (
-          name: nameController?.text, status: Constants.OUT_OF_SYNC, onlineSince: null, location: locationController?.text, isShowed: true
-        )
-      );
-      */
-      await _service.createLocation(
-        LocationsModel (
-          name: nameController!.text,
-          address: null,
-          gps: null,
-          onlineSince: null,
-          status: Constants.OFFLINE,
-          isEnabled: false,
-        ).toMap()
-      );
-      onResetScreenSelection();
+      if(nameController?.text.isBlank == false/*&& locationController?.text.isBlank == false*/) {
+        /*
+        _insertMarker(_screenDetailslList.length, nameController?.text, Constants.OUT_OF_SYNC);
+        _screenDetailslList.add ( 
+          ScreensDetailsModel (
+            name: nameController?.text, status: Constants.OUT_OF_SYNC, onlineSince: null, location: locationController?.text, isShowed: true
+          )
+        );
+        */
+        _service.createLocation (
+          LocationsModel (
+            name: nameController!.text,
+            address: null,
+            gps: null,
+            onlineSince: null,
+            status: Constants.OFFLINE,
+            isEnabled: false,
+          ).toMap()
+        );
+        onResetScreenSelection();
+        onRefresh();
+      } else {
+        Get.snackbar("Error", "Inputs Invalid");
+      }
+    } catch (e) {
+      Get.snackbar("Error", "on Add Screen Failed");
+    } finally {
       isLoading(false);
       Get.back();
-      onRefresh();
-    } else {
-      Get.snackbar("Error", "Inputs Invalid");
-    }
+    }       
   }
 
   int getScreensViewLength() {
@@ -396,7 +402,7 @@ class DashboardController extends BaseController {
   }
 
   bool isIconVisible(int index) {
-    if (_markerModelList.value[index].name.isBlank == true) {
+    if (_markerModelList.value[index].name == null) {
       return true;
     } else {
       return false;
@@ -477,24 +483,34 @@ class DashboardController extends BaseController {
   }
 
   Future<void> onToggleScreenDetailsStatus(String? id) async {
-    isLoading(true);
-    _updateStaus (
-      _markerModelList.where((model) => model.id == id).first, 
-      _screenDetailslList.where((model) => model.id == id).first,
-      _locations.where((model) => model.id == id).first,
-      _locations.where((model) => model.id == id).first.isEnabled != true
-    );
-    isLoading(false);
-    onRefresh();
+    try {
+      isLoading(true);
+      _updateStaus (
+        _markerModelList.where((model) => model.id == id).first, 
+        _screenDetailslList.where((model) => model.id == id).first,
+        _locations.where((model) => model.id == id).first,
+        _locations.where((model) => model.id == id).first.isEnabled != true
+      );    
+      onRefresh();
+    } catch (e) {
+      Get.snackbar("Error", "Cannot Update Status");
+    } finally {
+      isLoading(false);
+    }
   }
 
   Future<void> onDeleteScreenDetails(String? id) async {
-    isLoading(true);
-    _screenDetailslList.removeWhere((model) => model.id == id);
-    _markerModelList.removeWhere((model) => model.id == id);
-    _service.deleteLocation(id);
-    isLoading(false);
-    onRefresh();
+    try {
+      isLoading(true);
+      _screenDetailslList.removeWhere((model) => model.id == id);
+      _markerModelList.removeWhere((model) => model.id == id);
+      _service.deleteLocation(id);
+    } catch (e) {
+      Get.snackbar("Error", "Cannot Delete Scren");
+    } finally {
+      isLoading(false);
+      onRefresh();
+    }
   }
   
   IconData getStatusEnabledIcon(String? id) {
@@ -570,7 +586,6 @@ class DashboardController extends BaseController {
       liveFileBytes(Uint8List.fromList([0]));
       onRefresh();
     } else {
-      debugPrint("onUpload taskSnapshot ${taskSnapshot?.state}");
       Get.snackbar("Error", "on Upload Media Content Failed");
     }
     isLoading(false);
