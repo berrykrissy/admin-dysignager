@@ -37,7 +37,7 @@ class DatePickerWidget extends BaseWidget {
           DateTime? pickedDate = await showDatePicker (
             context: context,
             initialDate: DateTime.now(),
-            firstDate:DateTime(2000), //DateTime.now() - not to allow to choose before today.
+            firstDate:DateTime.now(),//DateTime(2000)not to allow to choose before today.
             lastDate: DateTime(2101)
           );
           if (pickedDate != null) {            

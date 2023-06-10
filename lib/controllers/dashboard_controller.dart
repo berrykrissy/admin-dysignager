@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:signage/controllers/base_controller.dart';
 import 'package:signage/models/advertisement_model.dart';
 import 'package:signage/models/locations_model.dart';
@@ -43,14 +44,15 @@ class DashboardController extends BaseController {
   final TextEditingController? nameController = TextEditingController();
   final TextEditingController? locationController = TextEditingController();
 
-  final RxString spinnerValue = "".obs;
+  //final RxString spinnerValue = "".obs;
+  final TextEditingController? clientController = TextEditingController();
   final Rx<TextEditingController?> dateFromController = TextEditingController().obs;
   final Rx<TextEditingController?> dateToController = TextEditingController().obs;
   final TextEditingController? durationController = TextEditingController();
   final TextEditingController? mediaUrlController = TextEditingController();
   //#endregion
   PlatformFile? file = null;
-  final RxString liveFileName = "".obs, liveFileExtension = "".obs;
+  final RxString liveFileName = "".obs, liveFileSize = "".obs, liveFileExtension = "".obs;
   Rx<Uint8List> liveFileBytes = Uint8List.fromList([0]).obs;
 
   @override
@@ -83,15 +85,14 @@ class DashboardController extends BaseController {
     }
     debugPrint("advertisement running start--------------");
     _advertisement.forEach((element) {
-      debugPrint("document-id: ${element.id} ${element.mediaUrl} ${element.mediaType} ${element.duration} ${element.startDate} ${element.endDate} }");
+      debugPrint("document-id: ${element.id} ${element.mediaName} ${element.mediaUrl} ${element.mediaType} ${element.duration} ${element.startDate} ${element.endDate} }");
       _contentsDetailslList.add( ContentsModel (
          client: element.client,
-         fileName: "Sample.${element.mediaType}",
+         fileName: "${element.mediaName}.${element.mediaType}",
          startDate: element.startDate.toString(),
          endDate: element.endDate.toString(),
          duration: element.duration.toString()
       ) );
-
     });    
     debugPrint("advertisement running end----------------");
   }
@@ -506,7 +507,7 @@ class DashboardController extends BaseController {
   //#endregion
   //#region Contents Methods
   List<String?> getScreenList() {
-    spinnerValue(_markerModelList.where((model) => model.name != null).map((model) => model.name).toList()[0]);
+    //spinnerValue(_markerModelList.where((model) => model.name != null).map((model) => model.name).toList()[0]);
     return _markerModelList.where((model) => model.name != null).map((model) => model.name).toList();
   }
 
@@ -545,28 +546,33 @@ class DashboardController extends BaseController {
     isLoading(false);
   }
 
+  DateTime _toDateTime(String? date) {
+    return DateFormat("MM/dd/yyyy").parse(date!);
+  }
+
   Future<void> onUpload() async {
     isLoading(true);
-    //Todo: On Going
     TaskSnapshot? taskSnapshot = await _storage.uploadPlatformFiles(file);
     if (taskSnapshot != null && taskSnapshot!.state == TaskState.success) {
       debugPrint("onUpload taskSnapshot ${await taskSnapshot.ref.getDownloadURL()}");
       final data = AdvertisementModel (
+        client: clientController?.text,
         mediaName: liveFileName.value,
         mediaType: liveFileExtension.value,
         mediaUrl: await taskSnapshot.ref.getDownloadURL(),
-        duration: int.tryParse(durationController?.text.toString() ?? "30"),
-        startDate: DateTime.tryParse(dateFromController.value?.text.toString() ?? DateTime.now().toString()),
-        endDate: DateTime.tryParse(dateFromController.value?.text.toString() ?? DateTime.now().toString()),
+        duration: int.tryParse(durationController?.text ?? "30"),
+        startDate: _toDateTime(dateFromController.value?.text),
+        endDate: _toDateTime(dateToController.value?.text),
       );
-    await _service.createAdvertisement(data.toMap());
+      await _service.createAdvertisement(data.toMap());
+      liveFileName(""); 
+      liveFileExtension("");
+      liveFileBytes(Uint8List.fromList([0]));
+      onRefresh();
     } else {
       debugPrint("onUpload taskSnapshot ${taskSnapshot?.state}");
       Get.snackbar("Error", "on Upload Media Content Failed");
     }
-    liveFileName(""); 
-    liveFileExtension("");
-    liveFileBytes(Uint8List.fromList([0]));
     isLoading(false);
     Get.back();
   }
@@ -592,7 +598,8 @@ class DashboardController extends BaseController {
     final kb = file!.size / 1024;
     final mb = kb / 1024;
     final fileSize = mb >= 1 ? '${mb.toStringAsFixed(2)} MB' : '${kb.toStringAsFixed(2)} KB';
-    liveFileName("${file?.name} ${fileSize}");
+    liveFileName(file?.name?.split('.').first);
+    liveFileSize(fileSize);
     liveFileExtension(file?.extension);
     if (file?.extension?.toLowerCase()?.contains("jpg") == true || file?.extension?.toLowerCase()?.contains("png") == true || file?.extension?.toLowerCase()?.contains("webp") == true) {
       liveFileBytes(file?.bytes);

@@ -47,6 +47,7 @@ dependencies:
   get: ^4.6.5
   #google_fonts: ^3.0.1
   http: ^0.13.0
+  intl: ^0.18.1
   latlong2: ^0.8.0
   #open_file: ^3.3.1
   path_provider:

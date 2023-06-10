@@ -55,7 +55,7 @@ class CustomDialog {
     /*TextEditingController? contractNumberController,*/TextEditingController? clientController,
     Rx<TextEditingController?> dateFromController, Rx<TextEditingController?> dateToController,
     TextEditingController? durationController, TextEditingController? mediaUrlController,
-    RxBool liveLoading, RxString liveFileName, RxString liveFileExtension, Rx<Uint8List> liveFileBytes,
+    RxBool liveLoading, RxString liveFileName, RxString liveFileExtension, RxString liveFileSize, Rx<Uint8List> liveFileBytes,
     GestureTapCallback onPressedMedia ,GestureTapCallback onPressedUpload
   ) {
     Get.dialog(
@@ -177,7 +177,7 @@ class CustomDialog {
             }
           },),
           Obx(() => Text (
-            liveFileName.value ?? "",
+            "${liveFileName.value}.${liveFileExtension} ${liveFileSize.value}",
             style:  const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             overflow: TextOverflow.ellipsis,
           ),)

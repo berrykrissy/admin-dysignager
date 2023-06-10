@@ -36,7 +36,7 @@ class AdvertisementModel {
     final data = snapshot.data() as Map<String, dynamic>;
     id = snapshot.id;
     client = data['client'];
-    mediaUrl = data['mediaName'];
+    mediaName = data['mediaName'];
     mediaUrl = data['mediaUrl'];
     mediaType = data['mediaType'];
     startDate = (data['startDate'] as Timestamp).toDate();
@@ -48,7 +48,7 @@ class AdvertisementModel {
   AdvertisementModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     client = json['client'];
-    mediaType = json['mediaName'];
+    mediaName = json['mediaName'];
     mediaType = json['mediaType'];
     mediaUrl = json['mediaUrl'];
     startDate = (json['startDate'] as Timestamp).toDate();
