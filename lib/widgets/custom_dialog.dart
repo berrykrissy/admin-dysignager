@@ -50,9 +50,9 @@ class CustomDialog {
   }
 
   static newContract (
-    TextEditingController? contractNumberController, TextEditingController? clientController,
+    /*TextEditingController? contractNumberController,*/TextEditingController? clientController,
     Rx<TextEditingController?> dateFromController, Rx<TextEditingController?> dateToController,
-    TextEditingController? durationController,
+    TextEditingController? durationController, TextEditingController? mediaUrlController,
     RxBool liveLoading, RxString liveFileName, RxString liveFileExtension, Rx<Uint8List> liveFileBytes,
     GestureTapCallback onPressedMedia ,GestureTapCallback onPressedUpload
   ) {
@@ -63,6 +63,7 @@ class CustomDialog {
         ],
         content: Column (
         children: [
+          /*
           TextField (
             controller: contractNumberController,
             readOnly: true,
@@ -75,6 +76,7 @@ class CustomDialog {
             obscureText: false,
             keyboardType: TextInputType.text,
           ),
+          */
           TextField (
             controller: clientController,
             decoration: const InputDecoration (
@@ -109,6 +111,18 @@ class CustomDialog {
             obscureText: false,
             keyboardType: TextInputType.text,
           ),
+           TextField (
+            controller: mediaUrlController,
+            decoration: const InputDecoration (
+              hintText: 'Enter Media Url',
+              labelText: 'Media Url',
+            ),
+            enabled: true,
+            //maxLength: 10,
+            maxLines: 1,
+            obscureText: false,
+            keyboardType: TextInputType.text,
+          ),
           Obx(() {
             if (liveLoading.value) {
               return const SizedBox( height: 10.0,);
@@ -127,8 +141,9 @@ class CustomDialog {
                 width: 200,
                 child: Column(
                   children: [
-                    Image.memory (
-                      liveFileBytes.value, fit: BoxFit.scaleDown,
+                    Image.network (
+                      "liveFileBytes.value",
+                      fit: BoxFit.scaleDown,
                       height: 200,
                       width: 200,
                     ),

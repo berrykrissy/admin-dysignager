@@ -20,11 +20,12 @@ class ContentsFooterWidget extends BaseWidget<DashboardController> {
         children: [
           ButtonWidget(text: "+ New Contract", textColor: Colors.purple, fillColor: Colors.white, fontSize: 20, fontWeight: FontWeight.w500, onPressed: () {            
             controller.durationController?.text = "30";
-            CustomDialog.newContract(
-              null, null,
+            CustomDialog.newContract (
+              /*null,*/null,
               controller.dateFromController, controller.dateToController, 
-              controller.durationController,
-              controller.isLoading, controller.liveFileName, controller.liveFileExtension, controller.liveFileBytes, () {
+              controller.durationController, controller.mediaUrlController,
+              controller.isLoading, 
+              controller.liveFileName, controller.liveFileExtension, controller.liveFileBytes, () {
                 controller.onPickFiles();
               }, () {
                 controller.onUpload();

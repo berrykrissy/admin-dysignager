@@ -38,6 +38,7 @@ class DashboardController extends BaseController {
   final Rx<TextEditingController?> dateFromController = TextEditingController().obs;
   final Rx<TextEditingController?> dateToController = TextEditingController().obs;
   final TextEditingController? durationController = TextEditingController();
+  final TextEditingController? mediaUrlController = TextEditingController();
   
   final RxString liveFileName = "".obs, liveFileExtension = "".obs;
   Rx<Uint8List> liveFileBytes = Uint8List.fromList([0]).obs;
