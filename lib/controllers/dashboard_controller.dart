@@ -151,7 +151,7 @@ class DashboardController extends BaseController {
           )
         );
     });
-    //_markerModelList.add (MarkerModel(latitude: 0.00, longitude: 0.00));
+    _markerModelList.add (MarkerModel(latitude: 0.00, longitude: 0.00));
    debugPrint("service running end--------------");
   }
 
@@ -327,12 +327,12 @@ class DashboardController extends BaseController {
   }
   //#endregion
   //#region Screen Views Methods
+
+
   Future<void> onSelectCardScreen(int index) async {
     debugPrint("DashboardController onSelectCardScreen $index");
     isLoading(true);
-    if (_markerModelList.value[index].name == null) {
-      Get.snackbar("Test", "Add Icon");
-    } else {
+    if (_markerModelList.value[index].name != null) {
       _markerModelList.value.forEach((model) {
         if (model.isSelected == true) {
           model.isSelected = false;
@@ -346,17 +346,30 @@ class DashboardController extends BaseController {
 
   Future<void> onAddScreen() async {
     debugPrint("DashboardController onAddScreen ${nameController?.text} ${locationController?.text}");
-    if(nameController?.text.isBlank == false && locationController?.text.isBlank == false) {
+    if(nameController?.text.isBlank == false/*&& locationController?.text.isBlank == false*/) {
       isLoading(true);
+      /*
       _insertMarker(_screenDetailslList.length, nameController?.text, Constants.OUT_OF_SYNC);
       _screenDetailslList.add ( 
         ScreensDetailsModel (
           name: nameController?.text, status: Constants.OUT_OF_SYNC, onlineSince: null, location: locationController?.text, isShowed: true
         )
       );
+      */
+      await _service.createLocation(
+        LocationsModel (
+          name: nameController!.text,
+          address: null,
+          gps: null,
+          onlineSince: null,
+          status: Constants.OFFLINE,
+          isEnabled: false,
+        ).toMap()
+      );
       onResetScreenSelection();
       isLoading(false);
       Get.back();
+      onRefresh();
     } else {
       Get.snackbar("Error", "Inputs Invalid");
     }
@@ -479,16 +492,17 @@ class DashboardController extends BaseController {
       _locations.where((model) => model.id == id).first,
       _locations.where((model) => model.id == id).first.isEnabled != true
     );
-    onRefresh();
     isLoading(false);
+    onRefresh();
   }
 
-  Future<void> onDeleteScreenDetails(String name) async {
-    debugPrint("DashboardController onDeleteScreenDetails $name");
+  Future<void> onDeleteScreenDetails(String? id) async {
     isLoading(true);
-    _screenDetailslList.removeWhere((model) => model.name == name);
-    _markerModelList.removeWhere((model) => model.name == name);
+    _screenDetailslList.removeWhere((model) => model.id == id);
+    _markerModelList.removeWhere((model) => model.id == id);
+    _service.deleteLocation(id);
     isLoading(false);
+    onRefresh();
   }
   
   IconData getStatusEnabledIcon(String? id) {

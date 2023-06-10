@@ -33,13 +33,13 @@ class ListViewScreensDetailsWidget extends BaseWidget<DashboardController> {
                     onPressed: () {
                       controller.onDeleteScreenDetails(controller.getScreenDetailsName(index));
                     }, icon: const Icon( CupertinoIcons.delete), 
-                  )
-                  */
+                  ),
                   IconButton (
                     onPressed: () {
                       controller.onDisabledScreenDetails(controller.getScreenDetailsId(index));
                     }, icon: const Icon( Icons.disabled_visible_rounded ), 
-                  )
+                  ),
+                  */
                 ],
               ),
               const Divider(

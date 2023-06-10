@@ -46,7 +46,7 @@ class GridViewScreensViewWidget extends BaseWidget<DashboardController> {
                           onPressed: () { 
                             CustomDialog.addScreen (
                               controller.nameController, 
-                              controller.locationController, 
+                              /*controller.locationController,*/
                               () => controller.onAddScreen()
                             );
                           },

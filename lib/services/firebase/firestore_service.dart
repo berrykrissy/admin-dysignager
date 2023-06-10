@@ -7,6 +7,10 @@ import 'package:signage/models/schedule.model.dart';
 class FirestoreService extends GetxService {
   final dbFirestore = FirebaseFirestore.instance;
 
+  Future<void> createLocation(Map<String, dynamic> data) async {
+    await dbFirestore.collection("location").add(data);
+  }
+
   //GET: get all locations
   Future<List<LocationsModel>> getLocations() async {
     final response = await dbFirestore.collection("location").get();

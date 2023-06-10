@@ -9,7 +9,7 @@ import 'package:signage/widgets/date_picker_widget.dart';
 class CustomDialog {
 
   static addScreen(
-    TextEditingController? nameController, TextEditingController? locationController, 
+    TextEditingController? nameController,/*TextEditingController? locationController,*/
     VoidCallback? onConfirm
   ) {
     Get.defaultDialog (
@@ -28,6 +28,7 @@ class CustomDialog {
             obscureText: false,
             keyboardType: TextInputType.text,
           ),
+          /*
           TextField (
             controller: locationController,
             decoration: const InputDecoration (
@@ -40,6 +41,7 @@ class CustomDialog {
             obscureText: false,
             keyboardType: TextInputType.text,
           ),
+          */
         ],
       ),
       onConfirm: onConfirm,
