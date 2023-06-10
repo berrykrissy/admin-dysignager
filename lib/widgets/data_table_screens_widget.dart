@@ -31,9 +31,9 @@ class DataTableScreensWidget extends BaseWidget<DashboardController> {
                 DataCell(Text(cell.location ?? "", style: const TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),),    
                 DataCell(
                   IconButton (
-                        onPressed: () {
-                          controller.onDisabledScreenDetails(cell.id);
-                        }, icon: const Icon( Icons.disabled_visible_rounded ), 
+                    onPressed: () {
+                      controller.onToggleScreenDetailsStatus(cell.id);
+                    }, icon: Icon( controller.getStatusEnabledIcon(cell.id) ), 
                   )
                 )
             ] ) ).toList(),

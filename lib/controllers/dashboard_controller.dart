@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:html' as html;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:signage/controllers/base_controller.dart';
@@ -30,9 +30,9 @@ class DashboardController extends BaseController {
   //#endregion
   RxBool isLoading = false.obs;
   //#region Rx List
-  final locations = <LocationsModel>[].obs;
-  final advertisement = <AdvertisementModel>[].obs;
-  final schedule = <ScheduleModel>[].obs;
+  final _locations = <LocationsModel>[].obs;
+  final _advertisement = <AdvertisementModel>[].obs;
+  final _schedule = <ScheduleModel>[].obs;
   
   final RxList<MarkerModel> _markerModelList = new List<MarkerModel>.empty().obs;
   final RxList<ScreensDetailsModel> _screenDetailslList = new List<ScreensDetailsModel>.empty().obs;
@@ -58,18 +58,18 @@ class DashboardController extends BaseController {
     processLocationsOnScreens();
     //processLocationsByID();
     processAdvertisement();
-    processSchedule();
-    processScheduleByDate();
+    //processSchedule();
+    //processScheduleByDate();
     //_getCoordinates();
   }
 
   processSchedule() async {
     final snapshot = await _service.getSchedule();
     for (final item in snapshot) {
-      schedule.add(item);
+      _schedule.add(item);
     }
     debugPrint("schedule running start-----------");
-    schedule.forEach((element) =>
+    _schedule.forEach((element) =>
       debugPrint("mediaUrl: ${element.advertisement?.mediaUrl} | locationId: ${element.locationId}")
     );
     debugPrint("schedule running end-------------");
@@ -78,10 +78,10 @@ class DashboardController extends BaseController {
   void processAdvertisement() async {
     final snapshot = await _service.getAdvertisement();
     for (final item in snapshot) {
-      advertisement.add(item);
+      _advertisement.add(item);
     }
     debugPrint("advertisement running start--------------");
-    advertisement.forEach((element) {
+    _advertisement.forEach((element) {
       debugPrint("document-id: ${element.id} ${element.mediaUrl} ${element.mediaType} ${element.duration} ${element.startDate} ${element.endDate} }");
       _contentsDetailslList.add( ContentsModel (
          client: element.client,
@@ -100,8 +100,7 @@ class DashboardController extends BaseController {
     final data = AdvertisementModel(
         location: "1155 Purok 1, San Mateo, 1850 Rizal",
         mediaType: "jpg",
-        mediaUrl:
-            "https://th.bing.com/th/id/R.c13bfb9af48998d980d2720d10e6e877?rik=TW%2f5uKcY5qawKg&riu=http%3a%2f%2f2.bp.blogspot.com%2f-1UcODLZ_QQc%2fT5D95yt1txI%2fAAAAAAAAAdg%2f25vGOqNqIE8%2fs1600%2fHectic.jpg&ehk=rvNF4nwjJgbL9bCAC%2f9gX5d7WcRCIaRNDY2uBXcdrgs%3d&risl=&pid=ImgRaw&r=0",
+        mediaUrl: "https://th.bing.com/th/id/R.c13bfb9af48998d980d2720d10e6e877?rik=TW%2f5uKcY5qawKg&riu=http%3a%2f%2f2.bp.blogspot.com%2f-1UcODLZ_QQc%2fT5D95yt1txI%2fAAAAAAAAAdg%2f25vGOqNqIE8%2fs1600%2fHectic.jpg&ehk=rvNF4nwjJgbL9bCAC%2f9gX5d7WcRCIaRNDY2uBXcdrgs%3d&risl=&pid=ImgRaw&r=0",
         duration: 30,
         startDate: DateTime.now(),
         endDate: DateTime.now().add(const Duration(days: 1)));
@@ -123,21 +122,20 @@ class DashboardController extends BaseController {
   }
 
   void processLocationsOnScreens() async {
-
     final snapshot = await _service.getLocations();
     for (final item in snapshot) {
       debugPrint("DashboardController snapshot ${item.id}");
-      locations.add(item);
+      _locations.add(item);
     }
    debugPrint("service running start------------");
-    locations.forEach( (newValue) {
+    _locations.forEach( (newValue) {
       _markerModelList.add (
           MarkerModel (
             id: newValue.id,
             name: newValue.name,
             latitude: newValue.gps?.latitude ?? 0,
             longitude: newValue.gps?.longitude ?? 0,
-            status: newValue.status,
+            status: newValue.isEnabled == true ? newValue.status : Constants.DISABLED,
             isSelected: false
           )
         );
@@ -146,7 +144,7 @@ class DashboardController extends BaseController {
           ScreensDetailsModel (
             id: newValue.id,
             name: newValue.name,
-            status: newValue.status,
+            status: newValue.isEnabled == true ? newValue.status : Constants.DISABLED,
             onlineSince: newValue.onlineSince,
             location: newValue.address,
             isShowed: true
@@ -167,10 +165,10 @@ class DashboardController extends BaseController {
     final snapshot = await _service.getScheduleByDate(
         DateTime.parse("2023-06-06"), DateTime.parse("2023-06-06"));
     for (final item in snapshot) {
-      locations.add(item);
+      _locations.add(item);
     }
    debugPrint("locationByDate running--------");
-    locations.forEach((element)  {
+    _locations.forEach((element)  {
       debugPrint("location ${element.name} ${element.gps?.latitude} ${element.gps?.longitude} ${element.status} ${element.onlineSince}");
     });
   }
@@ -300,7 +298,7 @@ class DashboardController extends BaseController {
     return true;
   }
 
-  Future<void> _updateStaus(MarkerModel markerModel, ScreensDetailsModel screensDetailsModel, String status) async {
+  Future<void> _updateStaus(MarkerModel markerModel, ScreensDetailsModel screensDetailsModel, LocationsModel locationsModel, bool isEnabled) async {
     _service.updateStatus (
       markerModel.id, 
       LocationsModel (
@@ -308,7 +306,8 @@ class DashboardController extends BaseController {
         address: screensDetailsModel.location,
         gps: GeoPoint(markerModel.latitude, markerModel.longitude),
         onlineSince: screensDetailsModel.onlineSince,
-        status: status,
+        status: locationsModel.status,
+        isEnabled: isEnabled,
       ).toMap()
     );  
   }
@@ -472,12 +471,13 @@ class DashboardController extends BaseController {
     return _screenDetailslList.where( (model) => model.isShowed == true ).toList()[index].location ?? "Nil";
   }
 
-  Future<void> onDisabledScreenDetails(String? id) async {
+  Future<void> onToggleScreenDetailsStatus(String? id) async {
     isLoading(true);
-    _updateStaus(
+    _updateStaus (
       _markerModelList.where((model) => model.id == id).first, 
       _screenDetailslList.where((model) => model.id == id).first,
-      Constants.DISABLED
+      _locations.where((model) => model.id == id).first,
+      _locations.where((model) => model.id == id).first.isEnabled != true
     );
     onRefresh();
     isLoading(false);
@@ -489,6 +489,14 @@ class DashboardController extends BaseController {
     _screenDetailslList.removeWhere((model) => model.name == name);
     _markerModelList.removeWhere((model) => model.name == name);
     isLoading(false);
+  }
+  
+  IconData getStatusEnabledIcon(String? id) {
+    if (_locations.where((model) => model.id == id).first.isEnabled == true) {
+      return CupertinoIcons.eye;
+    } else {
+      return CupertinoIcons.eye_slash;
+    }
   }
   //#endregion
   //#region Contents Methods
