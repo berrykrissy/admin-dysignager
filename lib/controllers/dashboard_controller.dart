@@ -87,11 +87,12 @@ class DashboardController extends BaseController {
     _advertisement.forEach((element) {
       debugPrint("document-id: ${element.id} ${element.mediaName} ${element.mediaUrl} ${element.mediaType} ${element.duration} ${element.startDate} ${element.endDate} }");
       _contentsDetailslList.add( ContentsModel (
-         client: element.client,
-         fileName: "${element.mediaName}.${element.mediaType}",
-         startDate: element.startDate.toString(),
-         endDate: element.endDate.toString(),
-         duration: element.duration.toString()
+        id: element.id,
+        client: element.client,
+        fileName: "${element.mediaName}.${element.mediaType}",
+        startDate: element.startDate.toString(),
+        endDate: element.endDate.toString(),
+        duration: element.duration.toString()
       ) );
     });    
     debugPrint("advertisement running end----------------");
@@ -506,7 +507,7 @@ class DashboardController extends BaseController {
       _markerModelList.removeWhere((model) => model.id == id);
       _service.deleteLocation(id);
     } catch (e) {
-      Get.snackbar("Error", "Cannot Delete Scren");
+      Get.snackbar("Error", "Cannot Delete Screen");
     } finally {
       isLoading(false);
       onRefresh();
@@ -555,11 +556,17 @@ class DashboardController extends BaseController {
     return _contentsDetailslList[index].fileName ?? "Nil";
   }
 
-  Future<void> onDeleteContentDetails(int index) async {
-    debugPrint("DashboardController onDeleteContentDetails $index");
-    isLoading(true);
-    _contentsDetailslList.removeAt(index);
-    isLoading(false);
+  Future<void> onDeleteContentDetails(String? id) async {
+    try {
+      isLoading(true);
+      _contentsDetailslList.removeWhere((model) => model.id == id);
+      _service.deleteAdvertisement(id);
+    } catch (e) {
+      Get.snackbar("Error", "Cannot Delete Content");
+    } finally {
+      isLoading(false);
+      onRefresh();
+    }
   }
 
   DateTime _toDateTime(String? date) {

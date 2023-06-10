@@ -25,25 +25,24 @@ class DataTableScreensWidget extends BaseWidget<DashboardController> {
             DataColumn(label: SizedBox(),),
             DataColumn(label: SizedBox(),),
           ],
-          rows: controller.getScreensDetails().map(
-            (cell) => DataRow(cells: <DataCell> [
-                DataCell(Text(cell.name ?? "", style: const TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),),
-                DataCell(Text(cell.status ?? "", style: const TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),),
-                DataCell(Text(cell.onlineSince ?? "", style: const TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),),    
-                DataCell(Text(cell.location ?? "", style: const TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),),    
-                DataCell (
-                  onTap: () {
-                    controller.onToggleScreenDetailsStatus(cell.id);
-                  },
-                  Icon( controller.getStatusEnabledIcon(cell.id) ), 
-                ),
-                DataCell (
-                  onTap: () {
-                    controller.onDeleteScreenDetails(cell.id);
-                  },
-                  const Icon( CupertinoIcons.xmark )
-                )
-            ] ) ).toList(),
+          rows: controller.getScreensDetails().map ( (cell) => DataRow(cells: <DataCell> [
+            DataCell(Text(cell.name ?? "", style: const TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),),
+            DataCell(Text(cell.status ?? "", style: const TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),),
+            DataCell(Text(cell.onlineSince ?? "", style: const TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),),    
+            DataCell(Text(cell.location ?? "", style: const TextStyle ( color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500,),),),    
+            DataCell (
+              onTap: () {
+                controller.onToggleScreenDetailsStatus(cell.id);
+              },
+              Icon( controller.getStatusEnabledIcon(cell.id) ), 
+            ),
+            DataCell (
+              onTap: () {
+                controller.onDeleteScreenDetails(cell.id);
+              },
+              const Icon( CupertinoIcons.xmark )
+            )
+          ] ) ).toList(),
         );
       }
     } );
