@@ -178,6 +178,12 @@ class DashboardController extends BaseController {
       const Duration(milliseconds: 3000), ( () => html.window.location.reload() )
     );
   }
+
+  void onShowAlert(String title, String message) {
+    Timer(
+      const Duration(milliseconds: 2000), ( () => Get.snackbar(title, message) )
+    );
+  }
   //#region Page Launchers
   void launchFindScreen() {
     debugPrint("DashboardController launchFindScreen");
@@ -275,8 +281,7 @@ class DashboardController extends BaseController {
 
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      Get.snackbar(
-          "GPS", "Location services are disabled. Please enable the services");
+      Get.snackbar("GPS", "Location services are disabled. Please enable the services");
       return false;
     }
     permission = await Geolocator.checkPermission();
@@ -364,10 +369,10 @@ class DashboardController extends BaseController {
         onResetScreenSelection();
         onRefresh();
       } else {
-        Get.snackbar("Error", "Inputs Invalid");
+        onShowAlert("Error", "Inputs Invalid");
       }
     } catch (e) {
-      Get.snackbar("Error", "on Add Screen Failed");
+      onShowAlert("Error", "on Add Screen Failed");
     } finally {
       isLoading(false);
       Get.back();
@@ -494,7 +499,7 @@ class DashboardController extends BaseController {
       );    
       onRefresh();
     } catch (e) {
-      Get.snackbar("Error", "Cannot Update Status");
+      onShowAlert("Error", "Cannot Update Status");
     } finally {
       isLoading(false);
     }
@@ -507,7 +512,7 @@ class DashboardController extends BaseController {
       _markerModelList.removeWhere((model) => model.id == id);
       _service.deleteLocation(id);
     } catch (e) {
-      Get.snackbar("Error", "Cannot Delete Screen");
+      onShowAlert("Error", "Cannot Delete Screen");
     } finally {
       isLoading(false);
       onRefresh();
@@ -562,7 +567,7 @@ class DashboardController extends BaseController {
       _contentsDetailslList.removeWhere((model) => model.id == id);
       _service.deleteAdvertisement(id);
     } catch (e) {
-      Get.snackbar("Error", "Cannot Delete Content");
+      onShowAlert("Error", "Cannot Delete Content");
     } finally {
       isLoading(false);
       onRefresh();
@@ -574,29 +579,39 @@ class DashboardController extends BaseController {
   }
 
   Future<void> onUpload() async {
-    isLoading(true);
-    TaskSnapshot? taskSnapshot = await _storage.uploadPlatformFiles(file);
-    if (taskSnapshot != null && taskSnapshot!.state == TaskState.success) {
-      debugPrint("onUpload taskSnapshot ${await taskSnapshot.ref.getDownloadURL()}");
-      final data = AdvertisementModel (
-        client: clientController?.text,
-        mediaName: liveFileName.value,
-        mediaType: liveFileExtension.value,
-        mediaUrl: await taskSnapshot.ref.getDownloadURL(),
-        duration: int.tryParse(durationController?.text ?? "30"),
-        startDate: _toDateTime(dateFromController.value?.text),
-        endDate: _toDateTime(dateToController.value?.text),
-      );
-      await _service.createAdvertisement(data.toMap());
+    debugPrint("DashboardController onUpload");
+    try {
+      isLoading(true);
+      TaskSnapshot? taskSnapshot = await _storage.uploadPlatformFiles(file);
+      if (taskSnapshot != null && taskSnapshot!.state == TaskState.success) {
+        debugPrint("onUpload taskSnapshot ${await taskSnapshot.ref.getDownloadURL()}");
+        final data = AdvertisementModel (
+          client: clientController?.text,
+          mediaName: liveFileName.value,
+          mediaType: liveFileExtension.value,
+          mediaUrl: await taskSnapshot.ref.getDownloadURL(),
+          duration: int.tryParse(durationController?.text ?? "30"),
+          startDate: _toDateTime(dateFromController.value?.text),
+          endDate: _toDateTime(dateToController.value?.text),
+        );
+        await _service.createAdvertisement(data.toMap());
+        onRefresh();
+      } else {
+        //Get.back();
+        onShowAlert("Error", "on Upload Media Content Failed");
+        debugPrint("Error on Upload Media Content Failed");
+      }
+    } catch (e) {
+      //Get.back();
+      onShowAlert("Error", "on Upload Media Content Failed");
+      debugPrint("Error on Upload Media Content Failed");
+    } finally {
       liveFileName(""); 
       liveFileExtension("");
       liveFileBytes(Uint8List.fromList([0]));
-      onRefresh();
-    } else {
-      Get.snackbar("Error", "on Upload Media Content Failed");
+      isLoading(false);
+      Get.back();
     }
-    isLoading(false);
-    Get.back();
   }
 
   Future<void> onPickFiles() async {

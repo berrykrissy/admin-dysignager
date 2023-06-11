@@ -34,6 +34,9 @@ class FirebaseStorageService extends GetxService {
 
    Future<TaskSnapshot?> uploadPlatformFiles(PlatformFile? file) async {
     debugPrint("uploadPlatformFiles ${file?.name} ${file?.size}");
+    if (file?.name == null || file?.bytes == null) {
+      throw Exception("File is Null");
+    }
     bool isImage = file?.extension?.toLowerCase()?.contains("jpg") == true || file?.extension?.toLowerCase()?.contains("png") == true || file?.extension?.toLowerCase()?.contains("webp") == true;
     /*
     if (file?.bytes != null) {
