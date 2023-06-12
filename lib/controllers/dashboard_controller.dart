@@ -43,7 +43,6 @@ class DashboardController extends BaseController {
   //#region Text Editing Controllers
   final TextEditingController? nameController = TextEditingController();
   final TextEditingController? locationController = TextEditingController();
-
   //final RxString spinnerValue = "".obs;
   final TextEditingController? clientController = TextEditingController();
   final Rx<TextEditingController?> dateFromController = TextEditingController().obs;
@@ -66,7 +65,7 @@ class DashboardController extends BaseController {
     //_getCoordinates();
   }
 
-  processSchedule() async {
+  void processSchedule() async {
     final snapshot = await _service.getSchedule();
     for (final item in snapshot) {
       _schedule.add(item);
@@ -145,7 +144,7 @@ class DashboardController extends BaseController {
             id: newValue.id,
             name: newValue.name,
             status: newValue.isEnabled == true ? newValue.status : Constants.DISABLED,
-            onlineSince: newValue.onlineSince,
+            onlineSince: newValue.onlineSince.toString(),
             location: newValue.address,
             isShowed: true
           )
@@ -180,8 +179,27 @@ class DashboardController extends BaseController {
   }
 
   void onShowAlert(String title, String message) {
-    Timer(
+    Timer (
       const Duration(milliseconds: 2000), ( () => Get.snackbar(title, message) )
+    );
+  }
+
+  @override
+  void onReady() {
+    super.onReady();
+    Timer.periodic (
+      const Duration(minutes: 1), (timer) async { 
+        final snapshot = await _service.getLocations();
+        for (var newItem in snapshot) {
+          debugPrint("DashboardController location  ${newItem.id} ${newItem.name} ${newItem.onlineSince}");
+          final _oldList = _screenDetailslList.where( (oldItem) => oldItem.id == newItem.id);
+          if (_oldList.isNotEmpty && _oldList.firstOrNull?.status == Constants.ONLINE && _oldList.firstOrNull?.onlineSince != newItem.onlineSince) {
+            //DateTime(_oldList.firstOrNull?.onlineSince)
+          } else {
+
+          }
+        }
+      }
     );
   }
   //#region Page Launchers
@@ -281,19 +299,19 @@ class DashboardController extends BaseController {
 
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      Get.snackbar("GPS", "Location services are disabled. Please enable the services");
+      onShowAlert("GPS", "Location services are disabled. Please enable the services");
       return false;
     }
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        Get.snackbar("GPS", "Location permissions are denied");
+        onShowAlert("GPS", "Location permissions are denied");
         return false;
       }
     }
     if (permission == LocationPermission.deniedForever) {
-      Get.snackbar("GPS","Location permissions are permanently denied, we cannot request permissions.");
+      onShowAlert("GPS","Location permissions are permanently denied, we cannot request permissions.");
       return false;
     }
     return true;
@@ -306,7 +324,7 @@ class DashboardController extends BaseController {
         name: screensDetailsModel.name,
         address: screensDetailsModel.location,
         gps: GeoPoint(markerModel.latitude, markerModel.longitude),
-        onlineSince: screensDetailsModel.onlineSince,
+        onlineSince: DateTime.parse(screensDetailsModel.onlineSince!),
         status: locationsModel.status,
         isEnabled: isEnabled,
       ).toMap()

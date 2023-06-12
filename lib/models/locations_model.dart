@@ -5,7 +5,7 @@ class LocationsModel {
   String? name;
   String? address;
   GeoPoint? gps;
-  String? onlineSince;
+  DateTime? onlineSince;
   String? status;
   bool? isEnabled;
 
@@ -34,7 +34,7 @@ class LocationsModel {
     name = data ['name'];
     address = data ['address'];
     gps = data ['gps'];
-    onlineSince = data ['online_since'];
+    onlineSince = (data['online_since'] as Timestamp?)?.toDate();
     status = data ['status'];
     isEnabled = data ['isEnabled'];
   }
