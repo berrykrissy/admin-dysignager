@@ -184,21 +184,50 @@ class DashboardController extends BaseController {
     );
   }
 
+  Future<void> onUpdateStatus() async {
+    final snapshot = await _service.getLocations();
+    bool isRefresh = false;
+    for (var newItem in snapshot) {
+      final oldList = _locations.where( (oldItem) => oldItem.id == newItem.id); //final _oldList = _screenDetailslList.where( (oldItem) => oldItem.id == newItem.id);
+      final bool isNotEmpty = oldList.isNotEmpty;
+      final bool isStatusOnline = oldList.firstOrNull?.status == Constants.ONLINE;
+      //final bool isOnlineSinceNotSame = oldList.firstOrNull?.onlineSince != newItem.onlineSince;
+      final int onlineDifference = DateTime.now().difference(newItem.onlineSince ?? DateTime.now().subtract(const Duration(days: 1))).inMinutes;
+      debugPrint("DashboardController isNotEmpty $isNotEmpty");
+      debugPrint("DashboardController isStatusOnline $isStatusOnline");
+      //debugPrint("DashboardController $isOnlineSinceNotSame");
+      debugPrint("DashboardController onlineDifference $onlineDifference");
+      debugPrint("DashboardController onlineDifference > 2 ${onlineDifference > 2}");
+      debugPrint("DashboardController DateTime.now() ${DateTime.now()}");
+      debugPrint("DashboardController newItem location  ${newItem.id} ${newItem.name} ${newItem.onlineSince}");
+      debugPrint("DashboardController oldList location  ${oldList?.firstOrNull?.id} ${oldList?.firstOrNull?.name} ${oldList?.firstOrNull?.onlineSince}");
+      if (isNotEmpty && isStatusOnline && onlineDifference > 2) {
+        _service.updateLocation (
+          newItem?.id, 
+          LocationsModel (
+            name: newItem?.name,
+            address: newItem?.address,
+            gps: newItem.gps,
+            onlineSince: newItem.onlineSince,
+            status: Constants.OFFLINE,
+            isEnabled: newItem?.isEnabled,
+          ).toMap()
+        );
+        //isRefresh = true;
+      }
+    }
+    if (isRefresh) {
+      //onRefresh();
+    }
+  }
+
   @override
   void onReady() {
     super.onReady();
-    Timer.periodic (
-      const Duration(minutes: 1), (timer) async { 
-        final snapshot = await _service.getLocations();
-        for (var newItem in snapshot) {
-          debugPrint("DashboardController location  ${newItem.id} ${newItem.name} ${newItem.onlineSince}");
-          final _oldList = _screenDetailslList.where( (oldItem) => oldItem.id == newItem.id);
-          if (_oldList.isNotEmpty && _oldList.firstOrNull?.status == Constants.ONLINE && _oldList.firstOrNull?.onlineSince != newItem.onlineSince) {
-            //DateTime(_oldList.firstOrNull?.onlineSince)
-          } else {
-
-          }
-        }
+    debugPrint("DashboardController onReady");
+    onUpdateStatus();
+    Timer.periodic ( const Duration(minutes: 1), (timer) async {
+        onUpdateStatus();
       }
     );
   }
