@@ -5,6 +5,7 @@ import 'package:signage/utils/hex_color.dart';
 class Constants {
   static const TIMEOUT = 10000;
   static const BLANK = " ";
+  static const CITY = "Manila";
 
   static const ONLINE = "Online";
   static const OUT_OF_SYNC = "Out of Sync";
