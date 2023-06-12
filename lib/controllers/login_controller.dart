@@ -14,8 +14,8 @@ class LoginController extends BaseController {
     debugPrint("LoginController Constructor");
   }
 
-final FirestoreService _service;
-LocationsModel? _locations = null;
+  final FirestoreService _service;
+  LocationsModel? _location = null;
   RxBool isLoading = false.obs;
   final TextEditingController? usernameController = new TextEditingController();
   final TextEditingController? passwordController = new TextEditingController();
@@ -55,7 +55,7 @@ LocationsModel? _locations = null;
   Future<void> getLocation() async {
     debugPrint("SplashController getLocation");
     final snapshot = await _service.getLocationsByIdByCity(Constants.CITY);
-    _locations = snapshot.firstOrNull;
+    _location = snapshot.firstOrNull;
   }
 
   Future<void> checkCredentials() async {
@@ -64,14 +64,14 @@ LocationsModel? _locations = null;
     if (await _handleLocationPermission()) {
       Position position = await Geolocator.getCurrentPosition ( desiredAccuracy: LocationAccuracy.best);
       _service.updateLocation (
-        _locations?.id, 
+        _location?.id, 
         LocationsModel (
-          name: _locations?.name,
-          address: _locations?.address,
+          name: _location?.name,
+          address: _location?.address,
           gps: GeoPoint(position.latitude ,position.longitude),
-          onlineSince: _locations?.onlineSince,
-          status: _locations?.status,
-          isEnabled: _locations?.isEnabled,
+          onlineSince: _location?.onlineSince,
+          status: _location?.status,
+          isEnabled: _location?.isEnabled,
         ).toMap()
       );
     }

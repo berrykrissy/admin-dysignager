@@ -221,13 +221,34 @@ class DashboardController extends BaseController {
     }
   }
 
+  Future<void> onRetrieve() async {
+    final snapshot = await _service.getLocationsByIdByCity(Constants.CITY);
+    final _location = snapshot.firstOrNull;
+    if (await _handleLocationPermission()) {
+      Position position = await Geolocator.getCurrentPosition ( desiredAccuracy: LocationAccuracy.best);
+      _service.updateLocation (
+        _location?.id, 
+        LocationsModel (
+          name: _location?.name,
+          address: _location?.address,
+          gps: GeoPoint(position.latitude ,position.longitude),
+          onlineSince: _location?.onlineSince,
+          status: _location?.status,
+          isEnabled: _location?.isEnabled,
+        ).toMap()
+      );
+    }
+  }
+
   @override
   void onReady() {
     super.onReady();
     debugPrint("DashboardController onReady");
     onUpdateStatus();
+    onRetrieve();
     Timer.periodic ( const Duration(minutes: 1), (timer) async {
         onUpdateStatus();
+        onRetrieve();
       }
     );
   }
