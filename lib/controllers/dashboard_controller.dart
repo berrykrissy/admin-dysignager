@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:html' as html;
+import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -427,7 +428,7 @@ class DashboardController extends BaseController {
         _service.createLocation (
           LocationsModel (
             name: nameController!.text,
-            address: null,
+            address: locationController!.toString(),
             gps: null,
             onlineSince: null,
             status: Constants.OFFLINE,
